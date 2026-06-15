@@ -193,7 +193,6 @@ function applyChoice(choice) {
 
 function advanceScene() {
   if (UI.isPhoneVisible?.()) return;
-
   if (isTyping) {
     UI.skipTyping();
     isTyping = false;
@@ -206,9 +205,15 @@ function advanceScene() {
   if (currentScene?.next) {
     state.sceneId = currentScene.next;
     renderScene();
+  } else if (currentScene?.nextEpisode) {
+    state.episodeId = currentScene.nextEpisode;
+    loadCurrentEpisode();
+    state.sceneId =
+      currentEpisode?.startScene ||
+      Object.keys(currentEpisode?.scenes || {})[0];
+    renderScene();
   }
 }
-
 // ═══════════════════════════════
 // HELPERS
 // ═══════════════════════════════

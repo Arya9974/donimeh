@@ -477,7 +477,39 @@ body {
   background: rgba(212, 168, 70, 0.12);
   color: #fff;
 }
-
+.audio-btn {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 50;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(10, 8, 4, 0.6);
+  border: 1px solid rgba(212, 168, 70, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  backdrop-filter: blur(10px);
+}
+.audio-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--text-dim);
+}
+.audio-btn:hover {
+  border-color: var(--gold-light);
+  box-shadow: 0 0 20px var(--gold-glow);
+}
+.audio-btn.on {
+  border-color: var(--gold-light);
+  background: rgba(212, 168, 70, 0.15);
+}
+.audio-btn.on svg {
+  stroke: var(--gold-light);
+}
 /* ============ PUZZLE ============ */
 .puzzle-overlay {
   position: absolute;

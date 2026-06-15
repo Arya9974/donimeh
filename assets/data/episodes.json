@@ -190,6 +190,12 @@
                 "stats": { "trustRahi": 20 },
                 "memory": { "rahiTrustsSina": true }
               }
+            },
+            {
+              "text": "از آریا بپرسم — شاید اون بدونه",
+              "next": "ask_arya_about_scar",
+              "require": { "memory": { "askedAryaAboutRahi": true } },
+              "effects": { "suspicion": { "arya": 5 } }
             }
           ]
         },
@@ -212,6 +218,13 @@
           "speaker": "رهی",
           "dialogue": "...تو هم؟",
           "narrator": "رهی خیره می‌ماند. چیزی در چهره‌اش تغییر می‌کند — نه اعتماد کامل، ولی یک پنجره کوچک که باز شده. می‌گوید: «شاید یه روز... شاید یه روز بهت بگم.» بعد شال را شل‌تر می‌بندد.",
+          "next": "group_gathering"
+        },
+        "ask_arya_about_scar": {
+          "portrait": "assets/images/arya.jpg",
+          "speaker": "آریا",
+          "dialogue": "زخم روی گردنش؟ من فقط شنیدم که یه اتفاق قدیمیه. زیاد نزدیک نشو — اون به کسی اعتماد نمی‌کنه.",
+          "narrator": "آریا طوری می‌گوید که انگار نگران است، ولی سینا حس می‌کند بیش از حد معمولی است.",
           "next": "group_gathering"
         },
         "approach_mehras": {
@@ -427,28 +440,36 @@
           "speaker": "",
           "dialogue": "",
           "narrator": "تبریز نفسش را حبس کرده. ساغر گم شده. مهراس خشم دارد. رهی رازی روی گردنش پنهان کرده — و شاید تنها کسی باشد که می‌تواند کمک کند. دو نیمه از یک حقیقت. سینا به سمت خانه رهی راه می‌افتد. برف سنگین‌تر می‌بارد. پایان اپیزود اول — «دو نیمه».",
-          "next": null
+          "next": "ep1_to_ep2_bridge"
         },
         "ep1_end_mehras": {
           "portrait": "assets/images/mehras.jpg",
           "speaker": "",
           "dialogue": "",
           "narrator": "تبریز نفسش را حبس کرده. ساغر گم شده. مهراس از همه مشکوک‌تر بود — و شاید بیشتر از همه می‌داند. سینا به سمت خانه مهراس راه می‌افتد. برف سنگین‌تر می‌بارد. پایان اپیزود اول — «دو نیمه».",
-          "next": null
+          "next": "ep1_to_ep2_bridge"
         },
         "ep1_end_seyf": {
           "portrait": "assets/images/seyf.jpg",
           "speaker": "",
           "dialogue": "",
           "narrator": "تبریز نفسش را حبس کرده. ساغر گم شده. سیف تنها کسی است که قانون را می‌شناسد — ولی آیا قانون برای این شهر کافیست؟ سینا فردا صبح با مدارک بیشتر برمی‌گردد. پایان اپیزود اول — «دو نیمه».",
-          "next": null
+          "next": "ep1_to_ep2_bridge"
         },
         "ep1_end_alone": {
           "portrait": "assets/images/sina.jpg",
           "speaker": "",
           "dialogue": "",
           "narrator": "تبریز نفسش را حبس کرده. ساغر گم شده. سینا نمی‌داند به کی اعتماد کند — پس فقط به خودش اعتماد می‌کند. تنها به ایل‌گلی برمی‌گردد، جایی که همه چیز شروع شد. شاید چیزی جا مانده باشد. پایان اپیزود اول — «دو نیمه».",
-          "next": null
+          "next": "ep1_to_ep2_bridge"
+        },
+        "ep1_to_ep2_bridge": {
+          "portrait": "assets/images/sina.jpg",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "صبح روز بعد. برف سنگین‌تر از هر روز. شهر آرام است — زیادی آرام. انگار نفسش را حبس کرده. سینا از پنجره به خیابان نگاه می‌کند. داستان ادامه دارد...",
+          "next": null,
+          "nextEpisode": 2
         }
       }
     },
@@ -715,8 +736,26 @@
           "portrait": "assets/images/sina.jpg",
           "speaker": "",
           "dialogue": "",
-          "narrator": "بازیکن باید بفهمد هر کس در مهمانی کجا ایستاده بود. یک نمودار از باغ با ۸ نقطه نشان داده می‌شود. شواهد: لیوان هانا، جای پای سپهر، شال رهی، فندک مهراس، گوشی پامیا، کفش گِلی مهراس، گوشواره دیانا. نتیجه: مهراس قبل از همه آمده بود و در باغ قدم می‌زده. کفش‌هایش گواهی می‌دهند.",
-          "next": "ep2_pamia"
+          "narrator": "با شواهدی که جمع کردی، چه کسی قبل از همه در باغ بوده و کفش‌هایش گلی شده؟",
+          "choices": [
+            {
+              "text": "مهراس — کفش‌هایش گلی بود",
+              "next": "ep2_pamia",
+              "effects": {
+                "suspicion": { "mehras": 15 },
+                "memory": { "gardenSuspect": "mehras" }
+              }
+            },
+            {
+              "text": "آریا — او همیشه زود میاد",
+              "next": "ep2_pamia",
+              "effects": {
+                "suspicion": { "arya": 5 },
+                "memory": { "gardenSuspect": "arya" }
+              }
+            },
+            { "text": "نمیشه مطمئن بود", "next": "ep2_pamia", "effects": {} }
+          ]
         },
         "ep2_pamia": {
           "portrait": "assets/images/pamya.jpg",

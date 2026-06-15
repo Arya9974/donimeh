@@ -19,6 +19,8 @@ window.DonimehUI = (function () {
   let onTypingDone = null;
   let isPhoneOpen = false;
   let currentPortrait = "";
+  let ambientAudio = null;
+  let isAudioOn = false;
 
   // ═══════════════════════════════
   // ATMOSPHERE PARTICLES
@@ -96,7 +98,6 @@ window.DonimehUI = (function () {
     }
     if (currentPortrait === src) return;
     currentPortrait = src;
-
     portraitStage.classList.add("fading");
     setTimeout(() => {
       portraitImg.src = src;
@@ -120,7 +121,6 @@ window.DonimehUI = (function () {
     clearTimeout(typingTimer);
     let i = 0;
     dialogueLine.innerHTML = '<span class="typing-cursor"></span>';
-
     function step() {
       if (i < text.length) {
         const cursor = dialogueLine.querySelector(".typing-cursor");
@@ -235,6 +235,32 @@ window.DonimehUI = (function () {
   }
 
   // ═══════════════════════════════
+  // AUDIO
+  // ═══════════════════════════════
+  function startAmbient() {
+    if (!ambientAudio) {
+      ambientAudio = new Audio("audios/audios.mp3");
+
+      ambientAudio.loop = true;
+      ambientAudio.volume = 0.3;
+    }
+    ambientAudio.play();
+    isAudioOn = true;
+  }
+
+  function stopAmbient() {
+    if (ambientAudio) {
+      ambientAudio.pause();
+    }
+    isAudioOn = false;
+  }
+
+  function toggleAudio() {
+    if (isAudioOn) stopAmbient();
+    else startAmbient();
+  }
+
+  // ═══════════════════════════════
   // PUZZLE
   // ═══════════════════════════════
   function showPuzzle(html) {
@@ -254,6 +280,14 @@ window.DonimehUI = (function () {
   initAtmosphere();
 
   // ═══════════════════════════════
+  // EVENT LISTENERS
+  // ═══════════════════════════════
+  document.getElementById("audioBtn")?.addEventListener("click", () => {
+    toggleAudio();
+    document.getElementById("audioBtn").classList.toggle("on", isAudioOn);
+  });
+
+  // ═══════════════════════════════
   // PUBLIC API
   // ═══════════════════════════════
   return {
@@ -269,5 +303,6 @@ window.DonimehUI = (function () {
     isPhoneVisible,
     showPuzzle,
     hidePuzzle,
+    toggleAudio,
   };
 })();

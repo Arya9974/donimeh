@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>دونیمه</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/style/style.css" />
+  </head>
+  <body>
+    <!-- Background -->
+    <div class="orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+    <canvas id="snow-canvas"></canvas>
+    <div class="vignette"></div>
+
+    <!-- ═══════════════ LANDING ═══════════════ -->
+    <section id="landing">
+      <header class="site-header">
+        <p class="eyebrow">یک داستان تعاملی</p>
+        <h1 class="title">دونیمه</h1>
+        <p class="subtitle">دو شخصیت · دو دنیا · یک انتخاب</p>
+      </header>
+
+      <div class="cards">
+        <div class="char-card sina">
+          <div class="char-avatar">س</div>
+          <div class="char-name">سینا</div>
+          <div class="char-desc">
+            در خیابان‌های تبریز زندگی می‌کند. دنیایش بوی آسفالت خیس و نئون شب
+            می‌دهد.
+          </div>
+          <span class="char-tag">تبریز · خیابان‌ها</span>
+        </div>
+        <div class="char-card rahi">
+          <div class="char-avatar">ر</div>
+          <div class="char-name">رهی</div>
+          <div class="char-desc">
+            در ایل‌گلی و فضاهای بسته پناه گرفته. درونش پر از سکوت و سوال است.
+          </div>
+          <span class="char-tag">ایل‌گلی · درون</span>
+        </div>
+      </div>
+
+      <div class="quote-wrap">
+        <p class="quote-text" id="quote-text">
+          بعضی وقت‌ها نصف‌شدن، تنها راه دیده‌شدن است.
+        </p>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn-start" id="btn-start" onclick="handleStart()">
+          شروع ماجرا
+        </button>
+        <button
+          class="btn-continue"
+          id="btn-continue"
+          onclick="handleContinue()"
+        >
+          ↩ ادامه داستان
+        </button>
+      </div>
+    </section>
+
+    <!-- ═══════════════ TUTORIAL ═══════════════ -->
+    <div
+      id="tutorial"
+      role="dialog"
+      aria-modal="true"
+      aria-label="راهنمای بازی"
+    >
+      <div class="tutorial-box">
+        <p class="tutorial-title">پیش از آغاز</p>
+
+        <div class="dialogues" id="dialogues">
+          <div class="dialogue sina-d" id="d1">
+            <div class="dialogue-avatar">س</div>
+            <div class="dialogue-bubble">
+              <div class="dialogue-name">سینا</div>
+              سلام! من سینا هستم. توی این بازی، تو قراره داستان رو از نگاه من و
+              رهی دنبال کنی. ما دو تا شخصیت اصلی هستیم و هرکدوم توی دنیای خودمون
+              زندگی می‌کنیم.
+            </div>
+          </div>
+
+          <div class="dialogue rahi-d" id="d2">
+            <div class="dialogue-avatar">ر</div>
+            <div class="dialogue-bubble">
+              <div class="dialogue-name">رهی</div>
+              من رهی هستم. توی خیلی از لحظه‌ها باید تصمیم بگیری — مثلاً چی بگی،
+              کدوم راه رو بری، یا به کی اعتماد کنی. هر انتخابی که می‌کنی مسیر
+              داستان رو عوض می‌کنه.
+            </div>
+          </div>
+
+          <div class="dialogue sina-d" id="d3">
+            <div class="dialogue-avatar">س</div>
+            <div class="dialogue-bubble">
+              <div class="dialogue-name">سینا</div>
+              بعضی تصمیم‌ها کوچیکن، ولی بعضی‌شون کل داستان رو تغییر میدن. نگران
+              نباش — بازی راهنماییت می‌کنه. فقط با دقت ببین، بخون، و انتخاب کن.
+            </div>
+          </div>
+
+          <div class="dialogue rahi-d" id="d4">
+            <div class="dialogue-avatar">ر</div>
+            <div class="dialogue-bubble">
+              <div class="dialogue-name">رهی</div>
+              خب، دیگه وقتشه! نمی‌خوایم بیشتر از این وقتت رو بگیریم. آماده‌ای که
+              وارد داستان بشی؟
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorial-actions">
+          <button class="btn-ready" onclick="handleReady()">آماده‌ام</button>
+          <button class="btn-later" onclick="handleLater()">بعداً</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ GAME PLACEHOLDER ═══════════════ -->
+    <div id="game-screen">
+      <div class="game-placeholder">
+        <h2>بازی دونیمه</h2>
+        <p>این جایی است که بازی بارگذاری می‌شود.</p>
+        <button class="btn-back-landing" onclick="goToLanding()">
+          بازگشت به صفحه اصلی
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // ═══ SNOW CANVAS ═══
+      (function () {
+        const canvas = document.getElementById("snow-canvas");
+        const ctx = canvas.getContext("2d");
+        let W,
+          H,
+          flakes = [];
+        const COUNT = 110;
+
+        function resize() {
+          W = canvas.width = window.innerWidth;
+          H = canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener("resize", resize);
+
+        function rnd(a, b) {
+          return Math.random() * (b - a) + a;
+        }
+
+        for (let i = 0; i < COUNT; i++) {
+          flakes.push({
+            x: rnd(0, window.innerWidth),
+            y: rnd(0, window.innerHeight),
+            r: rnd(0.8, 2.5),
+            vx: rnd(-0.3, 0.3),
+            vy: rnd(0.2, 0.8),
+            alpha: rnd(0.2, 0.65),
+          });
+        }
+
+        function draw() {
+          ctx.clearRect(0, 0, W, H);
+          for (const f of flakes) {
+            ctx.beginPath();
+            ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(200,190,255,${f.alpha})`;
+            ctx.fill();
+            f.x += f.vx;
+            f.y += f.vy;
+            if (f.y > H + 4) {
+              f.y = -4;
+              f.x = rnd(0, W);
+            }
+            if (f.x < -4) f.x = W + 4;
+            if (f.x > W + 4) f.x = -4;
+          }
+          requestAnimationFrame(draw);
+        }
+        draw();
+      })();
+
+      // ═══ QUOTE ROTATOR ═══
+      const quotes = [
+        "بعضی وقت‌ها نصف‌شدن، تنها راه دیده‌شدن است.",
+        "سینا در خیابان می‌دوید تا از خودش فرار کند. رهی می‌نشست تا با خودش رو‌به‌رو شود.",
+        "دو نفر. دو دنیای موازی. یک لحظه که همه چیز را تغییر داد.",
+        "انتخاب‌هایت، تو را می‌سازند — حتی وقتی نمی‌دانی که داری انتخاب می‌کنی.",
+        "بین ایل‌گلی و تبریز، فاصله‌ای بود که هیچ‌کس نمی‌توانست ببیندش.",
+      ];
+      let qi = 0;
+      const qEl = document.getElementById("quote-text");
+
+      function rotateQuote() {
+        qEl.style.opacity = "0";
+        setTimeout(() => {
+          qi = (qi + 1) % quotes.length;
+          qEl.textContent = quotes[qi];
+          qEl.style.opacity = "1";
+        }, 500);
+      }
+      setInterval(rotateQuote, 4500);
+
+      // ═══ LOCALSTORAGE ═══
+      const LS = {
+        TUTORIAL_DONE: "donimeh_tutorial_done",
+        HAS_PROGRESS: "donimeh_has_progress",
+      };
+
+      function checkContinueButton() {
+        if (localStorage.getItem(LS.HAS_PROGRESS) === "true") {
+          document.getElementById("btn-continue").classList.add("visible");
+        }
+      }
+      checkContinueButton();
+
+      // ═══ TUTORIAL ANIMATION ═══
+      let tutorialAnimated = false;
+
+      function animateTutorialDialogues() {
+        if (tutorialAnimated) return;
+        tutorialAnimated = true;
+        const ds = document.querySelectorAll(".dialogue");
+        ds.forEach((d, i) => {
+          setTimeout(() => d.classList.add("show"), i * 280);
+        });
+      }
+
+      // ═══ HANDLERS ═══
+      function handleStart() {
+        const tutorialDone = localStorage.getItem(LS.TUTORIAL_DONE) === "true";
+
+        // پاک کردن progress قبلی — از اول شروع کن
+        localStorage.removeItem("donimeh_scene");
+        localStorage.removeItem("donimeh_episode");
+
+        if (tutorialDone) {
+          startGame();
+        } else {
+          showTutorial();
+        }
+      }
+
+      function handleContinue() {
+        // بدون پاک کردن progress، ادامه بده
+        window.location.href = "game.html";
+      }
+      function showTutorial() {
+        const t = document.getElementById("tutorial");
+        t.classList.add("active");
+        setTimeout(animateTutorialDialogues, 200);
+      }
+
+      function hideTutorial() {
+        const t = document.getElementById("tutorial");
+        t.classList.remove("active");
+        tutorialAnimated = false;
+        // Reset dialogues for potential re-open
+        document
+          .querySelectorAll(".dialogue")
+          .forEach((d) => d.classList.remove("show"));
+      }
+
+      function handleReady() {
+        localStorage.setItem(LS.TUTORIAL_DONE, "true");
+        localStorage.setItem(LS.HAS_PROGRESS, "true");
+        // پاک کردن progress قبلی — از اول شروع کن
+        localStorage.removeItem("donimeh_scene");
+        localStorage.removeItem("donimeh_episode");
+        hideTutorial();
+        startGame();
+      }
+      function handleLater() {
+        // Close tutorial, return to landing (no flag set)
+        hideTutorial();
+      }
+
+      function startGame() {
+        localStorage.setItem("donimeh_has_progress", "true");
+        checkContinueButton();
+        window.location.href = "game.html?restart=true";
+      }
+
+      function goToLanding() {
+        document.getElementById("game-screen").classList.remove("active");
+      }
+    </script>
+    <script src="src/game.js"></script>
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>

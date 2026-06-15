@@ -1,0 +1,524 @@
+/* ============================================
+   DONIMEH — CINEMATIC GOLDEN EDITION
+   تم طلایی — اتمسفریک — سینمایی
+   ============================================ */
+
+@font-face {
+  font-family: "Vazir";
+  src: url("../fonts/Vazir-Bold.ttf") format("truetype");
+  font-weight: bold;
+}
+
+:root {
+  --bg-void: #050508;
+  --bg-deep: #0a0a10;
+  --gold-dim: #5a4318;
+  --gold-mid: #8b6914;
+  --gold: #b8921a;
+  --gold-light: #d4a846;
+  --gold-pale: #f0cc7a;
+  --gold-glow: rgba(212, 168, 70, 0.5);
+  --text-primary: #e8ddd0;
+  --text-dim: rgba(232, 221, 208, 0.5);
+  --panel-bg: rgba(8, 6, 4, 0.88);
+  --panel-border: rgba(212, 168, 70, 0.2);
+  --glass-bg: rgba(20, 16, 8, 0.6);
+  --glass-border: rgba(212, 168, 70, 0.25);
+  --choice-hover: rgba(212, 168, 70, 0.1);
+  --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-void);
+  font-family: "Vazirmatn", "Vazir", sans-serif;
+  color: var(--text-primary);
+  -webkit-tap-highlight-color: transparent;
+  cursor: default;
+}
+
+/* ============ ROOT ============ */
+.game-root {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ============ ATMOSPHERE CANVAS ============ */
+.atmosphere-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ============ VIGNETTE ============ */
+.vignette-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(5, 5, 8, 0.9) 100%
+  );
+}
+
+/* ============ SCENE AREA ============ */
+.scene-area {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 2;
+}
+
+/* ============ PORTRAIT STAGE ============ */
+.portrait-stage {
+  position: relative;
+  z-index: 10;
+  opacity: 1;
+  transition:
+    opacity 0.6s var(--transition-smooth),
+    transform 0.6s var(--transition-smooth);
+}
+.portrait-stage.fading {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.portrait-frame-gold {
+  position: relative;
+  padding: 16px;
+  background: rgba(10, 8, 4, 0.5);
+  border: 1px solid rgba(212, 168, 70, 0.3);
+  box-shadow:
+    0 0 60px rgba(212, 168, 70, 0.1),
+    0 0 120px rgba(0, 0, 0, 0.6);
+}
+
+.portrait-frame-inner {
+  position: relative;
+  z-index: 2;
+  line-height: 0;
+}
+
+.portrait-image {
+  max-width: 55vw;
+  max-height: 60vh;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.7));
+  transition:
+    opacity 0.6s var(--transition-smooth),
+    filter 0.6s var(--transition-smooth);
+}
+
+.portrait-frame-border {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(212, 168, 70, 0.15);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.portrait-frame-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: var(--gold-light);
+  border-style: solid;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0.7;
+}
+.corner-tl {
+  top: 8px;
+  left: 8px;
+  border-width: 2px 0 0 2px;
+}
+.corner-tr {
+  top: 8px;
+  right: 8px;
+  border-width: 2px 2px 0 0;
+}
+.corner-bl {
+  bottom: 8px;
+  left: 8px;
+  border-width: 0 0 2px 2px;
+}
+.corner-br {
+  bottom: 8px;
+  right: 8px;
+  border-width: 0 2px 2px 0;
+}
+
+.portrait-shadow {
+  position: absolute;
+  bottom: -30px;
+  left: 20%;
+  right: 20%;
+  height: 40px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.7) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(10px);
+}
+
+/* ============ DIALOGUE PANEL ============ */
+.dialogue-panel {
+  flex-shrink: 0;
+  background: var(--panel-bg);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border-top: 1px solid var(--panel-border);
+  padding: 1.4rem 2.5rem 1.6rem;
+  min-height: 150px;
+  max-height: 42vh;
+  position: relative;
+  z-index: 40;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.dialogue-accent-line {
+  position: absolute;
+  top: 0;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold-light),
+    transparent
+  );
+  opacity: 0.4;
+}
+
+.speaker-line {
+  font-family: "Cinzel", serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 0.6rem;
+  text-shadow: 0 0 20px rgba(212, 168, 70, 0.4);
+}
+
+.dialogue-line {
+  font-size: 1.1rem;
+  line-height: 2;
+  color: var(--text-primary);
+  min-height: 2.2em;
+  position: relative;
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  background: var(--gold-light);
+  vertical-align: -2px;
+  animation: cursorBlink 0.8s ease-in-out infinite;
+}
+@keyframes cursorBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ============ CHOICES ============ */
+.choices-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.choice-btn {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  font-family: "Vazirmatn", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  padding: 0.7rem 1.4rem;
+  text-align: right;
+  cursor: pointer;
+  transition: all 0.35s var(--transition-smooth);
+  border-radius: 2px;
+  position: relative;
+  letter-spacing: 0.3px;
+}
+
+.choice-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(212, 168, 70, 0.05) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+
+.choice-btn:hover {
+  border-color: var(--gold-light);
+  box-shadow:
+    0 0 30px var(--gold-glow),
+    inset 0 0 30px rgba(212, 168, 70, 0.05);
+  transform: translateY(-2px);
+  color: var(--gold-pale);
+}
+.choice-btn:hover::after {
+  opacity: 1;
+}
+
+/* ============ CONTINUE HINT ============ */
+.continue-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  font-size: 0.7rem;
+  color: rgba(212, 168, 70, 0.4);
+  animation: hintFloat 2.5s ease-in-out infinite;
+}
+.continue-hint svg {
+  width: 14px;
+  height: 14px;
+  stroke: rgba(212, 168, 70, 0.4);
+}
+@keyframes hintFloat {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translateY(4px);
+  }
+}
+
+/* ============ BACK BUTTON ============ */
+.back-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 50;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(10, 8, 4, 0.6);
+  border: 1px solid rgba(212, 168, 70, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  backdrop-filter: blur(10px);
+}
+.back-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--text-dim);
+}
+.back-btn:hover {
+  border-color: var(--gold-light);
+  box-shadow: 0 0 20px var(--gold-glow);
+}
+.back-btn:hover svg {
+  stroke: var(--gold-light);
+}
+
+/* ============ PHONE ============ */
+.phone-stage {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 110%);
+  width: 300px;
+  height: 500px;
+  z-index: 80;
+  transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.phone-stage.open {
+  transform: translate(-50%, 2%);
+}
+
+.phone-device {
+  width: 100%;
+  height: 100%;
+  border-radius: 34px;
+  background: #0e0c08;
+  border: 2px solid #1a1808;
+  box-shadow:
+    0 -10px 60px rgba(0, 0, 0, 0.9),
+    0 0 0 4px rgba(10, 8, 4, 0.8),
+    0 0 40px rgba(212, 168, 70, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+.phone-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 46%;
+  height: 22px;
+  background: #0e0c08;
+  border-radius: 0 0 16px 16px;
+  z-index: 5;
+  border: 2px solid #1a1808;
+  border-top: none;
+}
+.phone-screen {
+  padding: 36px 14px 14px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(170deg, #0d0b06, #12100a);
+}
+.phone-header {
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+  font-family: "Cinzel", serif;
+  letter-spacing: 2px;
+}
+.phone-chat {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.chat-msg {
+  max-width: 80%;
+  padding: 8px 12px;
+  border-radius: 14px;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  animation: msgPop 0.35s ease;
+}
+@keyframes msgPop {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.chat-msg.incoming {
+  align-self: flex-start;
+  background: #1a1810;
+  color: #ddd;
+  border-bottom-left-radius: 4px;
+}
+.chat-msg.outgoing {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #5a4318, #8b6914);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.phone-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+.phone-choice-btn {
+  background: rgba(212, 168, 70, 0.06);
+  border: 1px solid rgba(212, 168, 70, 0.2);
+  color: #ccc;
+  font-family: "Vazirmatn", sans-serif;
+  font-size: 0.72rem;
+  padding: 8px 12px;
+  border-radius: 16px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+.phone-choice-btn:hover {
+  border-color: var(--gold-light);
+  background: rgba(212, 168, 70, 0.12);
+  color: #fff;
+}
+
+/* ============ PUZZLE ============ */
+.puzzle-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 70;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+.puzzle-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+  .portrait-image {
+    max-width: 80vw;
+    max-height: 45vh;
+  }
+  .dialogue-panel {
+    padding: 1rem 1.4rem;
+  }
+  .dialogue-line {
+    font-size: 0.95rem;
+  }
+  .phone-stage {
+    width: 85vw;
+    max-width: 300px;
+    height: 55vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

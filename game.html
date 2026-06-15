@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>دونیمه — بازی</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/style/game.css" />
+  </head>
+  <body>
+    <div class="game-root" id="gameRoot">
+      <!-- پس‌زمینه اتمسفریک -->
+      <canvas class="atmosphere-canvas" id="atmosphereCanvas"></canvas>
+      <div class="vignette-overlay"></div>
+
+      <!-- ============ SCENE AREA ============ -->
+      <div class="scene-area" id="sceneArea">
+        <!-- container پرتره -->
+        <div class="portrait-stage" id="portraitStage">
+          <div class="portrait-frame-gold">
+            <div class="portrait-frame-inner">
+              <img class="portrait-image" id="portraitImg" src="" alt="" />
+            </div>
+            <div class="portrait-frame-border"></div>
+            <div class="portrait-frame-corner corner-tl"></div>
+            <div class="portrait-frame-corner corner-tr"></div>
+            <div class="portrait-frame-corner corner-bl"></div>
+            <div class="portrait-frame-corner corner-br"></div>
+          </div>
+          <div class="portrait-shadow"></div>
+        </div>
+
+        <!-- پازل overlay -->
+        <div class="puzzle-overlay" id="puzzleOverlay">
+          <div class="puzzle-content" id="puzzleContent"></div>
+        </div>
+
+        <!-- گوشی -->
+        <div class="phone-stage" id="phoneOverlay">
+          <div class="phone-device">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="phone-header" id="phoneHeader"></div>
+              <div class="phone-chat" id="phoneChat"></div>
+              <div class="phone-choices" id="phoneChoices"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- دکمه برگشت -->
+        <button class="back-btn" id="backBtn" title="بازگشت به خانه">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- ============ DIALOGUE PANEL ============ -->
+      <div class="dialogue-panel" id="dialoguePanel">
+        <div class="dialogue-accent-line"></div>
+        <div class="speaker-line" id="speakerLine"></div>
+        <div class="dialogue-line" id="dialogueLine">
+          <span class="typing-cursor"></span>
+        </div>
+        <div class="choices-list" id="choicesList"></div>
+        <div class="continue-hint" id="continueHint">
+          <span class="hint-text">Space یا کلیک</span>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 5v14M19 12l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <script src="src/game.js"></script>
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>

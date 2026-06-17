@@ -1,0 +1,1166 @@
+/* ===================================================================
+   assets/style/landing.css
+   پروژه «دو نیمه» (Donimeh)
+   =================================================================== */
+
+/* ============ FONTS ============ */
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../fonts/Vazirmatn-Regular.ttf") format("truetype");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../fonts/Vazirmatn-Bold.ttf") format("truetype");
+  font-weight: 700;
+}
+
+/* ============ RESET ============ */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: "Vazirmatn", Tahoma, sans-serif;
+  background: #0a0a0f;
+  color: #c0c8d4;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ============ CUSTOM SCROLLBAR (برای لندینگ کاغذی) ============ */
+.custom-scrollbar {
+  position: fixed;
+  top: 0;
+  left: 4px;
+  width: 3px;
+  height: 100vh;
+  z-index: 60;
+  background: rgba(0, 0, 0, 0.06);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.custom-scrollbar--visible {
+  opacity: 1;
+}
+
+.custom-scrollbar-thumb {
+  width: 100%;
+  background: #8a7540;
+  border-radius: 3px;
+  transition: height 0.1s linear;
+  box-shadow: 0 0 6px rgba(138, 117, 64, 0.3);
+}
+
+/* ================================================================
+   مرحله ۱: کتاب بسته
+   ================================================================ */
+.book-entrance {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition:
+    opacity 0.8s ease,
+    visibility 0.8s ease;
+}
+.book-entrance--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.entrance-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    #1a1a2e 0%,
+    #0a0a14 60%,
+    #050510 100%
+  );
+  overflow: hidden;
+}
+.entrance-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 50%,
+    transparent 30%,
+    rgba(5, 5, 16, 0.8) 100%
+  );
+  pointer-events: none;
+}
+
+.snow-fall {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 15% 20%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 35% 45%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(
+      1.5px 1.5px at 55% 15%,
+      rgba(255, 255, 255, 0.35),
+      transparent
+    ),
+    radial-gradient(1px 1px at 70% 60%, rgba(255, 255, 255, 0.25), transparent),
+    radial-gradient(2px 2px at 85% 30%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 25% 75%, rgba(255, 255, 255, 0.2), transparent),
+    radial-gradient(
+      1.5px 1.5px at 60% 85%,
+      rgba(255, 255, 255, 0.25),
+      transparent
+    ),
+    radial-gradient(1px 1px at 90% 70%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(
+      1.5px 1.5px at 10% 65%,
+      rgba(255, 255, 255, 0.25),
+      transparent
+    ),
+    radial-gradient(1px 1px at 45% 90%, rgba(255, 255, 255, 0.2), transparent);
+  background-size: 250px 250px;
+  animation: snowDrift 25s linear infinite;
+}
+@keyframes snowDrift {
+  from {
+    transform: translateY(-250px);
+  }
+  to {
+    transform: translateY(250px);
+  }
+}
+
+.book-closed-wrapper {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.book-closed {
+  width: 300px;
+  height: 400px;
+  cursor: pointer;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateY(-6deg) rotateX(4deg);
+  transition:
+    transform 0.5s ease,
+    opacity 0.5s ease;
+  animation: bookFloat 5s ease-in-out infinite;
+}
+@keyframes bookFloat {
+  0%,
+  100% {
+    transform: rotateY(-6deg) rotateX(4deg) translateY(0);
+  }
+  50% {
+    transform: rotateY(-6deg) rotateX(4deg) translateY(-8px);
+  }
+}
+.book-closed:hover {
+  transform: rotateY(-4deg) rotateX(2deg) translateY(-3px);
+  filter: brightness(1.1);
+}
+.book-closed:active {
+  transform: rotateY(-6deg) rotateX(4deg) scale(0.98);
+  transition: transform 0.1s ease;
+}
+.book-closed--opening {
+  transform: rotateY(-40deg) rotateX(8deg) scale(0.9) !important;
+  opacity: 0.7;
+  animation: none !important;
+  transition:
+    transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.5s ease !important;
+}
+
+.book-cover-front {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    #2a1a0e 0%,
+    #1a1008 30%,
+    #221510 60%,
+    #0d0804 100%
+  );
+  border-radius: 4px 14px 14px 4px;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.7),
+    0 4px 12px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border-right: 2px solid rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+.cover-texture {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.04) 2px,
+    rgba(0, 0, 0, 0.04) 4px
+  );
+  pointer-events: none;
+}
+.cover-worn-tl {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  width: 35px;
+  height: 35px;
+  background: radial-gradient(
+    ellipse at 30% 30%,
+    rgba(180, 150, 120, 0.25) 0%,
+    transparent 70%
+  );
+  border-radius: 0 0 20px 0;
+  pointer-events: none;
+}
+.cover-worn-br {
+  position: absolute;
+  bottom: 8px;
+  right: 6px;
+  width: 35px;
+  height: 35px;
+  background: radial-gradient(
+    ellipse at 70% 70%,
+    rgba(160, 130, 100, 0.2) 0%,
+    transparent 70%
+  );
+  border-radius: 20px 0 0 0;
+  pointer-events: none;
+}
+.cover-ornament-top,
+.cover-ornament-bottom {
+  font-size: 11px;
+  color: #8a7540;
+  letter-spacing: 8px;
+  opacity: 0.6;
+  z-index: 1;
+}
+.cover-title {
+  font-size: 40px;
+  font-weight: 900;
+  color: #d4a846;
+  letter-spacing: 6px;
+  text-shadow:
+    0 0 30px rgba(212, 168, 70, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.6);
+  z-index: 1;
+  line-height: 1;
+}
+.cover-subtitle {
+  font-size: 11px;
+  color: #8a7540;
+  letter-spacing: 5px;
+  z-index: 1;
+  opacity: 0.7;
+}
+.cover-border-frame {
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(180, 150, 110, 0.2);
+  border-radius: 2px;
+  pointer-events: none;
+}
+.book-spine {
+  position: absolute;
+  top: 0;
+  left: -15px;
+  width: 15px;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #0d0804 0%,
+    #1a1008 30%,
+    #2a1a0e 60%,
+    #1a1008 100%
+  );
+  border-radius: 6px 0 0 6px;
+  box-shadow: inset -1px 0 2px rgba(0, 0, 0, 0.5);
+  transform: rotateY(25deg);
+  transform-origin: right center;
+}
+.book-edge {
+  position: absolute;
+  top: 4px;
+  right: -13px;
+  width: 13px;
+  height: calc(100% - 8px);
+  background: repeating-linear-gradient(
+    0deg,
+    #f0e8d8 0px,
+    #e8dcc8 1px,
+    #d4c4a8 2px,
+    #e8dcc8 3px,
+    #f0e8d8 4px
+  );
+  border-radius: 0 8px 8px 0;
+  box-shadow:
+    inset 0 0 3px rgba(0, 0, 0, 0.3),
+    -1px 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.entrance-hint {
+  font-size: 13px;
+  color: #8a7540;
+  letter-spacing: 4px;
+  opacity: 0.7;
+  animation: hintPulse 3s ease-in-out infinite;
+}
+@keyframes hintPulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+.book-shadow {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  height: 35px;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.7) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(8px);
+  transition: opacity 0.6s ease;
+}
+
+/* ================================================================
+   غبار
+   ================================================================ */
+.dust-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.6s ease,
+    visibility 0s 0.6s;
+  pointer-events: none;
+  overflow: hidden;
+}
+.dust-overlay--active {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.6s ease,
+    visibility 0s 0s;
+}
+.dust-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: dustDrift var(--dust-duration, 2.5s) linear forwards;
+  opacity: 0;
+}
+@keyframes dustDrift {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0);
+  }
+  10% {
+    opacity: var(--dust-opacity, 0.8);
+    transform: translate(0, 0) scale(0.3);
+  }
+  90% {
+    opacity: var(--dust-opacity, 0.8);
+    transform: translate(var(--drift-x, 0), var(--drift-y, 0)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--drift-x, 0), var(--drift-y, 0)) scale(0.1);
+  }
+}
+
+/* ================================================================
+   مرحله ۲: لندینگ روی کاغذ
+   ================================================================ */
+.paper-landing {
+  position: relative;
+  z-index: 50;
+  min-height: 100vh;
+  background-color: #f5efe0;
+  color: #2a1f14;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.8s ease 0.3s,
+    visibility 0s 1.1s;
+  padding: 50px 20px 80px;
+  overflow-y: auto;
+  height: 100vh;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.paper-landing::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+.paper-landing--visible {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.8s ease,
+    visibility 0s 0s;
+}
+
+/* اسکرول‌بار کاستوم */
+.custom-scrollbar {
+  position: fixed;
+  top: 0;
+  right: 6px; /* سمت راست چون صفحه RTL هست */
+  width: 4px;
+  height: 100vh;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.custom-scrollbar--visible {
+  opacity: 1;
+}
+.custom-scrollbar-thumb {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  background: #8a7540;
+  border-radius: 4px;
+  transition: height 0.15s ease-out;
+  box-shadow: 0 0 8px rgba(138, 117, 64, 0.4);
+  min-height: 30px;
+}
+
+/* بافت */
+.paper-texture {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(180, 160, 130, 0.06) 2px,
+      rgba(180, 160, 130, 0.06) 4px
+    ),
+    radial-gradient(
+      ellipse at 20% 30%,
+      rgba(200, 170, 120, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 70%,
+      rgba(180, 150, 100, 0.08) 0%,
+      transparent 50%
+    );
+}
+.paper-lines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 31px,
+    rgba(180, 140, 100, 0.12) 31px,
+    rgba(180, 140, 100, 0.12) 32px
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 3%,
+    black 97%,
+    transparent 100%
+  );
+}
+
+/* لکه‌ها */
+.tea-stain {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+}
+.tea-stain--1 {
+  top: 8%;
+  right: 6%;
+  width: 200px;
+  height: 150px;
+  background: radial-gradient(
+    ellipse at 40% 45%,
+    rgba(139, 105, 20, 0.14) 0%,
+    transparent 70%
+  );
+  transform: rotate(-15deg);
+}
+.tea-stain--2 {
+  bottom: 25%;
+  left: 4%;
+  width: 140px;
+  height: 100px;
+  background: radial-gradient(
+    ellipse at 55% 40%,
+    rgba(139, 105, 20, 0.1) 0%,
+    transparent 65%
+  );
+  transform: rotate(20deg);
+}
+.tea-stain--3 {
+  top: 55%;
+  right: 12%;
+  width: 90px;
+  height: 70px;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(139, 105, 20, 0.08) 0%,
+    transparent 60%
+  );
+}
+
+.ink-blot {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+}
+.ink-blot--1 {
+  top: 30%;
+  left: 8%;
+  width: 30px;
+  height: 25px;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.1) 0%, transparent 70%);
+  border-radius: 60% 40% 55% 45%;
+  transform: rotate(-25deg);
+}
+.ink-blot--2 {
+  bottom: 40%;
+  right: 6%;
+  width: 22px;
+  height: 18px;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.08) 0%, transparent 65%);
+  border-radius: 45% 55% 50% 50%;
+  transform: rotate(18deg);
+}
+
+.paper-fold {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 70px;
+  height: 70px;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(
+    135deg,
+    transparent 50%,
+    rgba(0, 0, 0, 0.08) 50%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+}
+.paper-tear {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 40px;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(
+    225deg,
+    transparent 60%,
+    rgba(139, 105, 20, 0.2) 60%,
+    rgba(139, 105, 20, 0.08) 100%
+  );
+  border-radius: 0 0 0 20px;
+}
+
+/* ================================================================
+   سکشن‌ها
+   ================================================================ */
+.paper-section {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto 56px;
+  padding: 0 12px;
+}
+
+/* Reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.paper-ornament {
+  text-align: center;
+  font-size: 20px;
+  color: #8a7540;
+  margin-bottom: 18px;
+  opacity: 0.5;
+}
+.paper-eyebrow {
+  text-align: center;
+  font-size: 12px;
+  color: #5c4a3a;
+  letter-spacing: 3px;
+  margin-bottom: 14px;
+}
+.paper-title {
+  text-align: center;
+  font-size: 48px;
+  font-weight: 900;
+  color: #2a1f14;
+  letter-spacing: 5px;
+  line-height: 1.2;
+  margin-bottom: 18px;
+}
+.paper-rule {
+  width: 140px;
+  height: 1px;
+  margin: 0 auto 24px;
+  background: linear-gradient(90deg, transparent, #8a7540, transparent);
+}
+.paper-desc {
+  font-size: 15px;
+  line-height: 2.4;
+  color: #3a2818;
+  text-align: justify;
+  margin-bottom: 12px;
+}
+.paper-desc strong {
+  color: #1a1008;
+}
+.paper-section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2a1f14;
+  margin-bottom: 22px;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.12);
+  padding-bottom: 10px;
+}
+
+/* ================================================================
+   راهنمای مسیر
+   ================================================================ */
+.guide-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.guide-card {
+  text-align: center;
+  padding: 20px 14px;
+  border: 1px dashed rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.25);
+  transition: all 0.3s ease;
+}
+.guide-card:hover {
+  background: rgba(212, 168, 70, 0.08);
+  border-color: #d4a846;
+  transform: translateY(-3px);
+}
+.guide-icon {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 10px;
+}
+.guide-label {
+  font-weight: 700;
+  font-size: 13px;
+  color: #2a1f14;
+  display: block;
+  margin-bottom: 6px;
+}
+.guide-desc {
+  font-size: 11px;
+  color: #5c4a3a;
+  line-height: 1.6;
+}
+
+/* ================================================================
+   فضاسازی
+   ================================================================ */
+.atmosphere-note {
+  margin-top: 20px;
+  padding: 18px 20px;
+  background: rgba(0, 0, 0, 0.03);
+  border-right: 3px solid #8a7540;
+  border-radius: 4px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.atmosphere-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.atmosphere-note p {
+  font-size: 14px;
+  color: #3a2818;
+  line-height: 2;
+  font-style: italic;
+}
+
+/* ================================================================
+   پیشرفت
+   ================================================================ */
+.progress-widget {
+  text-align: center;
+}
+.progress-big-num {
+  font-size: 72px;
+  font-weight: 900;
+  color: #2a1f14;
+  line-height: 1;
+  margin-bottom: 18px;
+}
+.progress-bar-wrap {
+  height: 10px;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #8a7540, #d4a846, #8a7540);
+  border-radius: 10px;
+  transition: width 1.2s ease;
+}
+.progress-label {
+  font-size: 14px;
+  color: #5c4a3a;
+}
+
+/* ================================================================
+   اپیزودها
+   ================================================================ */
+.episode-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.episode-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 1px dashed rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  cursor: default;
+}
+.episode-item--clickable {
+  cursor: pointer;
+}
+.episode-item--clickable:hover {
+  background: rgba(212, 168, 70, 0.08);
+  border-color: #d4a846;
+  transform: translateX(-4px);
+}
+.episode-status {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.episode-info {
+  flex: 1;
+  min-width: 0;
+}
+.episode-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: #2a1f14;
+}
+.episode-subtitle {
+  font-size: 12px;
+  color: #5c4a3a;
+  margin-top: 3px;
+}
+
+/* ================================================================
+   دفترچه خاطرات
+   ================================================================ */
+.journal-lines {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 28px,
+    rgba(180, 140, 100, 0.18) 28px,
+    rgba(180, 140, 100, 0.18) 29px
+  );
+  padding: 14px 18px;
+  border-right: 3px solid rgba(180, 140, 80, 0.2);
+}
+.journal-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  line-height: 2.1;
+}
+.journal-label {
+  color: #5c4a3a;
+  font-size: 14px;
+}
+.journal-value {
+  font-weight: 700;
+  color: #2a1f14;
+  font-size: 20px;
+}
+.journal-note {
+  margin-top: 14px;
+  font-size: 12px;
+  color: #8a7540;
+  text-align: center;
+}
+
+/* ================================================================
+   نقشه داستان
+   ================================================================ */
+.story-map {
+  position: relative;
+  padding-right: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.story-map::before {
+  content: "";
+  position: absolute;
+  right: 16px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    #d4a846 0%,
+    #8a7540 50%,
+    rgba(138, 117, 64, 0.2) 100%
+  );
+  border-radius: 1px;
+}
+.map-point {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.map-dot {
+  position: absolute;
+  right: -31px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #c0b090;
+  border: 2px solid #f5efe0;
+  box-shadow: 0 0 0 2px #c0b090;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+.map-dot--completed {
+  background: #d4a846;
+  box-shadow:
+    0 0 0 2px #d4a846,
+    0 0 12px rgba(212, 168, 70, 0.4);
+}
+.map-dot--active {
+  background: #e8c865;
+  box-shadow:
+    0 0 0 2px #e8c865,
+    0 0 16px rgba(212, 168, 70, 0.5);
+  animation: dotPulse 2s ease-in-out infinite;
+}
+.map-dot--locked {
+  background: #c0b090;
+  opacity: 0.5;
+}
+@keyframes dotPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 2px #e8c865,
+      0 0 10px rgba(212, 168, 70, 0.4);
+  }
+  50% {
+    box-shadow:
+      0 0 0 5px rgba(212, 168, 70, 0.2),
+      0 0 20px rgba(212, 168, 70, 0.6);
+  }
+}
+.map-label {
+  font-weight: 600;
+  font-size: 15px;
+  color: #2a1f14;
+}
+.map-label--dim {
+  color: #8a7540;
+  font-weight: 400;
+}
+
+/* ================================================================
+   نقل قول‌ها
+   ================================================================ */
+.quote-track {
+  position: relative;
+  min-height: 160px;
+}
+.quote-item {
+  display: none;
+  text-align: center;
+  animation: quoteFade 0.6s ease;
+}
+.quote-item.active {
+  display: block;
+}
+@keyframes quoteFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.quote-mark {
+  font-size: 48px;
+  line-height: 0.5;
+  color: #8a7540;
+  display: block;
+  margin-bottom: 20px;
+  opacity: 0.4;
+}
+.quote-item p {
+  font-size: 17px;
+  line-height: 2.2;
+  color: #3a2818;
+  margin-bottom: 16px;
+  font-style: italic;
+}
+.quote-source {
+  font-size: 11px;
+  color: #8a7540;
+  letter-spacing: 2px;
+}
+.quote-nav {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+.q-dot {
+  width: 6px;
+  height: 6px;
+  border: 1px solid #8a7540;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.q-dot.active {
+  background: #8a7540;
+  box-shadow: 0 0 8px rgba(138, 117, 64, 0.3);
+}
+
+/* ================================================================
+   CTA
+   ================================================================ */
+.cta-section {
+  text-align: center;
+}
+.cta-ornament {
+  font-size: 20px;
+  color: #8a7540;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+.cta-question {
+  font-size: 19px;
+  font-weight: 500;
+  color: #2a1f14;
+  margin-bottom: 28px;
+  line-height: 2;
+}
+.cta-buttons {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-ink {
+  display: inline-block;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+}
+.btn-ink--primary {
+  background: #2a1f14;
+  color: #d4a846;
+  border: 1px solid #8a7540;
+}
+.btn-ink--primary:hover {
+  background: #3a2818;
+  color: #e8c865;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+.btn-ink--secondary {
+  background: transparent;
+  color: #5c4a3a;
+  border: 1px dashed #8a7540;
+}
+.btn-ink--secondary:hover {
+  border-color: #d4a846;
+  color: #d4a846;
+  background: rgba(212, 168, 70, 0.05);
+}
+
+/* ================================================================
+   فوتر
+   ================================================================ */
+.paper-footer {
+  text-align: center;
+  padding: 40px 0 20px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.08);
+  margin-top: 30px;
+}
+.footer-ornament {
+  font-size: 12px;
+  color: #8a7540;
+  margin-bottom: 12px;
+  opacity: 0.5;
+  letter-spacing: 6px;
+}
+.paper-footer p {
+  font-size: 12px;
+  color: #8a7540;
+  letter-spacing: 2px;
+}
+.footer-sub {
+  font-size: 10px !important;
+  color: #5c4a3a !important;
+  margin-top: 6px;
+  letter-spacing: 1px !important;
+}
+
+/* ================================================================
+   ریسپانسیو
+   ================================================================ */
+@media (max-width: 768px) {
+  .guide-cards {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 480px) {
+  .book-closed {
+    width: 210px;
+    height: 290px;
+  }
+  .cover-title {
+    font-size: 30px;
+    letter-spacing: 4px;
+  }
+  .paper-title {
+    font-size: 34px;
+  }
+  .paper-desc {
+    font-size: 13px;
+  }
+  .paper-section {
+    margin-bottom: 36px;
+  }
+  .progress-big-num {
+    font-size: 52px;
+  }
+  .cta-buttons {
+    flex-direction: column;
+  }
+  .btn-ink {
+    text-align: center;
+  }
+  .story-map {
+    padding-right: 30px;
+    gap: 20px;
+  }
+  .map-dot {
+    right: -24px;
+    width: 11px;
+    height: 11px;
+  }
+  .map-label {
+    font-size: 13px;
+  }
+  .episode-item {
+    padding: 12px 14px;
+  }
+  .episode-title {
+    font-size: 14px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .book-closed {
+    animation: none;
+  }
+  .dust-particle {
+    animation-duration: 0.3s;
+  }
+  .snow-fall {
+    animation: none;
+  }
+  .reveal {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  * {
+    transition-duration: 0.1s !important;
+  }
+}

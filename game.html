@@ -14,26 +14,12 @@
     <link rel="stylesheet" href="assets/style/game.css" />
   </head>
   <body>
-    <button class="audio-btn" id="audioBtn" title="صدا">
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M11 5L6 9H2v6h4l5 4V5z" />
-        <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" />
-      </svg>
-    </button>
     <div class="game-root" id="gameRoot">
-      <!-- پس‌زمینه اتمسفریک -->
       <canvas class="atmosphere-canvas" id="atmosphereCanvas"></canvas>
       <div class="vignette-overlay"></div>
 
-      <!-- ============ SCENE AREA ============ -->
       <div class="scene-area" id="sceneArea">
-        <!-- container پرتره -->
+        <!-- پرتره -->
         <div class="portrait-stage" id="portraitStage">
           <div class="portrait-frame-gold">
             <div class="portrait-frame-inner">
@@ -48,56 +34,185 @@
           <div class="portrait-shadow"></div>
         </div>
 
-        <!-- پازل overlay -->
+        <!-- ردیف افقی: دیالوگ + تصمیم -->
+        <div class="dialogue-choice-row">
+          <div class="dialogue-panel" id="dialoguePanel">
+            <div class="speaker-line" id="speakerLine"></div>
+            <div class="dialogue-line" id="dialogueLine">
+              <span class="typing-cursor"></span>
+            </div>
+            <div class="continue-hint" id="continueHint">
+              <span class="hint-text">Space یا کلیک</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                <path d="M12 5v14M19 12l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+          <div class="choices-panel" id="choicesPanel">
+            <div class="choices-list" id="choicesList"></div>
+          </div>
+        </div>
+
         <div class="puzzle-overlay" id="puzzleOverlay">
           <div class="puzzle-content" id="puzzleContent"></div>
         </div>
 
-        <!-- گوشی -->
-        <div class="phone-stage" id="phoneOverlay">
-          <div class="phone-device">
-            <div class="phone-notch"></div>
-            <div class="phone-screen">
-              <div class="phone-header" id="phoneHeader"></div>
-              <div class="phone-chat" id="phoneChat"></div>
-              <div class="phone-choices" id="phoneChoices"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- دکمه برگشت -->
-        <button class="back-btn" id="backBtn" title="بازگشت به خانه">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
+        <button class="back-btn" id="backBtn" title="بازگشت">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </button>
+        <button class="audio-btn" id="audioBtn" title="صدا">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <path d="M11 5L6 9H2v6h4l5 4V5z" />
+            <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" />
+          </svg>
+        </button>
+        <button class="phone-open-btn" id="phoneOpenBtn" title="گوشی">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <rect x="5" y="2" width="14" height="20" rx="2" />
+            <line x1="12" y1="18" x2="12.01" y2="18" />
+          </svg>
+        </button>
+        <button class="inv-btn" id="invBtn" title="کیف">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <path
+              d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+            />
+          </svg>
+        </button>
+
+        <!-- گوشی -->
+        <div class="phone-stage" id="phoneOverlay">
+          <div class="phone-device">
+            <div class="phone-status-bar">
+              <span class="status-time" id="statusTime">۱۲:۳۰</span>
+              <div class="status-icons">
+                <span>▲</span><span>●●●</span><span>▮▮▮</span>
+              </div>
+            </div>
+            <div class="phone-notch"></div>
+            <div class="phone-screen" id="phoneScreen">
+              <div class="app-screen screen-home" id="screenHome">
+                <button
+                  class="phone-close-btn"
+                  onclick="window.DonimehUI.closePhone()"
+                >
+                  ✕
+                </button>
+                <div style="height: 36px"></div>
+                <div class="home-time" id="homeTime">۱۲:۳۰</div>
+                <div class="home-date" id="homeDate">سه‌شنبه، ۲۶ خرداد</div>
+                <div class="home-apps">
+                  <div
+                    class="app-icon"
+                    onclick="window.DonimehUI.openApp('chat')"
+                  >
+                    <div class="app-icon-emoji">💬</div>
+                    <div class="app-icon-info">
+                      <span class="app-icon-name">Chat</span
+                      ><span class="app-icon-sub">پیام‌ها</span>
+                    </div>
+                  </div>
+                  <div
+                    class="app-icon"
+                    onclick="window.DonimehUI.openApp('items')"
+                  >
+                    <div class="app-icon-emoji">🎒</div>
+                    <div class="app-icon-info">
+                      <span class="app-icon-name">Items</span
+                      ><span class="app-icon-sub">اشیاء</span>
+                    </div>
+                  </div>
+                  <div
+                    class="app-icon"
+                    onclick="window.DonimehUI.openApp('notes')"
+                  >
+                    <div class="app-icon-emoji">📋</div>
+                    <div class="app-icon-info">
+                      <span class="app-icon-name">Notes</span
+                      ><span class="app-icon-sub">یادداشت‌ها</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="app-screen screen-chat hidden" id="screenChat">
+                <div class="app-header">
+                  <button
+                    class="back-btn-phone"
+                    onclick="window.DonimehUI.openApp('home')"
+                  >
+                    ←
+                  </button>
+                  <div class="app-header-title">Chat</div>
+                </div>
+                <div class="list-screen" id="contactsList"></div>
+              </div>
+              <div
+                class="app-screen screen-chat-convo hidden"
+                id="screenChatConvo"
+              >
+                <div class="app-header">
+                  <button
+                    class="back-btn-phone"
+                    onclick="window.DonimehUI.openApp('chat')"
+                  >
+                    ←
+                  </button>
+                  <div class="app-header-title" id="chatHeader">Chat</div>
+                  <div class="app-header-dot"></div>
+                </div>
+                <div class="chat-messages" id="phoneChat"></div>
+                <div class="chat-choices" id="phoneChoices"></div>
+              </div>
+              <div class="app-screen screen-items hidden" id="screenItems">
+                <div class="app-header">
+                  <button
+                    class="back-btn-phone"
+                    onclick="window.DonimehUI.openApp('home')"
+                  >
+                    ←
+                  </button>
+                  <div class="app-header-title">🎒 Items</div>
+                </div>
+                <div class="list-screen" id="itemsList">
+                  <div class="empty-state">
+                    <div class="empty-emoji">🎒</div>
+                    موجودی خالی
+                  </div>
+                </div>
+              </div>
+              <div class="app-screen screen-notes hidden" id="screenNotes">
+                <div class="app-header">
+                  <button
+                    class="back-btn-phone"
+                    onclick="window.DonimehUI.openApp('home')"
+                  >
+                    ←
+                  </button>
+                  <div class="app-header-title">📋 Notes</div>
+                </div>
+                <div class="list-screen" id="notesList">
+                  <div class="empty-state">
+                    <div class="empty-emoji">📋</div>
+                    یادداشتی نیست
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="phone-home-btn"></div>
+          </div>
+        </div>
       </div>
 
-      <!-- ============ DIALOGUE PANEL ============ -->
-      <div class="dialogue-panel" id="dialoguePanel">
-        <div class="dialogue-accent-line"></div>
-        <div class="speaker-line" id="speakerLine"></div>
-        <div class="dialogue-line" id="dialogueLine">
-          <span class="typing-cursor"></span>
-        </div>
-        <div class="choices-list" id="choicesList"></div>
-        <div class="continue-hint" id="continueHint">
-          <span class="hint-text">Space یا کلیک</span>
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M12 5v14M19 12l-7 7-7-7" />
-          </svg>
+      <div id="inventoryDrawer" class="inv-drawer-closed">
+        <div id="inventoryBackdrop"></div>
+        <div id="inventoryPanel">
+          <div id="inventoryHeader">
+            <span>🎒 کیف آیتم‌ها</span><button id="inventoryClose">✕</button>
+          </div>
+          <div id="inventoryGrid"></div>
+          <div id="inventoryEmpty">هیچ آیتمی وجود ندارد</div>
         </div>
       </div>
     </div>

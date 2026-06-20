@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>دو نیمه — داستان کامل</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="assets/style/story.css" />
+  </head>
+  <body>
+    <!-- لایه‌ی برف -->
+    <div class="snowfield" id="snowfield"></div>
+
+    <!-- نوار پیشرفت مطالعه -->
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- دکمه‌ی بستن -->
+    <button
+      class="close-btn"
+      id="closeBtn"
+      aria-label="بستن داستان"
+      title="بستن"
+    >
+      ✕
+    </button>
+
+    <main class="story-stage">
+      <div class="lamp-glow"></div>
+
+      <header class="story-header">
+        <p class="story-eyebrow" id="storyEyebrow">روایت کامل</p>
+        <h1 class="story-title" id="storyTitle">دو نیمه — داستان کامل</h1>
+        <p class="story-subtitle" id="storySubtitle"></p>
+        <div class="header-divider"></div>
+      </header>
+
+      <article class="story-content" id="storyContent">
+        <!-- پاراگراف‌ها و انتخاب‌ها این‌جا با جاوااسکریپت ساخته می‌شوند -->
+      </article>
+
+      <footer class="story-footer">
+        <div class="footer-ornament">✦ ✦ ✦</div>
+        <p>پایان روایت</p>
+      </footer>
+    </main>
+
+    <script src="src/story.js"></script>
+  </body>
+</html>

@@ -64,7 +64,7 @@
             "id": "sina_phone",
             "name": "گوشی سینا",
             "icon": "📱",
-            "description": "گوشی قدیمی با چت‌های نصفه."
+            "description": "گوشی قدیمی با چت‌های نصفه و نیمه."
           },
           "next": "flashback_bedroom"
         },
@@ -73,45 +73,18 @@
           "speaker": "",
           "dialogue": "",
           "narrator": "دو شب قبل. اتاق سینا. برف از پنجره پیداست. خیابان ولیعصر خاموش. سینا روی تخت دراز کشیده. گوشی رو سینه‌ش گذاشته. حوصله هیچی رو نداره. گوشی ویبره می‌ره. نوتیفیکیشن تلگرام. آریا.",
-          "phone": {
-            "header": "آریا",
-            "messages": [
-              {
-                "text": "سینا. امشب ایل‌گلی. همه میان. تو هم بیا.",
-                "sent": false,
-                "delay": 0
-              },
-              { "text": "کیا هستن؟", "sent": true, "delay": 0.8 },
-              {
-                "text": "من. مهراس. ساغر. یه دختر دیگه هم دعوت کردم — رهی. نمی‌شناسیش.",
-                "sent": false,
-                "delay": 1.6
-              },
-              {
-                "text": "راستی... حواست به رهی باشه. یه چیزایی هست که باید بدونی.",
-                "sent": false,
-                "delay": 2.4
-              },
-              { "text": "چی؟", "sent": true, "delay": 3.2 },
-              {
-                "text": "فردا می‌گم. فقط... زیاد بهش نزدیک نشو.",
-                "sent": false,
-                "delay": 3.6
-              }
-            ],
-            "choices": [
-              {
-                "text": "برم ایل‌گلی",
-                "next": "elgoli_evening",
-                "effects": { "stats": { "trustSina": 5 } }
-              },
-              {
-                "text": "نرم — حوصله ندارم",
-                "next": "ignore_arya_msg",
-                "effects": { "stats": { "sanity": -5 } }
-              }
-            ]
-          }
+          "choices": [
+            {
+              "text": "برم ایل‌گلی",
+              "next": "elgoli_evening",
+              "effects": { "stats": { "curiosity": 10 } }
+            },
+            {
+              "text": "نرم — حوصله ندارم",
+              "next": "ignore_arya_msg",
+              "effects": { "stats": { "curiosity": -5 } }
+            }
+          ]
         },
         "ignore_arya_msg": {
           "portrait": "assets/images/sina defualt.png",
@@ -128,7 +101,7 @@
           "next": "arya_introduces"
         },
         "arya_introduces": {
-          "portrait": "assets/images/arya talking.jpg",
+          "portrait": "assets/images/arya happy.jpg",
           "speaker": "آریا",
           "dialogue": "سینا! این رهی. گفتم بیاد. رهی، این سینا. رفیق قدیمیم.",
           "narrator": "",
@@ -156,7 +129,7 @@
           "next": "arya_leaves"
         },
         "arya_leaves": {
-          "portrait": "assets/images/arya talking.jpg",
+          "portrait": "assets/images/arya happy.jpg",
           "speaker": "آریا",
           "dialogue": "باشه دیگه، من برم ببینم مهراس و ساغر کجان. شما دو تا آشنا بشین.",
           "narrator": "آریا می‌ره. سینا و رهی می‌مونن. سکوت.",
@@ -166,7 +139,7 @@
           "portrait": "assets/images/sina defualt.png",
           "speaker": "سینا",
           "dialogue": "آریا گفت یه چیزایی هست که باید بدونم. درباره تو.",
-          "narrator": "رهی عینک آفتابی به چشم دارد. شال بلند دور گردنش.",
+          "narrator": "",
           "next": "rahi_responds_1"
         },
         "rahi_responds_1": {
@@ -194,7 +167,7 @@
           "portrait": "assets/images/sina defualt.png",
           "speaker": "سینا",
           "dialogue": "اون چیه؟",
-          "narrator": "رهی شال را محکم می‌گیرد.",
+          "narrator": "",
           "next": "rahi_scar_response"
         },
         "rahi_scar_response": {
@@ -265,7 +238,7 @@
           "next": "mehras_saghar_lake"
         },
         "mehras_saghar_lake": {
-          "portrait": "assets/images/mehras default.png",
+          "portrait": "assets/images/mehras defualt.png",
           "speaker": "مهراس",
           "dialogue": "بهت گفتم امشب نیا. گفتم یه حسی دارم.",
           "narrator": "سینا و رهی راه می‌افتن. از کنار دریاچه رد می‌شن. مهراس و ساغر رو می‌بینن. مهراس دستش رو بازوی ساغر گذاشته. آروم ولی جدی حرف می‌زنه.",
@@ -279,7 +252,7 @@
           "next": "mehras_khahesh"
         },
         "mehras_khahesh": {
-          "portrait": "assets/images/mehras default.png",
+          "portrait": "assets/images/mehras defualt.png",
           "speaker": "مهراس",
           "dialogue": "این دفعه فرق می‌کنه. خواهش می‌کنم. بریم خونه.",
           "narrator": "",
@@ -296,14 +269,14 @@
           "portrait": "assets/images/saghar defualt.jpg",
           "speaker": "ساغر",
           "dialogue": "مهراس همیشه همینطوره. فکر می‌کنه همه چی خطرناکه. شماها اومدین پای آتیش؟",
-          "narrator": "ساغر به سینا و رهی نگاه می‌کنه. سعی می‌کنه بخنده.",
+          "narrator": "",
           "next": "campfire_gathering"
         },
         "campfire_gathering": {
           "portrait": "assets/images/arya happy.jpg",
           "speaker": "آریا",
           "dialogue": "خب! همه اینجان. سینا، رهی، مهراس، ساغر. امشب قراره یه شب خوب باشه. کی بیسکویت داره؟",
-          "narrator": "همه جمع شدن دور یه آتش کوچیک. آریا چوب جمع می‌کنه. شعله رو بلندتر می‌کنه. مهراس کنار ساغر نشسته. ساکته. ساغر سعی می‌کنه بخنده.",
+          "narrator": "همه جمع شدن دور یه آتش کوچیک. آریا چوب جمع می‌کنه. شعله رو بلندتر می‌کنه. مهراس کنار ساغر نشسته. ساکته.",
           "next": "campfire_talk"
         },
         "campfire_talk": {
@@ -328,7 +301,7 @@
           "next": "mehras_follow_offer"
         },
         "mehras_follow_offer": {
-          "portrait": "assets/images/mehras default.png",
+          "portrait": "assets/images/mehras defualt.png",
           "speaker": "مهراس",
           "dialogue": "منم میام.",
           "narrator": "",
@@ -383,9 +356,17 @@
           "narrator": "گوشی سینا زنگ می‌خوره. شماره ناشناس. سینا جواب می‌ده. صدای خش‌خش. بعد یه زمزمه: «تو فقط نگاه کردی.» قطع میشه. سینا به رهی نگاه می‌کنه. رهی رنگش پریده.",
           "choices": [
             {
-              "text": "کفش رو بردارم. باید ببریمش پیش سیف.",
+              "text": "کفش رو بردارم. باید ببریمش پیش پلیس.",
               "next": "pick_up_shoe",
-              "effects": { "memory": { "tookShoe": true } }
+              "effects": {
+                "memory": { "tookShoe": true },
+                "addItem": {
+                  "id": "saghars_shoe",
+                  "name": "کفش ساغر",
+                  "icon": "👠",
+                  "description": "پاشنه‌بلند مشکی. بندش هنوز گرم بود."
+                }
+              }
             },
             {
               "text": "دست نزنم. بذارم برای پلیس.",
@@ -397,14 +378,8 @@
         "pick_up_shoe": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "سینا",
-          "dialogue": "باید ببریمش پیش سیف.",
+          "dialogue": "باید ببریمش پیش پلیس.",
           "narrator": "سینا کفش رو برمی‌داره. توی جیب کاپشنش می‌ذاره.",
-          "addItem": {
-            "id": "saghars_shoe",
-            "name": "کفش ساغر",
-            "icon": "👠",
-            "description": "پاشنه‌بلند مشکی. بندش هنوز گرم بود."
-          },
           "next": "back_to_station"
         },
         "leave_items": {
@@ -447,34 +422,45 @@
           "speaker": "سیف",
           "dialogue": "حقیقت. برو پیداش کن.",
           "narrator": "سیف بلند میشه. عینک شکسته رو برمی‌داره.",
-          "next": "final_choice"
+          "next": "sina_leaves_station"
         },
-        "final_choice": {
+        "sina_leaves_station": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "",
           "dialogue": "",
-          "narrator": "سینا از کلانتری بیرون می‌زنه. برف سنگین‌تر می‌باره. گوشیش رو چک می‌کنه. یه نوتیفیکیشن جدید — شماره ناشناس: «هنوز دیر نشده. ولی نزدیکه.»",
-          "addNote": { "text": "پیام ناشناس: «هنوز دیر نشده. ولی نزدیکه.»" },
+          "narrator": "سینا از کلانتری بیرون می‌زنه. برف سنگین‌تر می‌باره. گوشیش رو چک می‌کنه. یه نوتیفیکیشن جدید از شماره ناشناس: «هنوز دیر نشده. ولی نزدیکه.» سینا نفس عمیقی می‌کشه و برف را تماشا می‌کند. حالا باید تصمیم بگیرد که کدام راه را برود.",
           "choices": [
             {
               "text": "برم پیش رهی — اون یه چیزی دیده. شاید بدونه.",
               "next": "ep1_end_rahi",
-              "effects": { "memory": { "ep1FinalChoice": "rahi" } }
+              "effects": {
+                "memory": { "ep1FinalChoice": "rahi" },
+                "stats": { "curiosity": 10 }
+              }
             },
             {
               "text": "برم پیش مهراس — اون از همه بیشتر نگران بود. شاید بیشتر از همه می‌دونه.",
               "next": "ep1_end_mehras",
-              "effects": { "memory": { "ep1FinalChoice": "mehras" } }
+              "effects": {
+                "memory": { "ep1FinalChoice": "mehras" },
+                "stats": { "curiosity": 5 }
+              }
             },
             {
-              "text": "فردا برم پیش سیف با مدارک بیشتر — مسیر قانونی.",
+              "text": "فردا برم پیش پلیس با مدارک بیشتر — مسیر قانونی.",
               "next": "ep1_end_seyf",
-              "effects": { "memory": { "ep1FinalChoice": "seyf" } }
+              "effects": {
+                "memory": { "ep1FinalChoice": "seyf" },
+                "stats": { "patience": 10 }
+              }
             },
             {
               "text": "تنها برگردم به ایل‌گلی — شاید چیزی جا مونده باشه.",
               "next": "ep1_end_alone",
-              "effects": { "memory": { "ep1FinalChoice": "alone" } }
+              "effects": {
+                "memory": { "ep1FinalChoice": "alone" },
+                "stats": { "curiosity": 15, "sanity": -5 }
+              }
             }
           ]
         },
@@ -482,37 +468,49 @@
           "portrait": "assets/images/rehi talking.jpg",
           "speaker": "",
           "dialogue": "",
-          "narrator": "تبریز نفسش را حبس کرده. ساغر گم شده. سینا به سمت خانه رهی راه می‌افتد. برف سنگین‌تر می‌بارد. پایان اپیزود اول — «دو نیمه».",
-          "next": "ep1_to_ep2_bridge"
+          "narrator": "سینا به سمت خانه رهی راه می‌افتد. برف سنگین‌تر می‌بارد. پایان اپیزود اول — «دو نیمه».",
+          "addNote": {
+            "text": "سینا تصمیم گرفت به رهی اعتماد کند. شاید او کلید این ماجرا باشد."
+          },
+          "next": null,
+          "nextEpisode": 2,
+          "episodeEnd": true
         },
         "ep1_end_mehras": {
-          "portrait": "assets/images/mehras default.png",
+          "portrait": "assets/images/mehras defualt.png",
           "speaker": "",
           "dialogue": "",
-          "narrator": "تبریز نفسش را حبس کرده. سینا به سمت خانه مهراس راه می‌افتد. برف سنگین‌تر می‌بارد. پایان اپیزود اول — «دو نیمه».",
-          "next": "ep1_to_ep2_bridge"
+          "narrator": "سینا به سمت خانه مهراس راه می‌افتد. برف سنگین‌تر می‌بارد. پایان اپیزود اول — «دو نیمه».",
+          "addNote": {
+            "text": "سینا تصمیم گرفت به مهراس برود. او بیشتر از همه نگران بود."
+          },
+          "next": null,
+          "nextEpisode": 2,
+          "episodeEnd": true
         },
         "ep1_end_seyf": {
           "portrait": "assets/images/seyf defualt.png",
           "speaker": "",
           "dialogue": "",
-          "narrator": "تبریز نفسش را حبس کرده. سینا فردا با مدارک بیشتر برمی‌گردد. پایان اپیزود اول — «دو نیمه».",
-          "next": "ep1_to_ep2_bridge"
+          "narrator": "سینا تصمیم می‌گیرد صبر کند و فردا با مدارک بیشتر به کلانتری برگردد. برف سنگین‌تر می‌بارد. پایان اپیزود اول — «دو نیمه».",
+          "addNote": {
+            "text": "سینا مسیر قانونی را انتخاب کرد. شاید این بهترین راه باشد."
+          },
+          "next": null,
+          "nextEpisode": 2,
+          "episodeEnd": true
         },
         "ep1_end_alone": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "",
           "dialogue": "",
-          "narrator": "تبریز نفسش را حبس کرده. سینا تنها به ایل‌گلی برمی‌گردد. پایان اپیزود اول — «دو نیمه».",
-          "next": "ep1_to_ep2_bridge"
-        },
-        "ep1_to_ep2_bridge": {
-          "portrait": "",
-          "speaker": "",
-          "dialogue": "",
-          "narrator": "پایان اپیزود اول — «دو نیمه».",
+          "narrator": "سینا تنها به ایل‌گلی برمی‌گردد. برف سنگین‌تر می‌بارد. پایان اپیزود اول — «دو نیمه».",
+          "addNote": {
+            "text": "سینا تصمیم گرفت به ایل‌گلی برگردد. شاید چیزی جا مانده باشد."
+          },
           "next": null,
-          "nextEpisode": 2
+          "nextEpisode": 2,
+          "episodeEnd": true
         }
       }
     },
@@ -520,185 +518,70 @@
       "id": 2,
       "title": "نقطه ناپدید شدن",
       "season": 1,
-      "startScene": "ep2_morning",
+      "startScene": "ep2_router",
       "scenes": {
-        "ep2_morning": {
+        "ep2_router": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "",
           "dialogue": "",
-          "narrator": "صبح زود. برف سنگین از پنجره پیداست. سینا لباس پوشیده. پوشه‌ای که سیف بهش داده روی میز بازه. یه صفحه جدید اضافه شده: پرینت تماس‌های مهراس با ساغر در هفته قبل از ناپدید شدن. ۱۴ تماس. بعضی‌شون نیمه‌شب. گوشی سینا زنگ می‌خوره. سیف.",
-          "next": "ep2_seyf_call"
-        },
-        "ep2_seyf_call": {
-          "portrait": "assets/images/seyf defualt.png",
-          "speaker": "سیف",
-          "dialogue": "پرینت تماس‌ها رو دیدی؟",
-          "narrator": "",
-          "next": "ep2_sina_tamas"
-        },
-        "ep2_sina_tamas": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "آره. ۱۴ تماس توی یه هفته.",
-          "narrator": "",
-          "next": "ep2_seyf_explains"
-        },
-        "ep2_seyf_explains": {
-          "portrait": "assets/images/seyf defualt.png",
-          "speaker": "سیف",
-          "dialogue": "بیشترشون شبونه. آخرین تماس ساعت ۱۱:۴۷ شب حادثه. مهراس می‌گه تماس رو جواب نداده. ولی خودش زنگ زده. یعنی مهراس آخرین نفری بوده که قبل از ناپدید شدن با ساغر تماس گرفته. اگه جواب نداده، چرا دوباره زنگ زده؟ ۱۴ بار توی یه هفته یعنی چی؟ یا خیلی نگران بوده، یا... یا می‌خواسته بدون کسی بفهمه کنترلش کنه. یه چیز دیگه: یه دختر دیگه هم گم شده. نگار کریمی. ۲۱ ساله. شب بعد از ناپدید شدن ساغر. اونم نزدیک ایل‌گلی. پرونده ساغر دیگه فقط یه گم‌شدن نیست.",
-          "narrator": "سینا گوشی را محکم‌تر می‌گیرد. ۱۴ تماس. نگار. همه چیز دارد پیچیده‌تر می‌شود.",
+          "narrator": "صبح روز بعد. برف سنگین از پنجره پیداست. سینا لباس پوشیده. پوشه‌ای که سیف بهش داده روی میز بازه. یه صفحه جدید اضافه شده: پرینت تماس‌های مهراس با ساغر در هفته قبل از ناپدید شدن. ۱۴ تماس. بعضی‌شون نیمه‌شب. سینا باید تصمیم بگیرد که امروز را از کجا شروع کند. اما انتخاب دیشب، مسیرش را مشخص کرده است.",
           "choices": [
             {
-              "text": "برم با مهراس حرف بزنم — باید درباره این تماس‌ها توضیح بده.",
-              "next": "ep2_mehras_basement",
-              "effects": { "memory": { "ep2Path": "mehras" } }
-            },
-            {
-              "text": "برم پیش سیف — بذارم پلیس کار خودش رو بکنه.",
-              "next": "ep2_seyf_station",
-              "effects": { "memory": { "ep2Path": "seyf" } }
-            },
-            {
-              "text": "برم پیش رهی — اون شب با من بود وقتی کفش رو پیدا کردیم. شاید چیزی یادش اومده.",
+              "text": "ادامه...",
               "next": "ep2_rahi_house",
+              "require": { "memory": { "ep1FinalChoice": "rahi" } },
               "effects": { "memory": { "ep2Path": "rahi" } }
             },
             {
-              "text": "تنها برم ایل‌گلی — یه گوشواره اون شب پیدا کردم که مال ساغر نیست.",
+              "text": "ادامه...",
+              "next": "ep2_mehras_basement",
+              "require": { "memory": { "ep1FinalChoice": "mehras" } },
+              "effects": { "memory": { "ep2Path": "mehras" } }
+            },
+            {
+              "text": "ادامه...",
+              "next": "ep2_seyf_station",
+              "require": { "memory": { "ep1FinalChoice": "seyf" } },
+              "effects": { "memory": { "ep2Path": "seyf" } }
+            },
+            {
+              "text": "ادامه...",
               "next": "ep2_alone_elgoli",
+              "require": { "memory": { "ep1FinalChoice": "alone" } },
               "effects": { "memory": { "ep2Path": "alone" } }
             }
           ]
         },
+
         "ep2_mehras_basement": {
           "portrait": "assets/images/mehras sad.png",
           "speaker": "مهراس",
-          "dialogue": "می‌دونم. فکر می‌کنی من این کارو کردم؟",
-          "narrator": "زیرزمین تاریک. بوی نم و سیگار کهنه. دیوارها پر از عکس ساغر. نقشه پارک ایل‌گلی با دایره‌های قرمز. مهراس پشت میز نشسته. نخوابیده. زیر چشم‌هاش سیاه شده.",
-          "next": "ep2_sina_14"
-        },
-        "ep2_sina_14": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "۱۴ تماس توی یه هفته. آخرینش شب حادثه. ساعت ۱۱:۴۷.",
-          "narrator": "",
-          "next": "ep2_mehras_fear"
-        },
-        "ep2_mehras_fear": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "نمی‌دونم. ولی می‌خوام بدونم چرا اینقدر زنگ می‌زدی.",
-          "narrator": "مهراس نفس عمیقی می‌کشد.",
+          "dialogue": "می‌دونم اومدی. ۱۴ تماس توی یه هفته. می‌دونم چطور به نظر میاد...",
+          "narrator": "زیرزمین تاریک. بوی نم و سیگار کهنه. دیوارها پر از عکس ساغر. مهراس پشت میز نشسته. نخوابیده.",
           "next": "ep2_mehras_explains"
         },
-        "ep2_mehras_explains": {
-          "portrait": "assets/images/mehras talking.png",
-          "speaker": "مهراس",
-          "dialogue": "چون می‌ترسیدم. از یه هفته قبلش، یکی داشت ساغر رو تهدید می‌کرد. پیام می‌داد. شماره ناشناس. می‌گفت تنهایی جایی نره. می‌گفت زیر نظره. ساغر می‌ترسید. منم می‌ترسیدم.",
-          "narrator": "",
-          "next": "ep2_sina_payam"
-        },
-        "ep2_sina_payam": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "پیام‌ها رو داری؟",
-          "narrator": "",
-          "next": "ep2_mehras_screenshot"
-        },
-        "ep2_mehras_screenshot": {
-          "portrait": "assets/images/mehras talking.png",
-          "speaker": "مهراس",
-          "dialogue": "پاک شدن. ساغر پاکشون کرد. می‌گفت نمی‌خواد کسی بفهمه. ولی من چندتا رو اسکرین‌شات گرفتم.",
-          "narrator": "مهراس گوشیش رو باز می‌کنه. اسکرین‌شات‌ها را نشان می‌دهد: «تنهایی جایی نرو.» — «تحت نظری.» — «اگه به کسی بگی...»",
-          "next": "ep2_mehras_regret"
-        },
-        "ep2_mehras_regret": {
-          "portrait": "assets/images/mehras sad.png",
-          "speaker": "مهراس",
-          "dialogue": "می‌خواستم ازش محافظت کنم. بهش گفتم بیاد پیش من. گفتم خونه امنه. ولی گوش نکرد. گفت می‌خواد یه شب معمولی داشته باشه. اون شب که با هم حرف می‌زدیم کنار دریاچه... بهش التماس کردم بریم خونه. قبول نکرد. من عصبانی شدم. رفتم. گمونم آخرین نفری بودم که باهاش حرف زدم قبل از...",
-          "narrator": "مهراس بغضش رو قورت می‌دهد.",
-          "next": "ep2_mehras_negar"
-        },
-        "ep2_mehras_negar": {
-          "portrait": "assets/images/mehras talking.png",
-          "speaker": "مهراس",
-          "dialogue": "یه چیز دیگه. اون دختره — نگار — اونم پیش من اومد. می‌گفت یکی تعقیبش می‌کنه. می‌خواست از شهر بره. ازم خواست کمکش کنم. پول بلیت بهم داد. من قبول کردم. حالا اونم گم شده.",
-          "narrator": "سینا به مهراس نگاه می‌کند. داستانش زیادی مرتبه. ۱۴ تماس. اسکرین‌شات. نگار. یا واقعاً راست می‌گه، یا زیادی آماده‌ست.",
-          "choices": [
-            {
-              "text": "باور کنم — مهراس واقعاً می‌خواسته کمک کنه. ولی یکی داره بازیش می‌ده.",
-              "next": "ep2_bridge_to_garden",
-              "effects": { "stats": { "trustMehras": 15 } }
-            },
-            {
-              "text": "شک کنم — داستانش زیادی مرتبه. ۱۴ تماس. اسکرین‌شات. نگار. زیادی آماده‌ست.",
-              "next": "ep2_bridge_to_garden",
-              "effects": { "suspicion": { "mehras": 10 } }
-            }
-          ]
-        },
-        "ep2_seyf_station": {
-          "portrait": "assets/images/seyf defualt.png",
-          "speaker": "سیف",
-          "dialogue": "نگار کریمی. ۲۱ ساله. دانشجوی تئاتر. شب بعد از ناپدید شدن ساغر گم شده. جالبه بدونین آخرین کسی که باهاش تماس گرفته... مهراس بوده.",
-          "narrator": "سیف پشت میزش. یه فایل جدید روی میز: «مفقودی شماره ۲ — نگار کریمی». عکس نگار کنار عکس ساغر روی تابلو سنجاق شده.",
-          "next": "ep2_sina_mehras_komak"
-        },
-        "ep2_sina_mehras_komak": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "مهراس می‌گه می‌خواسته کمکش کنه از شهر بره.",
-          "narrator": "",
-          "next": "ep2_seyf_theory"
-        },
-        "ep2_seyf_theory": {
-          "portrait": "assets/images/seyf talking.png",
-          "speaker": "سیف",
-          "dialogue": "کمک کنه یا گیر بندازه؟ دو تا دختر که هر دو می‌خوان از شهر برن. هر دو با مهراس در تماس بودن. هر دو گم شدن. این دیگه الگوئه. مهراس یا قاتله، یا... یا یکی می‌خواد ما فکر کنیم قاتله. کسی که بهش اعتماد دارن. کسی که همه فکر می‌کنن بی‌خطره.",
-          "narrator": "سیف یه نگاهی به سینا می‌کنه. انگار منتظره سینا اسمی رو بگه.",
-          "next": "ep2_bridge_to_garden"
-        },
+
         "ep2_rahi_house": {
           "portrait": "assets/images/rehi sad.jpg",
           "speaker": "رهی",
-          "dialogue": "یادمه.",
-          "narrator": "رهی بدون عینک. چشم‌هاش قرمزه. انگار گریه کرده یا نخوابیده.",
-          "next": "ep2_sina_payam_rahi"
-        },
-        "ep2_sina_payam_rahi": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "اون شب... بعد از اینکه کفش رو پیدا کردیم. یه پیام اومد. گفتی «تو فقط نگاه کردی.» یادته؟",
-          "narrator": "",
-          "next": "ep2_rahi_suspects"
-        },
-        "ep2_rahi_suspects": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "فکر می‌کنی کی بود؟",
-          "narrator": "رهی مکث می‌کند.",
+          "dialogue": "می‌دونستم می‌ای. اون شب... یه چیزی دیدم که بهت نگفتم.",
+          "narrator": "رهی بدون عینک. چشم‌هاش قرمزه. انگار گریه کرده.",
           "next": "ep2_rahi_reveals"
         },
-        "ep2_rahi_reveals": {
-          "portrait": "assets/images/rehi sad.jpg",
-          "speaker": "رهی",
-          "dialogue": "نمی‌دونم. ولی اون شب یه چیزی توی هوا بود. وقتی ساغر رفت دستشویی، یه نفر از جمع بلند شد و دنبالش رفت. فکر کردم شاید مهراس باشه. ولی نبود. مهراس پیش ما بود. تاریک بود. دیدم یه نفر رد شد. چند دقیقه بعدش ساغر رفته بود.",
-          "narrator": "",
-          "next": "ep2_sina_ki_bood"
+
+        "ep2_seyf_station": {
+          "portrait": "assets/images/seyf defualt.png",
+          "speaker": "سیف",
+          "dialogue": "سینا! بیا تو. یه چیز جدید پیدا کردیم. نگار کریمی... شب بعد از ناپدید شدن ساغر گم شده.",
+          "narrator": "سیف پشت میزش. یه فایل جدید روی میز: «مفقودی شماره ۲ — نگار کریمی».",
+          "next": "ep2_seyf_theory"
         },
-        "ep2_sina_ki_bood": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "پس کی بود؟",
-          "narrator": "رهی جواب نمی‌دهد. شاید نمی‌داند. شاید نمی‌خواهد بگوید.",
-          "next": "ep2_bridge_to_garden"
-        },
+
         "ep2_alone_elgoli": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "",
           "dialogue": "",
-          "narrator": "ایل‌گلی زیر برف. جای دیشب. کنار نیمکت، یه گوشواره طلایی روی برف می‌درخشه. مال ساغر نیست. ظریف‌تره. جدیدتره. شاید مال نگار. سینا آن را برمی‌دارد و توی جیبش می‌گذارد.",
+          "narrator": "ایل‌گلی زیر برف. جای دیشب. کنار نیمکت، یه گوشواره طلایی روی برف می‌درخشه. مال ساغر نیست. ظریف‌تره. جدیدتره. شاید مال نگار.",
           "addItem": {
             "id": "earring",
             "name": "گوشواره طلایی",
@@ -710,6 +593,58 @@
           },
           "next": "ep2_bridge_to_garden"
         },
+
+        "ep2_mehras_explains": {
+          "portrait": "assets/images/mehras talking.png",
+          "speaker": "مهراس",
+          "dialogue": "اون پیام‌های تهدیدآمیز رو دیدی که ساغر دریافت می‌کرد. من فقط می‌خواستم ازش محافظت کنم. ولی اون گوش نکرد. گفت می‌خواد یه شب معمولی داشته باشه.",
+          "narrator": "",
+          "next": "ep2_mehras_screenshots"
+        },
+
+        "ep2_mehras_screenshots": {
+          "portrait": "assets/images/mehras talking.png",
+          "speaker": "مهراس",
+          "dialogue": "این‌ها رو اسکرین‌شات گرفتم. ببین.",
+          "narrator": "سه اسکرین‌شات: «تنهایی جایی نرو» — «تحت نظری» — «اگه به کسی بگی...»",
+          "next": "ep2_mehras_negar"
+        },
+
+        "ep2_mehras_negar": {
+          "portrait": "assets/images/mehras sad.png",
+          "speaker": "مهراس",
+          "dialogue": "یه چیز دیگه. نگار — اونم پیش من اومد. می‌گفت یکی تعقیبش می‌کنه. پول بلیت بهم داد تا کمکش کنم. حالا اونم گم شده.",
+          "narrator": "",
+          "choices": [
+            {
+              "text": "باور کنم — مهراس واقعاً می‌خواسته کمک کنه.",
+              "next": "ep2_bridge_to_garden",
+              "effects": { "stats": { "trustMehras": 15 } }
+            },
+            {
+              "text": "شک کنم — داستانش زیادی مرتبه.",
+              "next": "ep2_bridge_to_garden",
+              "effects": { "suspicion": { "mehras": 10 } }
+            }
+          ]
+        },
+
+        "ep2_rahi_reveals": {
+          "portrait": "assets/images/rehi sad.jpg",
+          "speaker": "رهی",
+          "dialogue": "وقتی ساغر رفت دستشویی، یه نفر از جمع بلند شد و دنبالش رفت. فکر کردم مهراسه. ولی نبود. مهراس پیش ما بود.",
+          "narrator": "",
+          "next": "ep2_bridge_to_garden"
+        },
+
+        "ep2_seyf_theory": {
+          "portrait": "assets/images/seyf talking.png",
+          "speaker": "سیف",
+          "dialogue": "دو تا دختر گم شدن. هر دو با مهراس در تماس بودن. این دیگه الگوئه. مهراس یا قاتله، یا یکی می‌خواد ما فکر کنیم قاتله.",
+          "narrator": "",
+          "next": "ep2_bridge_to_garden"
+        },
+
         "ep2_bridge_to_garden": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "",
@@ -717,164 +652,197 @@
           "narrator": "غروب همان روز. سینا به باغ قدیمی حومه شهر می‌رود. مهمانی امشب شاید جواب‌هایی داشته باشد.",
           "next": "ep2_garden_invitation"
         },
+
         "ep2_garden_invitation": {
           "portrait": "assets/images/arya happy.jpg",
           "speaker": "آریا",
-          "dialogue": "ممنون که اومدین. می‌دونم این چند روز سخت بوده. ولی فکر می‌کنم اگه همه با هم باشیم، شاید بتونیم به پلیس کمک کنیم. هرکی هرچی می‌دونه بگه.",
-          "narrator": "باغ قدیمی حومه شهر. فانوس‌های نفتی روشن. برف روی شاخه‌های سیب. همه اومدن: سینا، رهی، مهراس، آریا، سپهر، هانا، پامیا، دیانا. مهراس نقشه‌ای از ایل‌گلی پهن می‌کنه و شروع می‌کنه به توضیح: «اینجا جاییه که ساغر رو آخرین بار دیدم. اینجا درخت‌هاست. اینجا جاده‌ست. اینجا کفشش رو پیدا کردن.» در همین لحظه، گوشی سینا ویبره می‌ره. نوتیفیکیشن از همون شماره ناشناس: «چت مهراس و ساغر رو چک کن. سه نسخه داره. فقط یکی واقعیه.»",
-          "next": "ep2_rahi_helps"
+          "dialogue": "ممنون که اومدین. می‌دونم این چند روز سخت بوده. ولی فکر می‌کنم اگه همه با هم باشیم، شاید بتونیم به پلیس کمک کنیم.",
+          "narrator": "باغ قدیمی حومه شهر. فانوس‌های نفتی روشن. برف روی شاخه‌های سیب. همه اومدن: سینا، رهی، مهراس، آریا، سپهر، هانا، پامیا، دیانا.",
+          "next": "ep2_phone_message"
         },
-        "ep2_rahi_helps": {
-          "portrait": "assets/images/rehi talking.jpg",
-          "speaker": "رهی",
-          "dialogue": "من برنامه بازیابی پیام دارم. بذار کمکت کنم.",
-          "narrator": "رهی میاد کنار سینا. برنامه رو باز می‌کنه. چت مهراس و ساغر رو اسکن می‌کنه. سه نسخه از آخرین مکالمه ظاهر میشه:",
+
+        "ep2_phone_message": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "در همین لحظه، گوشی سینا ویبره می‌ره. نوتیفیکیشن از همون شماره ناشناس.",
+          "phone": {
+            "type": "chat",
+            "header": "ناشناس",
+            "messages": [
+              {
+                "text": "چت مهراس و ساغر رو چک کن. سه نسخه داره. فقط یکی واقعیه.",
+                "sent": false,
+                "delay": 0
+              }
+            ],
+            "choices": [
+              {
+                "text": "📱 چت رو چک کنم",
+                "next": "ep2_three_versions",
+                "effects": { "stats": { "curiosity": 10 } }
+              },
+              {
+                "text": "❌ الان وقتش نیست",
+                "next": "ep2_lie_detector",
+                "effects": { "stats": { "curiosity": -5 } }
+              }
+            ]
+          },
           "next": "ep2_three_versions"
         },
+
         "ep2_three_versions": {
           "portrait": "assets/images/rehi talking.jpg",
           "speaker": "رهی",
-          "dialogue": "سه نسخه. نسخه اول: تهدید — مهراس می‌گه «باید می‌ترسیدی». نسخه دوم: التماس — مهراس می‌گه «قول می‌دم اتفاقی نیفته». نسخه سوم: دستکاری‌شده — بقیه پاک شده. کدوم رو باور می‌کنی؟",
-          "narrator": "سه اسکرین‌شات روی صفحه گوشی. هر کدام یک داستان متفاوت.",
+          "dialogue": "سه نسخه از آخرین مکالمه. کدوم رو باور می‌کنی؟",
+          "narrator": "",
           "choices": [
             {
-              "text": "مهراس تهدیدش کرده — این نشون می‌ده مهراس خطرناکه.",
-              "next": "ep2_code_puzzle",
-              "effects": {
-                "suspicion": { "mehras": 25 },
-                "memory": { "believedThreat": true }
-              }
+              "text": "مهراس تهدیدش کرده",
+              "next": "ep2_lie_detector",
+              "effects": { "suspicion": { "mehras": 25 } }
             },
             {
-              "text": "نسخه سوم جعلیه — یکی داره سعی می‌کنه مهراس رو گناهکار نشون بده.",
-              "next": "ep2_code_puzzle",
+              "text": "نسخه سوم جعلیه",
+              "next": "ep2_lie_detector",
               "effects": { "memory": { "believedForged": true } }
             },
             {
-              "text": "هیچکدوم واقعی نیستن — همه رو دستکاری کردن.",
-              "next": "ep2_code_puzzle",
+              "text": "هیچکدوم واقعی نیستن",
+              "next": "ep2_lie_detector",
               "effects": { "memory": { "believedNone": true } }
             }
           ]
         },
-        "ep2_code_puzzle": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "",
-          "dialogue": "",
-          "narrator": "همون شب. سینا یادش میاد ساغر یه لاکر توی ایل‌گلی داشته. با رهی می‌ره اونجا. یه لاکر قدیمی با قفل رمز ۴ رقمی. توی چت‌های بازیابی‌شده، دو تا عدد هست: «۱۲ خرداد» (تولد ساغر) و «۳۴» (پلاک خونه). رمز رو پیدا کن.",
-          "puzzleId": "locker_code",
-          "puzzle": {
-            "html": "<div style='text-align:center;color:#d4a846;font-family:Vazirmatn;'><h3>🔐 رمز لاکر ساغر</h3><p style='margin:20px 0;font-size:0.9rem;color:#ccc;direction:rtl'>تولد ساغر: ۱۲ خرداد | پلاک خونه: ۳۴</p><input type='text' id='puzzleInput' maxlength='4' placeholder='۴ رقم' style='padding:10px;font-size:1.5rem;width:120px;text-align:center;background:#111;border:1px solid #d4a846;color:#d4a846;border-radius:8px;font-family:Vazirmatn;letter-spacing:8px;'><br><button onclick='window.checkCodePuzzle()' style='margin-top:15px;padding:10px 30px;background:rgba(212,168,70,0.2);border:1px solid #d4a846;color:#d4a846;border-radius:20px;cursor:pointer;font-family:Vazirmatn;'>تأیید</button><p id='puzzleFeedback' style='margin-top:10px;font-size:0.8rem;min-height:20px'></p></div>"
-          },
-          "onSolve": "ep2_locker_open"
-        },
-        "ep2_locker_open": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "",
-          "dialogue": "",
-          "narrator": "قفل باز شد. داخل لاکر: یه دفترچه کوچک، یه کلید با آویز قلب، و یه یادداشت از ساغر: «اگه همه می‌گن همه چیز خوبه... شاید نیست. اگه یه روز ناپدید شدم، کسی که همیشه می‌خنده رو زیر سوال ببر.»",
-          "addItem": {
-            "id": "saghars_key",
-            "name": "کلید ساغر",
-            "icon": "🔑",
-            "description": "کلید کوچک با آویز قلب. روش حک شده: «ایل‌گلی»."
-          },
-          "addNote": {
-            "text": "یادداشت ساغر توی لاکر: «کسی که همیشه می‌خنده رو زیر سوال ببر.»"
-          },
-          "next": "ep2_lie_detector"
-        },
+
         "ep2_lie_detector": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "",
           "dialogue": "",
-          "narrator": "سه نفر ادعا می‌کنن آخرین بار ساغر رو دیدن. مهراس: «ساعت ۱۰ شب دیدمش. داشت می‌رفت سمت دریاچه.» آریا: «ساعت ۹:۴۵ دیدمش. گفت داره می‌ره پیش مهراس.» رهی: «ساعت ۱۰:۱۵ دیدمش. از دریاچه برمی‌گشت. تنها بود.» اگه ساغر ساعت ۹:۴۵ می‌خواسته بره پیش مهراس، و ساعت ۱۰ مهراس دیده که می‌رفته سمت دریاچه، و ساعت ۱۰:۱۵ رهی دیده که برمی‌گشته — مهراس کجا بوده؟ چرا مهراس می‌گه «داشت می‌رفت» در حالی که ساغر باید تا ساعت ۱۰ رسیده باشه؟ کی دروغ می‌گه؟",
+          "narrator": "سه نفر ادعا می‌کنن آخرین بار ساغر رو دیدن. مهراس: ساعت ۱۰ شب. آریا: ساعت ۹:۴۵. رهی: ساعت ۱۰:۱۵. کی دروغ می‌گه؟",
           "puzzleId": "lie_detector",
           "puzzle": {
-            "html": "<div style='text-align:center;color:#d4a846;font-family:Vazirmatn;'><h3>🕵️ کی دروغ می‌گه؟</h3><div style='margin:15px 0;font-size:0.85rem;color:#ccc;text-align:right;direction:rtl;line-height:2'><p>🔹 مهراس: «ساعت ۱۰ شب دیدمش. داشت می‌رفت سمت دریاچه.»</p><p>🔹 آریا: «ساعت ۹:۴۵ دیدمش. گفت می‌ره پیش مهراس.»</p><p>🔹 رهی: «ساعت ۱۰:۱۵ دیدمش. از دریاچه برمی‌گشت.»</p></div><div style='display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:15px'><button onclick='window.checkLie(\"mehras\")' style='padding:8px 20px;background:rgba(212,168,70,0.15);border:1px solid #d4a846;color:#d4a846;border-radius:20px;cursor:pointer;font-family:Vazirmatn;'>مهراس</button><button onclick='window.checkLie(\"arya\")' style='padding:8px 20px;background:rgba(212,168,70,0.15);border:1px solid #d4a846;color:#d4a846;border-radius:20px;cursor:pointer;font-family:Vazirmatn;'>آریا</button><button onclick='window.checkLie(\"rahi\")' style='padding:8px 20px;background:rgba(212,168,70,0.15);border:1px solid #d4a846;color:#d4a846;border-radius:20px;cursor:pointer;font-family:Vazirmatn;'>رهی</button></div><p id='lieFeedback' style='margin-top:12px;font-size:0.8rem;min-height:20px'></p></div>"
+            "html": "<div style='text-align:center;color:#d4a846;font-family:Vazirmatn;'><h3>🕵️ کی دروغ می‌گه؟</h3><div style='margin:15px 0;font-size:0.85rem;color:#ccc;text-align:right;'><p>🔹 مهراس: ساعت ۱۰ شب</p><p>🔹 آریا: ساعت ۹:۴۵</p><p>🔹 رهی: ساعت ۱۰:۱۵</p></div><div style='display:flex;gap:10px;justify-content:center;flex-wrap:wrap;'><button onclick='window.checkLie(\"mehras\")' style='padding:8px 20px;background:rgba(212,168,70,0.15);border:1px solid #d4a846;color:#d4a846;border-radius:20px;cursor:pointer;font-family:Vazirmatn;'>مهراس</button><button onclick='window.checkLie(\"arya\")' style='padding:8px 20px;background:rgba(212,168,70,0.15);border:1px solid #d4a846;color:#d4a846;border-radius:20px;cursor:pointer;font-family:Vazirmatn;'>آریا</button><button onclick='window.checkLie(\"rahi\")' style='padding:8px 20px;background:rgba(212,168,70,0.15);border:1px solid #d4a846;color:#d4a846;border-radius:20px;cursor:pointer;font-family:Vazirmatn;'>رهی</button></div><p id='lieFeedback' style='margin-top:12px;font-size:0.8rem;min-height:20px'></p></div>"
           },
-          "onSolve": "ep2_lie_solved"
+          "onSolve": "ep2_lie_solved",
+          "next": "ep2_lie_solved"
         },
+
         "ep2_lie_solved": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "",
           "dialogue": "",
-          "narrator": "مهراس دروغ می‌گه. یا... ساغر هیچوقت به مهراس نرسیده. زمان‌بندی مهراس با بقیه جور درنمیاد.",
+          "narrator": "مهراس دروغ می‌گه. زمان‌بندی‌اش با بقیه جور درنمیاد.",
           "addNote": {
             "text": "مهراس درباره ساعت دیدن ساغر دروغ گفته. زمان‌بندی‌اش با آریا و رهی جور درنمیاد."
           },
           "effects": { "suspicion": { "mehras": 15 } },
           "next": "ep2_sayman_call"
         },
+
         "ep2_sayman_call": {
-          "portrait": "assets/images/default.jpg",
+          "portrait": "assets/images/sayman1 talking.png",
           "speaker": "سایمان",
-          "dialogue": "سینا. یه کیف پیدا کردم کنار جاده شریعتی. مال نگار. کارت دانشجوییش توشه. و یه رسید بانکی. حدس بزن به اسم کی؟ مهراس. یک میلیون تومن. تاریخ: همون روزی که ساغر گم شد.",
-          "narrator": "سایمان زنگ می‌زنه. نفس‌نفس می‌زنه. انگار مدت‌ها دویده.",
+          "dialogue": "سینا! یه کیف پیدا کردم کنار جاده شریعتی. مال نگار. کارت دانشجوییش توشه. و یه رسید بانکی. حدس بزن به اسم کی؟ مهراس. یک میلیون تومن.",
+          "narrator": "سایمان زنگ می‌زنه. نفس‌نفس می‌زنه.",
           "addNote": {
             "text": "سایمان کیف نگار رو پیدا کرد. رسید بانکی به اسم مهراس."
           },
           "next": "ep2_final_choice"
         },
+
         "ep2_final_choice": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "",
           "dialogue": "",
-          "narrator": "شب. سینا توی اتاقش. برف سنگین‌تر می‌باره. گوشی روشن میشه: ونتوس: «فردا. خیابان شریعتی. نبش کوچه بنفشه. ساعت ۱۱ شب. تنها بیا. بهت نشون می‌دم کی پشت این بازیه.»",
-          "choices": [
-            {
-              "text": "برم — خطرناکه، ولی شاید تنها راه حقیقت باشه.",
-              "next": "ep2_end_go",
-              "effects": { "memory": { "ep2FinalChoice": "go" } }
-            },
-            {
-              "text": "به سیف بگم — بذارم پلیس بره.",
-              "next": "ep2_end_seyf",
-              "effects": { "memory": { "ep2FinalChoice": "tell_seyf" } }
-            },
-            {
-              "text": "از آریا بپرسم — بهش اعتماد دارم. شاید کمک کنه.",
-              "next": "ep2_end_ask_arya",
-              "effects": { "memory": { "ep2FinalChoice": "ask_arya" } }
-            },
-            {
-              "text": "نرم — خطرناک‌تر از اونه. خودم تحقیق می‌کنم.",
-              "next": "ep2_end_decline",
-              "effects": { "memory": { "ep2FinalChoice": "decline" } }
-            }
-          ]
+          "narrator": "شب. سینا توی اتاقش. برف سنگین‌تر می‌باره. گوشی روشن می‌شه.",
+          "phone": {
+            "type": "chat",
+            "header": "ونتوس",
+            "messages": [
+              {
+                "text": "فردا. خیابان شریعتی. نبش کوچه بنفشه. ساعت ۱۱ شب. تنها بیا. بهت نشون می‌دم کی پشت این بازیه.",
+                "sent": false,
+                "delay": 0
+              }
+            ],
+            "choices": [
+              {
+                "text": "برم — خطرناکه، ولی شاید تنها راه حقیقت باشه.",
+                "next": "ep2_end_go",
+                "effects": { "memory": { "ep2FinalChoice": "go" } }
+              },
+              {
+                "text": "به سیف بگم — بذارم پلیس بره.",
+                "next": "ep2_end_seyf",
+                "effects": { "memory": { "ep2FinalChoice": "tell_seyf" } }
+              },
+              {
+                "text": "از آریا بپرسم — بهش اعتماد دارم. شاید کمک کنه.",
+                "next": "ep2_end_ask_arya",
+                "effects": { "memory": { "ep2FinalChoice": "ask_arya" } }
+              },
+              {
+                "text": "نرم — خطرناک‌تر از اونه. خودم تحقیق می‌کنم.",
+                "next": "ep2_end_decline",
+                "effects": { "memory": { "ep2FinalChoice": "decline" } }
+              }
+            ]
+          },
+          "next": "ep2_end_go"
         },
+
         "ep2_end_go": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "",
           "dialogue": "",
           "narrator": "سینا تصمیمش را گرفته. فردا شب، خیابان شریعتی. نمی‌داند ونتوس کیست — شاید یک متحد، شاید یک دشمن. ولی در این شهر تاریک، هر نخی را باید دنبال کرد. پایان اپیزود دوم — «نقطه ناپدید شدن».",
+          "addNote": {
+            "text": "سینا تصمیم گرفت به قرار ونتوس برود."
+          },
           "next": null,
-          "nextEpisode": 3
+          "nextEpisode": 3,
+          "episodeEnd": true
         },
+
         "ep2_end_seyf": {
           "portrait": "assets/images/seyf talking.png",
           "speaker": "سیف",
           "dialogue": "باشه. می‌رم. تو نیا — بذار کار من باشه.",
           "narrator": "سیف پیام را جدی می‌گیرد. شاید بالاخره یک سرنخ واقعی. پایان اپیزود دوم — «نقطه ناپدید شدن».",
+          "addNote": {
+            "text": "سینا به سیف گفت و پلیس وارد ماجرا شد."
+          },
           "next": null,
-          "nextEpisode": 3
+          "nextEpisode": 3,
+          "episodeEnd": true
         },
+
         "ep2_end_ask_arya": {
           "portrait": "assets/images/arya talking.jpg",
           "speaker": "آریا",
           "dialogue": "خیابان شریعتی؟ اونجا خطرناکه. من باهات میام. نمی‌ذارم تنها بری.",
-          "narrator": "آریا داوطلب می‌شود که همراه سینا بیاید. شجاع یا... فرصت‌طلب؟ سینا نمی‌داند. پایان اپیزود دوم — «نقطه ناپدید شدن».",
+          "narrator": "آریا داوطلب می‌شود که همراه سینا بیاید. پایان اپیزود دوم — «نقطه ناپدید شدن».",
+          "addNote": {
+            "text": "سینا از آریا کمک خواست. آریا قبول کرد همراه شود."
+          },
           "next": null,
-          "nextEpisode": 3
+          "nextEpisode": 3,
+          "episodeEnd": true
         },
+
         "ep2_end_decline": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "",
           "dialogue": "",
-          "narrator": "سینا گوشی را می‌بندد. نه. هنوز آماده نیست با کسی روبرو شود که نمی‌شناسد. ونتوس باید صبر کند. شاید این تصمیم درستی باشد. شاید هم بزرگترین اشتباه. پایان اپیزود دوم — «نقطه ناپدید شدن».",
+          "narrator": "سینا گوشی را می‌بندد. نه. هنوز آماده نیست با کسی روبرو شود که نمی‌شناسد. ونتوس باید صبر کند. پایان اپیزود دوم — «نقطه ناپدید شدن».",
+          "addNote": {
+            "text": "سینا تصمیم گرفت به قرار ونتوس نرود."
+          },
           "next": null,
-          "nextEpisode": 3
+          "nextEpisode": 3,
+          "episodeEnd": true
         }
       }
     },
@@ -882,547 +850,456 @@
       "id": 3,
       "title": "شب بنفشه",
       "season": 1,
-      "startScene": "ep3_street_shariati",
+      "startScene": "ep3_room_night",
       "scenes": {
-        "ep3_street_shariati": {
+        "ep3_room_night": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "",
           "dialogue": "",
-          "narrator": "برف سنگین. ساعت ۱۰:۵۵. خیابان شریعتی خلوت‌تر از همیشه. سینا توی ماشین نشسته. موتور رو روشن نکرده. انگشت‌هاش رو فرمان می‌کوبونه. یه مرد با کاپشن مشکی و کلاه به شیشه ماشین می‌زنه. سینا شیشه رو پایین می‌ده.",
-          "next": "ep3_ventus_intro"
-        },
-        "ep3_ventus_intro": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "سینا؟ من ونتوسم. بیا پایین. وقت نداریم.",
-          "narrator": "سینا پیاده می‌شه. برف زیر پاش خرد می‌شه. ونتوس کلاهش رو بالاتر می‌زنه. صورتش توی نور کم پیدا نیست. سنش حدوداً ۳۰-۳۵. ریش کوتاه. چشم‌های نافذ.",
-          "next": "ep3_sina_ventus_q"
-        },
-        "ep3_sina_ventus_q": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "چرا منو اینجا خوندی؟",
-          "narrator": "",
-          "next": "ep3_ventus_answer"
-        },
-        "ep3_ventus_answer": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "چون تو تنها کسی هستی که هنوز درست فکر می‌کنه. بقیه یا دارن دروغ می‌گن، یا دارن اشتباه می‌کنن.",
-          "narrator": "",
-          "next": "ep3_sina_ventus_what"
-        },
-        "ep3_sina_ventus_what": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "درباره چی؟",
-          "narrator": "",
-          "next": "ep3_ventus_reveal"
-        },
-        "ep3_ventus_reveal": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "درباره ناپدید شدن ساغر. ساغر رو یه غریبه دزدیده. یه مرد که سال‌هاست عاشقشه. ساغر حتی نمی‌دونه وجود داره. ولی اون همیشه بوده. توی کلاس‌هاش، توی خیابون‌هایی که می‌رفته، توی کافه‌هایی که می‌نشسته.",
-          "narrator": "سینا یه قدم عقب می‌ره. برف زیر پاش فشرده می‌شه.",
-          "next": "ep3_sina_ventus_name"
-        },
-        "ep3_sina_ventus_name": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "اسمش چیه؟",
-          "narrator": "",
-          "next": "ep3_ventus_name_answer"
-        },
-        "ep3_ventus_name_answer": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "حسین شفیعی.",
-          "narrator": "",
-          "next": "ep3_sina_ventus_how"
-        },
-        "ep3_sina_ventus_how": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "چطور می‌دونی؟",
-          "narrator": "",
-          "next": "ep3_ventus_how_answer"
-        },
-        "ep3_ventus_how_answer": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "چون اون شب اونجا بودم. دیدمش که ساغر رو می‌کشونه سمت ماشینش. یه شاسی‌بلند سفید. پلاکش رو نتونستم ببینم. ولی یه نشونه داره: یه خط و خش بزرگ روی گلگیر عقب سمت چپ.",
-          "narrator": "",
-          "next": "ep3_sina_ventus_police"
-        },
-        "ep3_sina_ventus_police": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "چرا به پلیس نگفتی؟",
-          "narrator": "",
-          "next": "ep3_ventus_police_answer"
-        },
-        "ep3_ventus_police_answer": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "چون پلیس منو باور نمی‌کنه. من سابقه‌دارم. یه بار بابت یه چیزی که نکردم رفتم زندان. دیگه به هیچ نهادی اعتماد ندارم.",
-          "narrator": "",
+          "narrator": "شب. برف سنگین می‌بارد. سینا توی اتاقش نشسته و به رسیدی که ونتوس بهش داده نگاه می‌کند. ونتوس بهش گفته که فردا برود خیابان شریعتی. هیچکس از این ماجرا خبر ندارد. سینا نمی‌داند که باید به کسی بگوید یا نه. اگر بگوید، ممکن است ونتوس ناراحت شود. اگر نگوید، ممکن است خطر کند.",
           "choices": [
             {
-              "text": "باور کنم و ازش کمک بگیرم",
-              "next": "ep3_car_conversation",
-              "effects": {
-                "memory": { "metVentus": true, "ventusTrust": 30 },
-                "stats": { "trustSina": 5 }
-              }
+              "text": "به رهی بگم — بهش اعتماد دارم",
+              "next": "ep3_chat_rahi",
+              "effects": { "memory": { "ep3Told": "rahi" } }
             },
             {
-              "text": "شک کنم و خودم برم",
-              "next": "ep3_sina_skeptical",
-              "effects": {
-                "memory": { "metVentus": true, "ventusTrust": -10 },
-                "suspicion": { "ventus": 20 }
-              }
+              "text": "به سایمان بگم — منطقیه",
+              "next": "ep3_call_sayman",
+              "effects": { "memory": { "ep3Told": "sayman" } }
             },
             {
-              "text": "بپرسم چطور به حسین برسم",
-              "next": "ep3_ventus_direct",
-              "effects": {
-                "memory": { "metVentus": true, "ventusTrust": 15 }
-              }
+              "text": "به آریا بگم — دوستمه",
+              "next": "ep3_call_arya",
+              "effects": { "memory": { "ep3Told": "arya" } }
             },
             {
-              "text": "به پلیس بگم",
-              "next": "ep3_sina_police",
-              "effects": {
-                "memory": { "metVentus": true, "ventusTrust": -20 },
-                "stats": { "sanity": -5 }
-              }
+              "text": "به هیچکس نگم — ونتوس گفته تنها بیا",
+              "next": "ep3_alone_decision",
+              "effects": { "memory": { "ep3Told": "none" } }
             }
           ]
         },
-        "ep3_sina_skeptical": {
+        "ep3_chat_rahi": {
           "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "تو به من می‌گی یه غریبه ساغر رو دزدیده، ولی خودت یه غریبه‌ای. چطور بدونم خودت حسین شفیعی نیستی؟",
-          "narrator": "ونتوس مکث می‌کنه. بعد کیفش رو باز می‌کنه و یه کارت شناسایی قدیمی نشون می‌ده.",
-          "next": "ep3_ventus_id"
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "سینا به رهی پیام می‌دهد.",
+          "phone": {
+            "type": "chat",
+            "header": "رهی",
+            "messages": [
+              {
+                "text": "رهی، فردا شب می‌رم یه جا. یه غریبه بهم گفته که اطلاعاتی درباره ساغر داره.",
+                "sent": true,
+                "delay": 0
+              },
+              {
+                "text": "کجا؟ کی؟",
+                "sent": false,
+                "delay": 1.2
+              },
+              {
+                "text": "خیابان شریعتی. ساعت ۱۱ شب. اسمش ونتوسه.",
+                "sent": true,
+                "delay": 2
+              },
+              {
+                "text": "تنها؟",
+                "sent": false,
+                "delay": 2.8
+              },
+              {
+                "text": "آره. گفته تنها بیام.",
+                "sent": true,
+                "delay": 3.6
+              },
+              {
+                "text": "سینا، این خطرناکه. بذار باهات بیام.",
+                "sent": false,
+                "delay": 4.4
+              }
+            ],
+            "choices": [
+              {
+                "text": "قبول کنم رهی بیاد",
+                "next": "ep3_rahi_accept",
+                "effects": { "memory": { "ep3Companion": "rahi" } }
+              },
+              {
+                "text": "به رهی بگم نه",
+                "next": "ep3_rahi_decline",
+                "effects": { "memory": { "ep3Companion": "none" } }
+              }
+            ]
+          },
+          "next": "ep3_rahi_accept"
         },
-        "ep3_ventus_id": {
-          "portrait": "assets/images/default.jpg",
+        "ep3_rahi_accept": {
+          "portrait": "assets/images/rehi talking.jpg",
+          "speaker": "رهی",
+          "dialogue": "باشه. من توی ماشین می‌مونم. اگه خطری شد، بهم زنگ بزن.",
+          "narrator": "سینا و رهی توی ماشین نشسته‌اند. برف سنگین می‌بارد. ساعت ۱۰:۵۵ شب. سینا پیاده می‌شود و به سمت کوچه بنفشه می‌رود.",
+          "next": "ep3_meeting_ventus_rahi"
+        },
+        "ep3_rahi_decline": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "سینا به رهی می‌گوید که تنها می‌رود. رهی نگران است ولی قبول می‌کند. سینا تنها توی ماشین نشسته و به سمت خیابان شریعتی می‌رود.",
+          "next": "ep3_meeting_ventus_alone"
+        },
+        "ep3_call_sayman": {
+          "portrait": "assets/images/sayman1 talking.png",
+          "speaker": "سایمان",
+          "dialogue": "سینا؟ دیر شده. چی شده؟",
+          "narrator": "سینا به سایمان زنگ می‌زند و ماجرا را برایش تعریف می‌کند.",
+          "choices": [
+            {
+              "text": "قبول کنم به سایمان زنگ بزنم",
+              "next": "ep3_sayman_accept",
+              "effects": { "memory": { "ep3Companion": "sayman" } }
+            },
+            {
+              "text": "به سایمان بگم نه",
+              "next": "ep3_sayman_decline",
+              "effects": { "memory": { "ep3Companion": "none" } }
+            }
+          ]
+        },
+        "ep3_sayman_accept": {
+          "portrait": "assets/images/sayman1 talking.png",
+          "speaker": "سایمان",
+          "dialogue": "باشه. اگه خطری شد، بهم زنگ بزن.",
+          "narrator": "سینا تنها توی ماشین نشسته. به سایمان زنگ زده که پشت صحنه منتظر باشد. برف سنگین می‌بارد. ساعت ۱۰:۵۵ شب. پیاده می‌شود و به سمت کوچه بنفشه می‌رود.",
+          "next": "ep3_meeting_ventus_alone"
+        },
+        "ep3_sayman_decline": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "سینا به سایمان می‌گوید که نیازی نیست. تنها می‌رود. برف سنگین می‌بارد. ساعت ۱۰:۵۵ شب.",
+          "next": "ep3_meeting_ventus_alone"
+        },
+        "ep3_call_arya": {
+          "portrait": "assets/images/arya talking.jpg",
+          "speaker": "آریا",
+          "dialogue": "سینا! چی شده؟",
+          "narrator": "سینا به آریا زنگ می‌زند و ماجرا را برایش تعریف می‌کند.",
+          "choices": [
+            {
+              "text": "قبول کنم آریا بیاد",
+              "next": "ep3_arya_accept",
+              "effects": { "memory": { "ep3Companion": "arya" } }
+            },
+            {
+              "text": "به آریا بگم نه",
+              "next": "ep3_arya_decline",
+              "effects": { "memory": { "ep3Companion": "none" } }
+            }
+          ]
+        },
+        "ep3_arya_accept": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "سینا، به ونتوس اعتماد نکن! این اسم رو امروز توی کلانتری شنیدم. یه آدم خطرناکه.",
+          "narrator": "سینا و آریا توی ماشین نشسته‌اند. برف سنگین می‌بارد. ساعت ۱۰:۵۵ شب. سینا پیاده می‌شود و به سمت کوچه بنفشه می‌رود.",
+          "next": "ep3_meeting_ventus_arya"
+        },
+        "ep3_arya_decline": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "سینا به آریا می‌گوید که تنها می‌رود. آریا نگران است ولی قبول می‌کند. سینا تنها توی ماشین نشسته و به سمت خیابان شریعتی می‌رود.",
+          "next": "ep3_meeting_ventus_alone"
+        },
+        "ep3_alone_decision": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "سینا گوشی را کنار می‌گذارد. به هیچکس نمی‌گوید. ونتوس گفته تنها بیاید. فردا تنها می‌رود.",
+          "next": "ep3_meeting_ventus_alone"
+        },
+        "ep3_meeting_ventus_rahi": {
+          "portrait": "assets/images/ventos default.jpg",
           "speaker": "ونتوس",
-          "dialogue": "من بهرادم. قبلاً توی نیروی انتظامی بودم. اخراج شدم چون راست می‌گفتم و کسی باور نمی‌کرد. حالا باور کن یا نه، انتخاب با خودته.",
-          "narrator": "سینا کارت رو نگاه می‌کنه. عکس ونتوس جوان‌تر. با یه لباس فرم. به نظر راست می‌گه.",
-          "next": "ep3_sina_skeptical_2"
+          "dialogue": "سینا. تنها اومدی؟",
+          "narrator": "سینا به سمت کوچه بنفشه می‌رود. ونتوس آنجاست. برف سنگین می‌بارد.",
+          "next": "ep3_ventus_info"
         },
-        "ep3_sina_skeptical_2": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "اگه راست می‌گی، پس مدرک بیشتری به من بده. نه فقط یه رسید خشک‌شویی.",
-          "narrator": "ونتوس نگاهش می‌کنه. چیزی توی چشم‌هاش می‌درخشه.",
-          "next": "ep3_ventus_more_info"
-        },
-        "ep3_ventus_more_info": {
-          "portrait": "assets/images/default.jpg",
+        "ep3_meeting_ventus_arya": {
+          "portrait": "assets/images/ventos default.jpg",
           "speaker": "ونتوس",
-          "dialogue": "باشه. یه چیز دیگه بهت می‌گم. حسین شفیعی یه ماشین سفید داره. شاسی‌بلند. ولی پلاکش رو یادم نیست. یه چیز دیگه: اون شب، قبل از اینکه ساغر رو ببره، یه مکالمه‌ی تلفنی داشت. با کسی. صداش رو شنیدم. گفت «تموم شد. هرچی بود تموم شد.»",
-          "narrator": "",
-          "next": "ep3_sina_ventus_who"
+          "dialogue": "سینا. تنها اومدی؟",
+          "narrator": "سینا به سمت کوچه بنفشه می‌رود. ونتوس آنجاست. برف سنگین می‌بارد.",
+          "next": "ep3_ventus_info"
         },
-        "ep3_sina_ventus_who": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "با کی حرف می‌زد؟",
-          "narrator": "",
-          "next": "ep3_ventus_who_answer"
-        },
-        "ep3_ventus_who_answer": {
-          "portrait": "assets/images/default.jpg",
+        "ep3_meeting_ventus_alone": {
+          "portrait": "assets/images/ventos default.jpg",
           "speaker": "ونتوس",
-          "dialogue": "نمی‌دونم. ولی اگه بتونی لیست تماس‌های ساغر رو بگیری، شاید اون نفر رو پیدا کنی.",
-          "narrator": "",
-          "next": "ep3_sina_ventus_list"
+          "dialogue": "سینا. تنها اومدی. خوبه.",
+          "narrator": "سینا تنها به سمت کوچه بنفشه می‌رود. ونتوس آنجاست. برف سنگین می‌بارد.",
+          "next": "ep3_ventus_info"
         },
-        "ep3_sina_ventus_list": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "لیست تماس‌ها رو مهراس داره. ولی مهراس به من نمی‌ده.",
-          "narrator": "",
-          "next": "ep3_ventus_list_answer"
-        },
-        "ep3_ventus_list_answer": {
-          "portrait": "assets/images/default.jpg",
+        "ep3_ventus_info": {
+          "portrait": "assets/images/ventos default.jpg",
           "speaker": "ونتوس",
-          "dialogue": "پس راهی پیدا کن. از سایمان کمک بگیر.",
-          "narrator": "سینا سرش رو تکون می‌ده.",
-          "next": "ep3_sina_ventus_final"
+          "dialogue": "خوب. چون چیزایی که باید بگم، فقط برای گوش توست.",
+          "narrator": "برف سنگین‌تر می‌بارد. ونتوس چند لحظه به اطراف نگاه می‌کند.",
+          "next": "ep3_ventus_accuse"
         },
-        "ep3_sina_ventus_final": {
+
+        "ep3_ventus_accuse": {
+          "portrait": "assets/images/ventos default.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "حسین شفیعی ساغر رو دزدیده.",
+          "narrator": "سینا برای چند ثانیه خشکش می‌زند.",
+          "next": "ep3_ventus_source"
+        },
+
+        "ep3_ventus_source": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "سینا",
-          "dialogue": "باشه. خودم میرسم. ولی اگه دروغ گفته باشی...",
+          "dialogue": "پس بگو از کجا اینو فهمیدی؟",
+          "narrator": "",
+          "choices": [
+            {
+              "text": "ادامه",
+              "next": "ep3_ventus_source_check"
+            }
+          ]
+        },
+
+        "ep3_ventus_source_check": {
+          "portrait": "assets/images/ventos default.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "منبع مهم نیست. مهم اینه که ساغر هنوز زنده‌ست.",
+          "narrator": "سینا به چشمان ونتوس خیره می‌شود.",
+          "choices": [
+            {
+              "text": "اصرار کنم",
+              "next": "ep3_ventus_source_real"
+            }
+          ]
+        },
+
+        "ep3_ventus_source_real": {
+          "portrait": "assets/images/ventos default.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "باشه. آریا بهم گفت که حسین رو می‌شناسه.",
+          "narrator": "برف روی شانه‌های هر دو نفر نشسته است.",
+          "next": "ep3_sina_reacts_arya"
+        },
+
+        "ep3_sina_reacts_arya": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "آریا؟ آریا هیچوقت درباره تو چیزی به من نگفته.",
+          "narrator": "",
+          "next": "ep3_ventus_answer_arya"
+        },
+
+        "ep3_ventus_answer_arya": {
+          "portrait": "assets/images/ventos default.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "چون نمی‌خواسته نگرانت کنه.",
+          "narrator": "",
+          "next": "ep3_sina_doubt"
+        },
+
+        "ep3_sina_doubt": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "یا شاید نمی‌خواسته بدونی با کی حرف می‌زنه.",
+          "narrator": "چند ثانیه سکوت بینشان حاکم می‌شود.",
+          "next": "ep3_ventus_proof_request"
+        },
+
+        "ep3_ventus_proof_request": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "پس ثابت کن راست می‌گی. یه مدرک بده.",
+          "narrator": "",
+          "next": "ep3_ventus_receipt"
+        },
+
+        "ep3_ventus_receipt": {
+          "portrait": "assets/images/ventos default.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "اینو شب حادثه پیدا کردم. رسید خشک‌شویی به اسم حسین شفیعی.",
+          "narrator": "ونتوس برگه‌ای تاخورده را از جیبش بیرون می‌آورد.",
+          "next": "ep3_ventus_receipt_2"
+        },
+
+        "ep3_ventus_receipt_2": {
+          "portrait": "assets/images/ventos default.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "برو خشک‌شویی ستارخان. از ناصر بپرس. اون آدرس خونه حسین رو می‌دونه.",
+          "narrator": "سینا رسید را از دست او می‌گیرد.",
+          "next": "ep3_ventus_trap_question"
+        },
+
+        "ep3_ventus_trap_question": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "...باشه. ولی اگه این یه تله باشه...",
           "narrator": "",
           "next": "ep3_ventus_final_answer"
         },
+
         "ep3_ventus_final_answer": {
-          "portrait": "assets/images/default.jpg",
+          "portrait": "assets/images/ventos default.jpg",
           "speaker": "ونتوس",
-          "dialogue": "نمی‌گم. بهراد همیشه راست می‌گه. حتی وقتی راستش به ضررش تموم بشه.",
-          "narrator": "ونتوس برمی‌گرده و توی تاریکی محو می‌شه. سینا تنها می‌مونه توی برف.",
-          "next": "ep3_car_conversation"
+          "dialogue": "تله نیست. ولی اگه می‌ترسی، با یه نفر برو.",
+          "narrator": "",
+          "next": "ep3_ventus_leave"
         },
-        "ep3_ventus_direct": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "این رسید مال حسین شفیعیه. آدرس خشک‌شویی رو ببین. برو اونجا. از پیرمرد بپرس حسین کیه. ولی بهش نگو من فرستادمت.",
-          "narrator": "سینا رسید رو برمی‌داره. به آدرس نگاه می‌کنه.",
-          "next": "ep3_sina_direct_question"
-        },
-        "ep3_sina_direct_question": {
+
+        "ep3_ventus_leave": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "سینا",
-          "dialogue": "چرا؟",
-          "narrator": "",
-          "next": "ep3_ventus_direct_answer"
+          "dialogue": "به کسی اعتماد ندارم. فقط می‌خوام ساغر رو پیدا کنم.",
+          "narrator": "سینا برمی‌گردد و به سمت ماشینش می‌رود.",
+          "next": "ep3_after_ventus"
         },
-        "ep3_ventus_direct_answer": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "چون پیرمرد از من می‌ترسه. اگه بفهمه من پشت پرده‌ام، هیچی بهت نمی‌گه.",
-          "narrator": "",
-          "next": "ep3_sina_direct_what"
-        },
-        "ep3_sina_direct_what": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "پس چی بگم؟",
-          "narrator": "",
-          "next": "ep3_ventus_direct_what_answer"
-        },
-        "ep3_ventus_direct_what_answer": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "بگو دوست ساغری. بگو می‌خوای پیداش کنی. اون کمک می‌کنه. و سینا... حسین شفیعی رو دست کم نگیر. اون قاتل نیست. ولی خطرناکه. هر کاری می‌کنه که ساغر رو نگه داره.",
-          "narrator": "",
-          "next": "ep3_sina_direct_not_killer"
-        },
-        "ep3_sina_direct_not_killer": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "چطور می‌دونی قاتل نیست؟",
-          "narrator": "",
-          "next": "ep3_ventus_direct_not_killer_answer"
-        },
-        "ep3_ventus_direct_not_killer_answer": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "چون اگه می‌خواست بکشش، توی پارک می‌کشت. ولی بردش. یعنی می‌خواد زنده نگهش داره.",
-          "narrator": "",
-          "next": "ep3_sina_direct_alive"
-        },
-        "ep3_sina_direct_alive": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "پس ساغر زنده‌ست.",
-          "narrator": "",
-          "next": "ep3_ventus_direct_alive_answer"
-        },
-        "ep3_ventus_direct_alive_answer": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "تا وقتی که حسین فکر کنه شانسی داره. اگه بفهمه هیچ شانسی نداره... می‌کشتش.",
-          "narrator": "سکوت. برف سنگین‌تر می‌باره.",
-          "next": "ep3_car_conversation"
-        },
-        "ep3_sina_police": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "این حرفا رو باید به سیف بزنی. نه به من.",
-          "narrator": "سینا برمی‌گرده سمت ماشین.",
-          "next": "ep3_ventus_police_warning"
-        },
-        "ep3_ventus_police_warning": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "اگه به پلیس بگی، ساغر رو دیگه نمی‌بینی!",
-          "narrator": "سینا می‌ایسته. برف زیر پاش خرد می‌شه.",
-          "next": "ep3_sina_police_why"
-        },
-        "ep3_sina_police_why": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "چرا؟",
-          "narrator": "",
-          "next": "ep3_ventus_police_why_answer"
-        },
-        "ep3_ventus_police_why_answer": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "چون پلیس یه عملیات می‌کنه. حسین شفیعی می‌فهمه و ساغر رو جابجا می‌کنه. یا بدتر...",
-          "narrator": "سینا برمی‌گرده. نگاه ونتوس می‌کنه.",
-          "next": "ep3_sina_police_what"
-        },
-        "ep3_sina_police_what": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "پس چیکار کنم؟",
-          "narrator": "",
-          "next": "ep3_ventus_police_what_answer"
-        },
-        "ep3_ventus_police_what_answer": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "به من اعتماد کن. بذار خودم راهنماییت کنم. پلیس رو بذار برای وقتی که حسین رو پیدا کردی. نه قبلش.",
-          "narrator": "سینا مکث می‌کنه. برف سنگین‌تر می‌باره.",
-          "choices": [
-            {
-              "text": "به ونتوس اعتماد کنم",
-              "next": "ep3_car_conversation",
-              "effects": {
-                "memory": { "ventusTrust": 20 },
-                "stats": { "trustSina": 5 }
-              }
-            },
-            {
-              "text": "برم پیش سیف",
-              "next": "ep3_climax_police",
-              "effects": {
-                "memory": { "wentToPolice": true, "ventusTrust": -30 },
-                "stats": { "sanity": -10 }
-              }
-            }
-          ]
-        },
-        "ep3_climax_police": {
-          "portrait": "assets/images/seyf defualt.png",
-          "speaker": "سیف",
-          "dialogue": "سینا، من می‌دونم دوست داری کمک کنی. ولی حرف یه مرد غریبه با سابقه رو نمی‌شه مدرک حساب کرد.",
-          "narrator": "سینا توی کلانتری روبه‌روی سیف نشسته. رسید و کارت ویزیت رو بهش می‌ده.",
-          "next": "ep3_police_investigation"
-        },
-        "ep3_police_investigation": {
-          "portrait": "assets/images/seyf talking.png",
-          "speaker": "سیف",
-          "dialogue": "این شماره به اسم کسی ثبت نشده. سیم‌کارت اعتباریه. ردگیری‌اش سخت‌ه. صبر کن. بذار من کارم رو بکنم. تو برو خونه و به هیچکس چیزی نگو.",
-          "narrator": "سینا از کلانتری بیرون میاد. برف سنگین‌تر می‌باره. گوشیش ویبره می‌کنه. پیام از حسین شفیعی: «پلیس رو خبر کردی؟ اشتباه کردی. حالا هیچوقت ساغر رو نمی‌بینی.»",
-          "addNote": {
-            "text": "حسین شفیعی فهمید پلیس دنبالشه. ساغر در خطر بیشتری هست."
-          },
-          "next": "ep3_police_end"
-        },
-        "ep3_police_end": {
+        "ep3_after_ventus": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "",
           "dialogue": "",
-          "narrator": "سینا به خونه برمی‌گرده. به سقف نگاه می‌کنه. ۲۴ ساعت. شاید دیگه دیر شده باشه. پایان مسیر پلیس — «ساعت‌شمار».",
-          "next": null
-        },
-        "ep3_car_conversation": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "",
-          "dialogue": "",
-          "narrator": "سینا و ونتوس توی ماشین نشستن. بخار نفس‌هاشون شیشه رو می‌گیره. ونتوس یه کاغذ مچاله از جیبش درمیاره.",
-          "next": "ep3_receipt_reveal"
-        },
-        "ep3_receipt_reveal": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "اینو شب حادثه از زمین برداشتم. رسید خشک‌شویی. آدرس: خیابان ستارخان، پلاک ۴۳، طبقه دوم.",
-          "narrator": "سینا رسید رو برمی‌داره. تاریخش: دو روز قبل از ناپدید شدن.",
-          "next": "ep3_sina_receipt"
-        },
-        "ep3_sina_receipt": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "مال حسین شفیعیه؟",
-          "narrator": "",
-          "next": "ep3_ventus_receipt_answer"
-        },
-        "ep3_ventus_receipt_answer": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "آره. توی جیبش افتاده. وقتی ساغر رو روی برف می‌کشیده، این افتاده.",
-          "narrator": "",
-          "next": "ep3_sina_receipt_question"
-        },
-        "ep3_sina_receipt_question": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "پس حسین شفیعی لباس‌هاش رو می‌برده خشک‌شویی؟",
-          "narrator": "",
-          "next": "ep3_ventus_receipt_blood"
-        },
-        "ep3_ventus_receipt_blood": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "یا لباسِ خونیش رو. یا لباسِ ساغر رو.",
-          "narrator": "",
-          "next": "ep3_sina_receipt_decision"
-        },
-        "ep3_sina_receipt_decision": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "فردا می‌رم اونجا.",
-          "narrator": "",
-          "choices": [
-            {
-              "text": "با رهی برم",
-              "next": "ep3_dry_cleaner",
-              "effects": {
-                "memory": { "dryCleanerPartner": "rahi" },
-                "stats": { "trustRahi": 5 }
-              }
-            },
-            {
-              "text": "با سایمان برم",
-              "next": "ep3_dry_cleaner_sayman",
-              "effects": {
-                "memory": { "dryCleanerPartner": "sayman" },
-                "stats": { "trustSina": 5 }
-              }
-            },
-            {
-              "text": "تنها برم",
-              "next": "ep3_dry_cleaner_alone",
-              "effects": {
-                "memory": { "dryCleanerPartner": "alone" },
-                "stats": { "sanity": -5 }
-              }
-            },
-            {
-              "text": "به سیف بدم تا پلیس بره",
-              "next": "ep3_dry_cleaner_police",
-              "effects": {
-                "memory": { "dryCleanerPartner": "police" },
-                "stats": { "trustSina": -5 }
-              }
-            }
-          ]
-        },
-        "ep3_dry_cleaner": {
-          "portrait": "assets/images/rehi talking.jpg",
-          "speaker": "",
-          "dialogue": "",
-          "narrator": "صبح روز بعد. سینا و رهی جلوی خشک‌شویی ایستادن. پلاک ۴۳، طبقه دوم. پله‌های چوبی که با هر قدم صدا می‌دن. سینا زنگ می‌زنه.",
-          "next": "ep3_nasser_intro"
-        },
-        "ep3_dry_cleaner_sayman": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "",
-          "dialogue": "",
-          "narrator": "صبح روز بعد. سینا و سایمان جلوی خشک‌شویی ایستادن. پلاک ۴۳، طبقه دوم. سینا زنگ می‌زنه.",
-          "next": "ep3_nasser_intro"
-        },
-        "ep3_dry_cleaner_alone": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "",
-          "dialogue": "",
-          "narrator": "صبح روز بعد. سینا تنها جلوی خشک‌شویی ایستاده. پلاک ۴۳، طبقه دوم. زنگ می‌زنه.",
-          "next": "ep3_nasser_intro"
-        },
-        "ep3_dry_cleaner_police": {
-          "portrait": "assets/images/seyf defualt.png",
-          "speaker": "",
-          "dialogue": "",
-          "narrator": "سینا رسید رو به سیف می‌ده. سیف یه مأمور می‌فرسته خشک‌شویی. ولی ناصر می‌گه چیزی نمی‌دونه. سینا باید خودش بره.",
+          "narrator": "سینا برمی‌گردد و سوار ماشین می‌شود. حالا می‌داند که باید برود خشک‌شویی ستارخان و از ناصر بپرسد.",
           "next": "ep3_dry_cleaner"
         },
-        "ep3_nasser_intro": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "",
-          "dialogue": "",
-          "narrator": "پیرمردی با عینک ضخیم در رو باز می‌کنه. ناصر.",
-          "next": "ep3_sina_nasser"
-        },
-        "ep3_sina_nasser": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "سلام. من درباره یه رسید اومدم. دو روز قبل از حادثه‌ی پارک ایل‌گلی.",
-          "narrator": "ناصر رنگش می‌پره.",
-          "next": "ep3_nasser_fear"
-        },
-        "ep3_nasser_fear": {
-          "portrait": "assets/images/default.jpg",
+        "ep3_dry_cleaner": {
+          "portrait": "assets/images/naser talking.jpg",
           "speaker": "ناصر",
-          "dialogue": "نمی‌دونم چی می‌گی. برو.",
-          "narrator": "ناصر در رو محکم‌تر می‌گیره.",
-          "choices": [
-            {
-              "text": "محکم و جدی برخورد کنم",
-              "next": "ep3_nasser_forceful",
-              "effects": {
-                "memory": { "nasserApproach": "forceful" },
-                "stats": { "trustSina": 5 }
-              }
-            },
-            {
-              "text": "نرم و خواهش‌کننده",
-              "next": "ep3_nasser_gentle",
-              "effects": {
-                "memory": { "nasserApproach": "gentle" },
-                "stats": { "trustRahi": 5 }
-              }
-            }
-          ]
+          "dialogue": "بله؟",
+          "narrator": "سینا جلوی خشک‌شویی ایستاده. پلاک ۴۳، طبقه دوم. پیرمردی با عینک ضخیم در را باز می‌کند. ناصر. یک کارمند ساده.",
+          "next": "ep3_naser_address"
         },
-        "ep3_nasser_forceful": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "آقا ناصر، یه دختر ناپدید شده. ساغر محمودی. می‌دونم شما چیزی می‌دونید. اگه کمک نکنید، پلیس میاد اینجا. اون موقع دیگه نمی‌تونید بگید نمی‌دونم.",
-          "narrator": "ناصر می‌لرزه. عینکش یه کم کج می‌شه. در رو بیشتر باز می‌کنه.",
-          "next": "ep3_nasser_inside"
-        },
-        "ep3_nasser_gentle": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "آقا ناصر، خواهش می‌کنم. من دوست ساغرم. می‌خوام پیداش کنم. اگه چیزی می‌دونید، کمکم کنید.",
-          "narrator": "ناصر نگاه سینا می‌کنه. دلش می‌سوزه. در رو بیشتر باز می‌کنه.",
-          "next": "ep3_nasser_inside"
-        },
-        "ep3_nasser_inside": {
-          "portrait": "assets/images/default.jpg",
+        "ep3_naser_address": {
+          "portrait": "assets/images/naser talking.jpg",
           "speaker": "ناصر",
-          "dialogue": "بیاین تو...",
-          "narrator": "داخل خشک‌شویی بوی نفتالین و پودر لباسشویی می‌ده. دیوارها زرد شدن. یه میز چوبی قدیمی توی گوشه‌ست.",
-          "next": "ep3_nasser_memory"
+          "dialogue": "حسین... آره. می‌شناسمش. مشتری قدیمیه.",
+          "narrator": "ناصر چند ثانیه ساکت می‌ماند. انگار از گفتن ادامه حرفش می‌ترسد.",
+          "next": "ep3_naser_address_2"
         },
-        "ep3_nasser_memory": {
-          "portrait": "assets/images/default.jpg",
+
+        "ep3_naser_address_2": {
+          "portrait": "assets/images/naser talking.jpg",
           "speaker": "ناصر",
-          "dialogue": "ساغر رو یادمه. دختر خوبی بود. یه بار با یه پسر اومده بود اینجا. حدوداً ۲۵ ساله. خوش‌تیپ. دستش رو شونه‌ی ساغر گذاشته بود. خیلی صمیمی بودن.",
+          "dialogue": "خونه‌ش توی خیابان شریعتی، نبش کوچه بنفشه، پلاک ۱۸ هست.",
           "narrator": "",
-          "next": "ep3_sina_nasser_person"
+          "next": "ep3_naser_warning"
         },
-        "ep3_sina_nasser_person": {
+
+        "ep3_naser_warning": {
+          "portrait": "assets/images/naser talking.jpg",
+          "speaker": "ناصر",
+          "dialogue": "ولی آقا... اون آدم خطرناکیه. مواظب باش.",
+          "narrator": "صورت پیرمرد ناگهان رنگ می‌بازد.",
+          "next": "ep3_sina_question_naser"
+        },
+
+        "ep3_sina_question_naser": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "سینا",
-          "dialogue": "اون پسر کیه؟",
+          "dialogue": "چطور می‌دونی خطرناکه؟",
           "narrator": "",
-          "next": "ep3_nasser_person_answer"
+          "next": "ep3_naser_girl_story"
         },
-        "ep3_nasser_person_answer": {
-          "portrait": "assets/images/default.jpg",
+
+        "ep3_naser_girl_story": {
+          "portrait": "assets/images/naser talking.jpg",
           "speaker": "ناصر",
-          "dialogue": "نمی‌دونم. ولی یه بار که تنها اومده بود، یه کارت ویزیت به من داد. گفت اگه کسی پرسید، این رو بهش بدم. فکر کردم شوخیه. ولی حالا...",
-          "narrator": "ناصر می‌ره پشت پیشخوان و یه کارت ویزیت کهنه رو درمیاره.",
-          "next": "ep3_card_reveal"
+          "dialogue": "یه بار یه دختر رو با خودش آورد اینجا.",
+          "narrator": "ناصر به نقطه‌ای نامعلوم خیره می‌شود.",
+          "next": "ep3_naser_girl_story_2"
         },
-        "ep3_card_reveal": {
-          "portrait": "assets/images/default.jpg",
+
+        "ep3_naser_girl_story_2": {
+          "portrait": "assets/images/naser talking.jpg",
+          "speaker": "ناصر",
+          "dialogue": "اون دختر گریه می‌کرد.",
+          "narrator": "",
+          "next": "ep3_naser_girl_story_3"
+        },
+
+        "ep3_naser_girl_story_3": {
+          "portrait": "assets/images/naser talking.jpg",
+          "speaker": "ناصر",
+          "dialogue": "حسین بهش گفت: اگه یه کلمه حرف بزنی، می‌میری.",
+          "narrator": "صدای ناصر کمی می‌لرزد.",
+          "next": "ep3_naser_girl_story_4"
+        },
+
+        "ep3_naser_girl_story_4": {
+          "portrait": "assets/images/naser talking.jpg",
+          "speaker": "ناصر",
+          "dialogue": "من هیچی نگفتم. ترسیدم.",
+          "narrator": "پیرمرد سرش را پایین می‌اندازد.",
+          "next": "ep3_naser_card_intro"
+        },
+
+        "ep3_naser_card_intro": {
+          "portrait": "assets/images/naser talking.jpg",
+          "speaker": "ناصر",
+          "dialogue": "صبر کن...",
+          "narrator": "ناصر پشت پیشخوان خم می‌شود و بین چند پوشه قدیمی می‌گردد.",
+          "next": "ep3_naser_card_intro_2"
+        },
+
+        "ep3_naser_card_intro_2": {
+          "portrait": "assets/images/naser talking.jpg",
+          "speaker": "ناصر",
+          "dialogue": "یه چیزی دارم که شاید به دردت بخوره.",
+          "narrator": "",
+          "next": "ep3_naser_card"
+        },
+        "ep3_naser_card": {
+          "portrait": "assets/images/naser talking.jpg",
+          "speaker": "ناصر",
+          "dialogue": "اینو یه بار به من داد. گفت اگه کسی پرسید، بدم.",
+          "narrator": "ناصر یک کارت ویزیت کهنه از پشت پیشخوان درمی‌آورد.",
+          "next": "ep3_naser_card_2"
+        },
+
+        "ep3_naser_card_2": {
+          "portrait": "assets/images/naser talking.jpg",
           "speaker": "",
           "dialogue": "",
-          "narrator": "روی کارت نوشته: «حسین شفیعی — تعمیرات لوازم خانگی» و یه شماره تلفن. ۴ رقم آخر: ۷۸۲۱. سینا کارت رو برمی‌داره. یه چیزی توی ذهنش جرقه می‌زنه.",
-          "puzzleId": "puzzle_7821",
-          "puzzle": {
-            "html": "<div style='text-align:center;color:#d4a846;font-family:Vazirmatn;'><h3>🔢 عدد ۷۸۲۱</h3><p style='margin:15px 0;font-size:0.9rem;color:#ccc;direction:rtl'>سینا یادش میاد این عدد رو قبلاً توی چت‌های ساغر دیده. ساغر این عدد رو به کی گفته بود؟</p><div style='display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:15px'><button onclick='window.check7821(\"arya\")' style='padding:8px 20px;background:rgba(212,168,70,0.15);border:1px solid #d4a846;color:#d4a846;border-radius:20px;cursor:pointer;font-family:Vazirmatn;'>به آریا</button><button onclick='window.check7821(\"mehras\")' style='padding:8px 20px;background:rgba(212,168,70,0.15);border:1px solid #d4a846;color:#d4a846;border-radius:20px;cursor:pointer;font-family:Vazirmatn;'>به مهراس</button><button onclick='window.check7821(\"rahi\")' style='padding:8px 20px;background:rgba(212,168,70,0.15);border:1px solid #d4a846;color:#d4a846;border-radius:20px;cursor:pointer;font-family:Vazirmatn;'>به رهی</button></div><p id='puzzleFeedback_7821' style='margin-top:12px;font-size:0.8rem;min-height:20px'></p></div>"
-          },
-          "onSolve": "ep3_after_7821",
-          "next": "ep3_after_7821"
+          "narrator": "روی کارت نوشته شده: «حسین شفیعی — تعمیرات لوازم خانگی».",
+          "next": "ep3_naser_card_3"
         },
-        "ep3_after_7821": {
+
+        "ep3_naser_card_3": {
+          "portrait": "assets/images/naser talking.jpg",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "شماره تماس با ۷۸۲۱ پایان پیدا می‌کند.",
+          "next": "ep3_sina_remember_7821"
+        },
+
+        "ep3_sina_remember_7821": {
           "portrait": "assets/images/sina defualt.png",
-          "speaker": "",
-          "dialogue": "",
-          "narrator": "سینا به یاد میاره که ساغر این عدد رو توی یه پیام به آریا گفته بود. ولی آریا هیچوقت بهش نگفته. چرا؟",
+          "speaker": "سینا",
+          "dialogue": "۷۸۲۱...",
+          "narrator": "قلب سینا تندتر می‌زند.",
+          "next": "ep3_sina_remember_7821_2"
+        },
+
+        "ep3_sina_remember_7821_2": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "این عدد رو قبلاً دیدم.",
+          "narrator": "",
+          "next": "ep3_sina_remember_7821_3"
+        },
+
+        "ep3_sina_remember_7821_3": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "ساغر توی یکی از پیام‌هاش این عدد رو برای آریا فرستاده بود.",
+          "narrator": "",
           "addItem": {
             "id": "hossein_card",
             "name": "کارت ویزیت حسین شفیعی",
@@ -1430,299 +1307,1102 @@
             "description": "تعمیرات لوازم خانگی — شماره: ...۷۸۲۱"
           },
           "addNote": {
-            "text": "عدد ۷۸۲۱ مال حسین شفیعیه. ساغر این عدد رو به آریا گفته بود."
+            "text": "عدد ۷۸۲۱ روی کارت ویزیت حسین شفیعی. ساغر قبلاً این عدد را برای آریا فرستاده بود."
           },
           "next": "ep3_arya_house"
         },
         "ep3_arya_house": {
-          "portrait": "assets/images/arya happy.jpg",
-          "speaker": "",
-          "dialogue": "",
-          "narrator": "سینا می‌ره خونه‌ی آریا. آریا توی آشپزخونه‌ست. دیانا کنارش نشسته و چای می‌خوره.",
-          "next": "ep3_arya_greeting"
-        },
-        "ep3_arya_greeting": {
-          "portrait": "assets/images/arya happy.jpg",
-          "speaker": "آریا",
-          "dialogue": "سینا! بیا تو. چی شده؟",
-          "narrator": "",
-          "next": "ep3_sina_arya_receipt"
-        },
-        "ep3_sina_arya_receipt": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "یه رسید خشک‌شویی پیدا کردم. از شب حادثه. اسم روشه: حسین شفیعی.",
-          "narrator": "آریا رسید رو می‌گیره. نگاه می‌کنه. پیشونیش رو چین می‌اندازه.",
-          "next": "ep3_arya_reaction"
-        },
-        "ep3_arya_reaction": {
           "portrait": "assets/images/arya sad.jpg",
           "speaker": "آریا",
-          "dialogue": "حسین شفیعی؟ این اسم رو تا حالا نشنیدم.",
-          "narrator": "",
-          "next": "ep3_sina_arya_7821"
+          "dialogue": "۷۸۲۱... آره! یادم اومد.",
+          "narrator": "سینا روبروی آریا نشسته. دیانا در آشپزخانه مشغول آماده کردن چای است.",
+          "next": "ep3_arya_7821_2"
         },
-        "ep3_sina_arya_7821": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "عدد ۷۸۲۱ برات آشناست؟ ساغر این عدد رو توی یه پیام به تو نوشته بود. یادته؟",
-          "narrator": "آریا مکث می‌کنه. نگاهش یه لحظه عوض میشه، ولی سریع جمع می‌کنه.",
-          "next": "ep3_arya_7821_answer"
-        },
-        "ep3_arya_7821_answer": {
+
+        "ep3_arya_7821_2": {
           "portrait": "assets/images/arya sad.jpg",
           "speaker": "آریا",
-          "dialogue": "سینا، اون یه عدد تصادفی بود. ساغر کلی چیزای بی‌ربط می‌نوشت. راستش یادم نیست.",
-          "narrator": "سینا به آریا نگاه می‌کنه. چیزی توی دلش می‌گه آریا همه‌چیز رو نمی‌گه.",
-          "next": "ep3_diana_warning"
-        },
-        "ep3_diana_warning": {
-          "portrait": "assets/images/diana defualt.png",
-          "speaker": "دیانا",
-          "dialogue": "سینا، تو داری چیکار می‌کنی؟ این کارها خطرناکه. بذار پلیس کارش رو بکنه.",
-          "narrator": "سینا به آریا نگاه می‌کنه.",
-          "next": "ep3_sina_arya_trust"
-        },
-        "ep3_sina_arya_trust": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "آریا... تو راست می‌گی؟",
+          "dialogue": "ساغر این عدد رو به من گفت.",
           "narrator": "",
-          "next": "ep3_arya_trust_answer"
+          "next": "ep3_arya_7821_3"
         },
-        "ep3_arya_trust_answer": {
+
+        "ep3_arya_7821_3": {
           "portrait": "assets/images/arya sad.jpg",
           "speaker": "آریا",
-          "dialogue": "سینا، من بهترین دوستتم. هیچوقت بهت دروغ نمی‌گم. ولی حواست باشه. آدمایی که ادعا می‌کنن همه چی رو دیدن، بعضی وقتا چیزایی رو می‌بینن که وجود نداره. یا شاید خودشون دستی توش دارن.",
+          "dialogue": "گفت یه کارت ویزیت پیدا کرده که این عدد روش نوشته شده.",
           "narrator": "",
-          "next": "ep3_sina_arya_ventus"
+          "next": "ep3_arya_7821_4"
         },
-        "ep3_sina_arya_ventus": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "سینا",
-          "dialogue": "به ونتوس شک داری؟",
-          "narrator": "",
-          "next": "ep3_arya_ventus_answer"
-        },
-        "ep3_arya_ventus_answer": {
+
+        "ep3_arya_7821_4": {
           "portrait": "assets/images/arya sad.jpg",
           "speaker": "آریا",
-          "dialogue": "یه غریبه که میاد بهت می‌گه قاتل کیه؟ زیادی راحته. برو خشک‌شویی. ببین چی پیدا می‌کنی. ولی با یه نفر برو. تنها نرو.",
+          "dialogue": "ولی من توجه نکردم. فکر کردم یه شماره تصادفیه.",
           "narrator": "",
-          "next": "ep3_cafe"
+          "next": "ep3_sina_angry"
         },
-        "ep3_cafe": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "",
-          "dialogue": "",
-          "narrator": "کافه‌ی مرکزی. عصر. سینا، رهی، سایمان و هانا دور یه میز نشستن. کارت ویزیت روی میزه.",
-          "next": "ep3_sayman_analysis"
-        },
-        "ep3_sayman_analysis": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "سایمان",
-          "dialogue": "حسین شفیعی. تعمیرات لوازم خانگی. این یه پوشش خوبیه برای یه آدمی که نمی‌خواد پیدا بشه.",
-          "narrator": "",
-          "next": "ep3_hana_caution"
-        },
-        "ep3_hana_caution": {
-          "portrait": "assets/images/hana defualt.png",
-          "speaker": "هانا",
-          "dialogue": "ما نباید همه چی رو به قتل ربط بدیم. شاید واقعاً تعمیراته.",
-          "narrator": "",
-          "next": "ep3_sayman_reply"
-        },
-        "ep3_sayman_reply": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "سایمان",
-          "dialogue": "هانا، یه دختر ناپدید شده. رسید خشک‌شویی با خون. کارت ویزیت یه غریبه. اینا تصادفی نیستن.",
-          "narrator": "",
-          "next": "ep3_sina_decision_cafe"
-        },
-        "ep3_sina_decision_cafe": {
+
+        "ep3_sina_angry": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "سینا",
-          "dialogue": "سایمان، می‌تونی شماره‌ش رو چک کنی؟ ببینم ثبت‌نام کرده یا نه.",
-          "narrator": "سایمان گوشیش رو برمی‌داره. چند دقیقه بعد نگاهش می‌کنه.",
-          "next": "ep3_sayman_result"
-        },
-        "ep3_sayman_result": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "سایمان",
-          "dialogue": "شماره فعاله. ولی هیچ پروفایلی توی شبکه‌های اجتماعی نداره. فقط یه شماره‌ست.",
+          "dialogue": "پس چرا به من نگفتی؟",
           "narrator": "",
-          "next": "ep3_hana_result"
+          "next": "ep3_arya_defend"
         },
-        "ep3_hana_result": {
-          "portrait": "assets/images/hana defualt.png",
-          "speaker": "هانا",
-          "dialogue": "یا خیلی محتاطه، یا خیلی حرفه‌ای.",
+
+        "ep3_arya_defend": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "چون یادم نبود، سینا.",
           "narrator": "",
-          "next": "ep3_sayman_plan"
+          "next": "ep3_arya_defend_2"
         },
-        "ep3_sayman_plan": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "سایمان",
-          "dialogue": "یه راه هست. می‌تونیم به این شماره پیام بدیم. با یه شماره‌ی ناشناس.",
+
+        "ep3_arya_defend_2": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "ساغر کلی چیزای بی‌ربط می‌گفت.",
           "narrator": "",
-          "next": "ep3_sina_what_message"
+          "next": "ep3_arya_defend_3"
         },
-        "ep3_sina_what_message": {
+
+        "ep3_arya_defend_3": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "من نمی‌دونستم این عدد مهمه.",
+          "narrator": "",
+          "next": "ep3_ventus_question"
+        },
+
+        "ep3_ventus_question": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "سینا",
-          "dialogue": "چی بگیم؟",
+          "dialogue": "آریا... ونتوس گفت شماره منو از تو گرفته.",
           "narrator": "",
-          "puzzleId": "puzzle_hossein_message",
-          "puzzle": {
-            "html": "<div style='text-align:center;color:#d4a846;font-family:Vazirmatn;'><h3>💬 پیام به حسین</h3><p style='margin:15px 0;font-size:0.9rem;color:#ccc;direction:rtl'>چیزی بگو که فقط حسین شفیعی می‌دونه جوابش رو بده. کدوم پیام رو می‌فرستی؟</p><div style='display:flex;flex-direction:column;gap:10px;align-items:center;margin-top:15px'><button onclick='window.checkHosseinMessage(\"ساغر رو کجا بردی؟\")' style='padding:10px 25px;background:rgba(212,168,70,0.15);border:1px solid #d4a846;color:#d4a846;border-radius:20px;cursor:pointer;font-family:Vazirmatn;width:90%;max-width:320px;'>ساغر رو کجا بردی؟</button><button onclick='window.checkHosseinMessage(\"چرا این کارو کردی؟\")' style='padding:10px 25px;background:rgba(212,168,70,0.15);border:1px solid #d4a846;color:#d4a846;border-radius:20px;cursor:pointer;font-family:Vazirmatn;width:90%;max-width:320px;'>چرا این کارو کردی؟</button><button onclick='window.checkHosseinMessage(\"من می‌دونم ساغر پیش توئه\")' style='padding:10px 25px;background:rgba(212,168,70,0.15);border:1px solid #d4a846;color:#d4a846;border-radius:20px;cursor:pointer;font-family:Vazirmatn;width:90%;max-width:320px;'>من می‌دونم ساغر پیش توئه</button></div><p id='puzzleFeedback_hossein' style='margin-top:12px;font-size:0.8rem;min-height:20px'></p></div>"
-          },
-          "onSolve": "ep3_after_hossein_message",
-          "next": "ep3_after_hossein_message"
+          "next": "ep3_ventus_question_2"
         },
-        "ep3_after_hossein_message": {
+
+        "ep3_ventus_question_2": {
           "portrait": "assets/images/sina defualt.png",
-          "speaker": "",
-          "dialogue": "",
-          "narrator": "پیام می‌ره. چند دقیقه بعد، جواب میاد: «ساغر پیش منه. زنده‌ست. ولی اگه به کسی بگی، دیگه نمی‌بینی‌اش.» همه نگاه هم می‌کنن.",
+          "speaker": "سینا",
+          "dialogue": "راست می‌گه؟",
+          "narrator": "",
+          "next": "ep3_arya_shocked"
+        },
+
+        "ep3_arya_shocked": {
+          "portrait": "assets/images/arya shocked.jpg",
+          "speaker": "آریا",
+          "dialogue": "ونتوس؟!",
+          "narrator": "آریا با تعجب به سینا نگاه می‌کند.",
+          "next": "ep3_arya_shocked_2"
+        },
+
+        "ep3_arya_shocked_2": {
+          "portrait": "assets/images/arya shocked.jpg",
+          "speaker": "آریا",
+          "dialogue": "من هیچوقت با کسی به اسم ونتوس حرف نزدم.",
+          "narrator": "",
+          "next": "ep3_arya_shocked_3"
+        },
+
+        "ep3_arya_shocked_3": {
+          "portrait": "assets/images/arya shocked.jpg",
+          "speaker": "آریا",
+          "dialogue": "اصلاً تا امروز این اسم رو نشنیده بودم.",
+          "narrator": "",
+          "next": "ep3_sina_confused"
+        },
+
+        "ep3_sina_confused": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "پس چطور شماره منو پیدا کرده؟",
+          "narrator": "",
+          "next": "ep3_arya_answer"
+        },
+
+        "ep3_arya_answer": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "نمی‌دونم.",
+          "narrator": "",
+          "next": "ep3_arya_answer_2"
+        },
+
+        "ep3_arya_answer_2": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "ولی سینا...",
+          "narrator": "",
+          "next": "ep3_arya_answer_3"
+        },
+
+        "ep3_arya_answer_3": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "تو می‌دونی که من هیچوقت بهت دروغ نمی‌گم.",
+          "narrator": "آریا دستش را روی دست سینا می‌گذارد.",
+          "next": "ep3_sina_realize"
+        },
+
+        "ep3_sina_realize": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "پس ونتوس دروغ گفته.",
+          "narrator": "",
+          "next": "ep3_arya_warning"
+        },
+
+        "ep3_arya_warning": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "به نظر میاد همینطوره.",
+          "narrator": "",
+          "next": "ep3_arya_warning_2"
+        },
+
+        "ep3_arya_warning_2": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "اگه درباره من دروغ گفته، شاید درباره چیزای دیگه هم دروغ گفته باشه.",
+          "narrator": "",
+          "next": "ep3_arya_warning_3"
+        },
+
+        "ep3_arya_warning_3": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "بهش اعتماد نکن.",
+          "narrator": "",
+          "next": "ep3_arya_binam"
+        },
+        "ep3_arya_binam": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "سینا، امروز توی کلانتری یه نفر رو دیدم. اسمش بینامه. نگهبان پارک ایل‌گلی. سیف ازش بازجویی میکرد. می‌گفت اون شب یه ماشین شاسی‌بلند سفید دیده. ولی به سیف چیزی نگفته. حس میکنم یه چیزی می‌دونه که نمی‌گه.",
+          "narrator": "آریا از بینام می‌گوید. کسی که ظاهراً چیزی می‌داند ولی سکوت کرده.",
           "addNote": {
-            "text": "حسین شفیعی تأیید کرد ساغر زنده‌ست و پیششه."
+            "text": "بینام نگهبان پارک ایل‌گلی. ادعا می‌کند ماشین سفید دیده ولی به سیف چیزی نگفته."
           },
-          "next": "ep3_sepehr_house"
+          "next": "ep3_arya_sepehr_go"
         },
-        "ep3_sepehr_house": {
+        "ep3_arya_sepehr_go": {
+          "portrait": "assets/images/sepehr defualt.png",
+          "speaker": "سپهر",
+          "dialogue": "آریا؟ این وقت شب؟",
+          "narrator": "آریا جلوی در خونه‌ی سپهر ایستاده. برف روی شانه‌هایش نشسته. سپهر با چهره‌ای خواب‌آلود و نگران در را باز می‌کند.",
+          "next": "ep3_arya_sepehr_go_2"
+        },
+
+        "ep3_arya_sepehr_go_2": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "سپهر، باید باهات برم یه جا. الان. نمی‌تونم بیشتر صبر کنم.",
+          "narrator": "آریا نفس‌هایش را به سختی بیرون می‌دهد. انگار از جایی دویده تا اینجا.",
+          "next": "ep3_arya_sepehr_go_3"
+        },
+
+        "ep3_arya_sepehr_go_3": {
+          "portrait": "assets/images/sepehr talking.png",
+          "speaker": "سپهر",
+          "dialogue": "کجا؟ این موقع شب؟",
+          "narrator": "سپهر با بی‌میلی به آریا نگاه می‌کند. دستش را روی چارچوب در گذاشته، انگار نمی‌خواهد راه بدهد.",
+          "next": "ep3_arya_sepehr_go_4"
+        },
+
+        "ep3_arya_sepehr_go_4": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "خونه‌ی حسین شفیعی. بینام بهم گفت که ناصر آدرس رو می‌دونه. رفتم پیش ناصر. آدرس رو گرفتم. باید بریم اونجا.",
+          "narrator": "آریا با نگاه التماس‌آمیز به سپهر نگاه می‌کند.",
+          "next": "ep3_arya_sepehr_go_5"
+        },
+
+        "ep3_arya_sepehr_go_5": {
+          "portrait": "assets/images/sepehr defualt.png",
+          "speaker": "سپهر",
+          "dialogue": "چرا من؟ چرا سینا رو نمی‌بری؟",
+          "narrator": "سپهر اخم می‌کند. صدایش کمی خشک است.",
+          "next": "ep3_arya_sepehr_go_6"
+        },
+
+        "ep3_arya_sepehr_go_6": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "چون به تو اعتماد دارم. و تنها نیستم. سینا... سینا توی این ماجرا داره خودش رو گم می‌کنه. نمی‌خوام بیشتر از این درگیرش کنم. ولی تو... تو می‌تونی کمک کنی.",
+          "narrator": "آریا قدمی جلوتر می‌گذارد. برف زیر پایش خرد می‌شود.",
+          "next": "ep3_arya_sepehr_go_7"
+        },
+
+        "ep3_arya_sepehr_go_7": {
+          "portrait": "assets/images/sepehr sad.png",
+          "speaker": "سپهر",
+          "dialogue": "...باشه. ولی اگه خطری شد، خودت می‌دونی.",
+          "narrator": "سپهر آهی می‌کشد. کاپشنش را از چوب‌لباسی برمی‌دارد و از خانه خارج می‌شود.",
+          "next": "ep3_hossein_house"
+        },
+        "ep3_hossein_house": {
+          "portrait": "assets/images/hossein defualt.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "خوش اومدید.",
+          "narrator": "آریا و سپهر وارد خانه می‌شوند. خانه تاریک و ساکت است. تنها چراغ طبقه همکف روشن مانده.",
+          "next": "ep3_hossein_house_2"
+        },
+
+        "ep3_hossein_house_2": {
+          "portrait": "assets/images/hossein defualt.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "منتظرتون بودم.",
+          "narrator": "حسین از اتاق کناری بیرون می‌آید.",
+          "next": "ep3_hossein_house_3"
+        },
+
+        "ep3_hossein_house_3": {
+          "portrait": "assets/images/hossein defualt.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "آریا... و سپهر.",
+          "narrator": "",
+          "next": "ep3_hossein_house_4"
+        },
+
+        "ep3_hossein_house_4": {
+          "portrait": "assets/images/hossein defualt.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "تورو ندیده بودم قبلاً.",
+          "narrator": "نگاهش روی سپهر ثابت می‌ماند.",
+          "next": "ep3_hossein_house_5"
+        },
+
+        "ep3_hossein_house_5": {
+          "portrait": "assets/images/hossein defualt.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "دور و ور سینا خیلی ندیدمت.",
+          "narrator": "",
+          "next": "ep3_hossein_house_6"
+        },
+
+        "ep3_hossein_house_6": {
+          "portrait": "assets/images/hossein defualt.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "ساغر تازه برات مهم شده.",
+          "narrator": "",
+          "next": "ep3_sepehr_question"
+        },
+        "ep3_sepehr_question": {
+          "portrait": "assets/images/sepehr defualt.png",
+          "speaker": "سپهر",
+          "dialogue": "ساغر کجاست؟",
+          "narrator": "",
+          "next": "ep3_hossein_answer"
+        },
+
+        "ep3_hossein_answer": {
+          "portrait": "assets/images/hossein defualt.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "زنده‌ست.",
+          "narrator": "حسین بدون کوچک‌ترین اضطرابی جواب می‌دهد.",
+          "next": "ep3_hossein_answer_2"
+        },
+
+        "ep3_hossein_answer_2": {
+          "portrait": "assets/images/hossein defualt.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "تا وقتی که به حرف‌های من گوش بدید.",
+          "narrator": "",
+          "next": "ep3_arya_why"
+        },
+        "ep3_arya_why": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "چرا این کار رو کردی؟",
+          "narrator": "",
+          "next": "ep3_hossein_love"
+        },
+
+        "ep3_hossein_love": {
+          "portrait": "assets/images/hossein sad.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "چون عاشقشم.",
+          "narrator": "",
+          "next": "ep3_hossein_love_2"
+        },
+
+        "ep3_hossein_love_2": {
+          "portrait": "assets/images/hossein sad.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "سال‌هاست.",
+          "narrator": "",
+          "next": "ep3_hossein_love_3"
+        },
+
+        "ep3_hossein_love_3": {
+          "portrait": "assets/images/hossein sad.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "ولی اون هیچوقت به من نگاه نکرد.",
+          "narrator": "",
+          "next": "ep3_hossein_love_4"
+        },
+
+        "ep3_hossein_love_4": {
+          "portrait": "assets/images/hossein sad.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "حیف ساغر که عاشق یه آدم ضعیف شده.",
+          "narrator": "حسین به سپهر نگاه می‌کند.",
+          "next": "ep3_hossein_love_5"
+        },
+
+        "ep3_hossein_love_5": {
+          "portrait": "assets/images/hossein sad.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "ولی تصمیم‌ها هستن که سرنوشت رو می‌سازن.",
+          "narrator": "",
+          "next": "ep3_hossein_love_6"
+        },
+
+        "ep3_hossein_love_6": {
+          "portrait": "assets/images/hossein sad.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "مگه نه؟",
+          "narrator": "",
+          "next": "ep3_sepehr_attack"
+        },
+        "ep3_sepehr_attack": {
           "portrait": "assets/images/sepehr defualt.png",
           "speaker": "",
           "dialogue": "",
-          "narrator": "شب. خونه‌ی سپهر. برف روی شونه‌هاش نشسته. سینا میاد سمتش.",
-          "next": "ep3_sepehr_greeting"
+          "narrator": "سپهر ناگهان به سمت حسین حمله می‌کند.",
+          "next": "ep3_sepehr_attack_2"
         },
-        "ep3_sepehr_greeting": {
-          "portrait": "assets/images/sepehr talking.png",
-          "speaker": "سپهر",
-          "dialogue": "می‌دونستم می‌ای.",
+
+        "ep3_sepehr_attack_2": {
+          "portrait": "assets/images/hossein defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "اما حسین سریع‌تر است.",
+          "next": "ep3_sepehr_attack_3"
+        },
+
+        "ep3_sepehr_attack_3": {
+          "portrait": "assets/images/hossein defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "با یک حرکت سپهر را روی زمین می‌اندازد.",
+          "next": "ep3_hossein_threat"
+        },
+        "ep3_hossein_threat": {
+          "portrait": "assets/images/hossein sad.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "اگه بلایی سر من بیاد، ساغر می‌میره.",
           "narrator": "",
-          "next": "ep3_sina_sepehr_why"
+          "next": "ep3_hossein_threat_2"
         },
-        "ep3_sina_sepehr_why": {
+
+        "ep3_hossein_threat_2": {
+          "portrait": "assets/images/hossein sad.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "یادت باشه.",
+          "narrator": "",
+          "next": "ep3_hossein_escape"
+        },
+
+        "ep3_hossein_escape": {
+          "portrait": "assets/images/hossein defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "حسین به ارامی از خانه خارج می‌شود. برف سنگین‌تر از قبل می‌بارد.",
+          "next": "ep3_hossein_escape_2"
+        },
+
+        "ep3_hossein_escape_2": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "آریا و سپهر در شوک فرو می‌روند.",
+          "next": "ep3_call_seif_rebuild"
+        },
+        "ep3_call_seif_rebuild": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "...باید به سیف زنگ بزنیم.",
+          "narrator": "",
+          "next": "ep3_call_seif_rebuild_2"
+        },
+
+        "ep3_call_seif_rebuild_2": {
+          "portrait": "assets/images/sepehr defualt.png",
+          "speaker": "سپهر",
+          "dialogue": "آره.",
+          "narrator": "سپهر گوشی را از جیبش بیرون می‌آورد.",
+          "next": "ep3_call_seif_rebuild_3"
+        },
+
+        "ep3_call_seif_rebuild_3": {
+          "portrait": "assets/images/sepehr defualt.png",
+          "speaker": "سپهر",
+          "dialogue": "سیف؟ ما خونه حسین بودیم. اون اینجا بود. فرار کرد.",
+          "narrator": "",
+          "next": "ep3_call_seif"
+        },
+        "ep3_sina_room_end": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "سینا توی اتاقش نشسته. برف پشت پنجره بی‌وقفه می‌بارد. تمام اتفاقات دو روز گذشته توی ذهنش تکرار می‌شوند؛ ونتوس، ناصر، کارت ویزیت، آریا، حسین. ناگهان گوشی روی میز می‌لرزد.",
+          "next": "ep3_sina_room_end_2"
+        },
+
+        "ep3_sina_room_end_2": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "دو پیام تقریباً همزمان می‌رسند.",
+          "next": "ep3_sina_room_chat"
+        },
+        "ep3_sina_room_chat": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "فرستنده هر دو پیام برای سینا آشناست.",
+          "phone": {
+            "type": "chat",
+            "header": "پیام‌های همزمان",
+            "messages": [
+              {
+                "text": "سینا. اگه می‌خوای حقیقت رو بدونی، بیا خونه‌ی من. یه نامه برات گذاشتم. همه‌چیز جلوی چشمتون بوده از اول.",
+                "sent": false,
+                "delay": 0,
+                "sender": "حسین شفیعی"
+              },
+              {
+                "text": "سینا. حسین داره بهت دروغ می‌گه. بیا پیش من. اتوبان شهید کسایی، پمپ بنزین قدیمی.",
+                "sent": false,
+                "delay": 1.5,
+                "sender": "ونتوس"
+              }
+            ],
+            "choices": [
+              {
+                "text": "برم پیش حسین — نامه رو می‌خونم",
+                "next": "ep3_end_hossein",
+                "effects": {
+                  "memory": {
+                    "ep3FinalChoice": "hossein"
+                  }
+                }
+              },
+              {
+                "text": "برم پیش ونتوس — شاید راست می‌گه",
+                "next": "ep3_end_ventus",
+                "effects": {
+                  "memory": {
+                    "ep3FinalChoice": "ventus"
+                  }
+                }
+              },
+              {
+                "text": "به هیچکس نرم — خودم فکر می‌کنم",
+                "next": "ep3_end_walk",
+                "effects": {
+                  "memory": {
+                    "ep3FinalChoice": "walk"
+                  }
+                }
+              }
+            ]
+          },
+          "next": "ep3_end_hossein"
+        },
+        "ep3_end_hossein": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "سینا",
-          "dialogue": "چرا به آریا شک داری؟",
-          "narrator": "",
-          "next": "ep3_sepehr_answer"
+          "dialogue": "اگه یه نفر جواب داشته باشه، احتمالاً حسینه.",
+          "narrator": "سینا گوشی را برمی‌دارد. تصمیمش را گرفته. باید نامه را ببیند. باید بداند حسین چه چیزی را پنهان کرده.",
+          "addNote": {
+            "text": "سینا تصمیم گرفت به خانه حسین برود و نامه را پیدا کند."
+          },
+          "next": null,
+          "nextEpisode": 4,
+          "episodeEnd": true
         },
-        "ep3_sepehr_answer": {
-          "portrait": "assets/images/sepehr talking.png",
-          "speaker": "سپهر",
-          "dialogue": "چون شب حادثه، آریا رو دیدم که داشت از پارک می‌رفت. ساعت ۱۰:۳۰. بهش گفتم کجا؟ گفت می‌ره دنبال ساغر. ولی ساغر اون موقع هنوز ناپدید نشده بود. و یه چیز دیگه... همین امروز صبح، آریا رو دیدم که داشت از خونه‌ی حسین شفیعی می‌اومد بیرون.",
-          "narrator": "",
-          "next": "ep3_sina_shock"
-        },
-        "ep3_sina_shock": {
+        "ep3_end_ventus": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "سینا",
-          "dialogue": "چطور می‌دونی خونه‌ی حسین شفیعی کجاست؟",
-          "narrator": "",
-          "next": "ep3_sepehr_address"
+          "dialogue": "شاید ونتوس هنوز همه حقیقت رو نگفته باشه.",
+          "narrator": "سینا به آدرس پمپ بنزین قدیمی نگاه می‌کند. اگر کسی بتواند پرده را کنار بزند، شاید ونتوس باشد.",
+          "addNote": {
+            "text": "سینا تصمیم گرفت به سراغ ونتوس برود."
+          },
+          "next": null,
+          "nextEpisode": 4,
+          "episodeEnd": true
         },
-        "ep3_sepehr_address": {
-          "portrait": "assets/images/sepehr talking.png",
-          "speaker": "سپهر",
-          "dialogue": "چون منم دارم تحقیق می‌کنم. آدرس رو از خشک‌شویی گرفتم. رفتم اونجا. دیدم آریا از خونه بیرون اومد.",
-          "narrator": "سینا به سپهر نگاه می‌کنه. برف سنگین‌تر می‌باره.",
+        "ep3_end_walk": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "شاید هر دو دارن بازی می‌کنن.",
+          "narrator": "سینا گوشی را خاموش می‌کند و از خانه بیرون می‌رود. برف سنگین تمام خیابان را پوشانده. امشب تصمیمی نمی‌گیرد.",
+          "addNote": {
+            "text": "سینا تصمیم گرفت فعلاً به هیچکس اعتماد نکند."
+          },
+          "next": null,
+          "nextEpisode": 4,
+          "episodeEnd": true
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "ردپا در برف",
+      "season": 1,
+      "startScene": "ep4_router",
+      "scenes": {
+        "ep4_router": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "صبح روز بعد. برف سنگین‌تر از همیشه می‌بارد. سینا توی اتاقش نشسته و به کارت ویزیت حسین شفیعی نگاه می‌کند. دیشب، آریا بهش گفته بود که بینام، نگهبان پارک ایل‌گلی، ماشین سفید را دیده. حالا باید تصمیم بگیرد که قدم بعدی چه باشد. در همین لحظه، گوشی روی میز ویبره می‌زند.",
+          "phone": {
+            "type": "chat",
+            "header": "پیام‌های همزمان",
+            "messages": [
+              {
+                "text": "سینا. اگه می‌خوای حقیقت رو بدونی، بیا خونه‌ی من. یه نامه برات گذاشتم. همه‌چیز جلوی چشمتون بوده از اول.",
+                "sent": false,
+                "delay": 0,
+                "sender": "حسین شفیعی"
+              },
+              {
+                "text": "سینا. حسین داره بهت دروغ می‌گه. بیا پیش من. اتوبان شهید کسایی، پمپ بنزین قدیمی.",
+                "sent": false,
+                "delay": 1.5,
+                "sender": "ونتوس"
+              }
+            ]
+          },
           "choices": [
             {
-              "text": "باور کنم و برم پیش آریا",
-              "next": "ep3_confront_arya",
-              "effects": {
-                "memory": { "believedSepehr": true, "sepehrWarning": true },
-                "suspicion": { "arya": 20 }
-              }
+              "text": "برم پیش حسین — نامه رو می‌خونم",
+              "next": "ep4_go_hossein",
+              "effects": { "memory": { "ep4Choice": "hossein" } }
             },
             {
-              "text": "باور نکنم — آریا دوستمه",
-              "next": "ep3_trust_arya",
-              "effects": {
-                "memory": { "believedSepehr": false },
-                "stats": { "trustArya": 5 }
-              }
+              "text": "برم پیش ونتوس — شاید راست می‌گه",
+              "next": "ep4_go_ventos_01",
+              "effects": { "memory": { "ep4Choice": "ventos" } }
             },
             {
-              "text": "برم خونه‌ی حسین شفیعی",
-              "next": "ep3_go_hossein_house",
-              "effects": {
-                "memory": {
-                  "believedSepehr": true,
-                  "wentToHosseinHouse": true
-                },
-                "stats": { "sanity": -5 }
-              }
-            },
-            {
-              "text": "به ونتوس بگم",
-              "next": "ep3_tell_ventus_sepehr",
-              "effects": {
-                "memory": { "toldVentusAboutSepehr": true },
-                "stats": { "trustSina": 5 }
-              }
+              "text": "به هیچکس نرم — قدم می‌زنم",
+              "next": "ep4_walk_01",
+              "effects": { "memory": { "ep4Choice": "walk" } }
             }
           ]
         },
-        "ep3_confront_arya": {
-          "portrait": "assets/images/arya sad.jpg",
-          "speaker": "آریا",
-          "dialogue": "سینا، من رفتم خونه‌ی حسین شفیعی. ولی نه برای اینکه باهاش همدست باشم. رفتم تا ببینم ساغر اونجاست یا نه. چند روزه دارم خودم تحقیق می‌کنم. یه کلید پیدا کردم. مال یه انباری توی حومه‌ی شهر.",
-          "narrator": "آریا یه کلید از جیبش درمیاره. روش یه برچسب کوچیک هست با یه آدرس.",
+
+        "ep4_go_hossein": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "سینا جلوی خونه‌ی حسین ایستاده. برف سنگین می‌بارد. در باز است. وارد می‌شود. داخل خونه ساکت و تاریک است. روی میز، یک پاکت سفید. اسمش روی آن نوشته شده. نامه را باز می‌کند. توی نامه نوشته: «همه‌چیز از اول جلوی چشمتون بوده. پارک ایل‌گلی. همون جایی که ساغر ناپدید شد. همون جایی که باید برگردی.»",
           "addItem": {
-            "id": "storage_key",
-            "name": "کلید انبار",
-            "icon": "🔑",
-            "description": "کلید انباری در حومه‌ی شهر. آدرس روی برچسب: جاده‌ی قدیم قم، پلاک ۱۴."
+            "id": "hossein_letter",
+            "name": "نامه حسین شفیعی",
+            "icon": "📜",
+            "description": "«همه‌چیز از اول جلوی چشمتون بوده. پارک ایل‌گلی.»"
           },
-          "next": "ep3_night_room"
+          "addNote": {
+            "text": "نامه حسین: همه‌چیز از اول جلوی چشمتون بوده. پارک ایل‌گلی."
+          },
+          "next": "ep4_go_hossein_phone"
         },
-        "ep3_trust_arya": {
+
+        "ep4_go_hossein_phone": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "سینا گوشی را برمی‌دارد و به آریا پیام می‌دهد: «آریا، پارک ایل‌گلی. برو اونجا. سریع.»",
+          "next": "ep4_team_split"
+        },
+
+        "ep4_go_ventos_01": {
+          "portrait": "assets/images/ventos default.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "چون حسین داره بهت دروغ می‌گه. اون می‌خواد تو رو به دام بندازه. انبار جاده‌ی قدیم قم یه تله‌ست.",
+          "narrator": "سینا ماشین را کنار پمپ بنزین قدیمی پارک می‌کند. ونتوس آنجاست. کاپشن مشکی. کلاه. برف روی شانه‌هاش نشسته.",
+          "next": "ep4_go_ventos_02"
+        },
+
+        "ep4_go_ventos_02": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "سینا",
-          "dialogue": "سپهر، تو اشتباه می‌کنی. آریا رو می‌شناسم. اون نمی‌تونه همچین کاری کنه.",
-          "narrator": "سینا برمی‌گرده و می‌ره. سپهر تنها توی حیاط می‌مونه. برف روی شونه‌هاش نشسته.",
-          "next": "ep3_night_room"
-        },
-        "ep3_go_hossein_house": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "",
-          "dialogue": "",
-          "narrator": "سینا می‌ره خیابان شریعتی. ساختمان رو پیدا می‌کنه. طبقه سوم. زنگ می‌زنه. هیچکس جواب نمی‌ده. خونه خالی‌ست.",
-          "addNote": {
-            "text": "خونه‌ی حسین شفیعی خالی‌ست. شاید ساغر رو برده جای دیگه."
-          },
-          "next": "ep3_night_room"
-        },
-        "ep3_tell_ventus_sepehr": {
-          "portrait": "assets/images/default.jpg",
-          "speaker": "ونتوس",
-          "dialogue": "سپهر رو باور نکن. داره اشتباه می‌کنه. آریا هیچ ربطی به حسین نداره. ولی یه چیز دیگه... سپهر خودش رو چک کن. شاید اون بیشتر از چیزی که می‌گه می‌دونه.",
+          "dialogue": "پس ساغر کجاست؟",
           "narrator": "",
-          "next": "ep3_night_room"
+          "next": "ep4_go_ventos_03"
         },
-        "ep3_night_room": {
+
+        "ep4_go_ventos_03": {
+          "portrait": "assets/images/ventos default.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "پارک ایل‌گلی. همون جایی که اول بود. حسین فکر می‌کنه هیچکس نمی‌دونه. ولی من می‌دونستم.",
+          "narrator": "",
+          "next": "ep4_go_ventos_04"
+        },
+
+        "ep4_go_ventos_04": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "چطور می‌تونم بهت اعتماد کنم؟",
+          "narrator": "",
+          "next": "ep4_go_ventos_05"
+        },
+
+        "ep4_go_ventos_05": {
+          "portrait": "assets/images/ventos default.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "نمی‌تونی. ولی این بار راست می‌گم.",
+          "narrator": "سینا به ونتوس نگاه می‌کند. چیزی توی چشم‌هایش هست که نمی‌تواند بخواند.",
+          "next": "ep4_go_ventos_06"
+        },
+
+        "ep4_go_ventos_06": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "پس چرا انبار رو به من گفتی؟",
+          "narrator": "",
+          "next": "ep4_go_ventos_07"
+        },
+
+        "ep4_go_ventos_07": {
+          "portrait": "assets/images/ventos default.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "چون می‌خواستم مطمئن بشم که به کسی اعتماد نمی‌کنی.",
+          "narrator": "",
+          "next": "ep4_go_ventos_08"
+        },
+
+        "ep4_go_ventos_08": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "یعنی منو تست کردی؟",
+          "narrator": "",
+          "next": "ep4_go_ventos_09"
+        },
+
+        "ep4_go_ventos_09": {
+          "portrait": "assets/images/ventos default.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "آره. و رد شدی.",
+          "narrator": "",
+          "next": "ep4_go_ventos_10"
+        },
+
+        "ep4_go_ventos_10": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "پس حالا بگو حقیقت رو.",
+          "narrator": "",
+          "next": "ep4_go_ventos_11"
+        },
+
+        "ep4_go_ventos_11": {
+          "portrait": "assets/images/ventos default.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "پارک ایل‌گلی. برو اونجا. ساغر اونجاست.",
+          "narrator": "",
+          "next": "ep4_go_ventos_12"
+        },
+
+        "ep4_go_ventos_12": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "صبر کن... تو گفتی انبار تله‌ست. پس چرا به من گفتی که برم انبار؟",
+          "narrator": "",
+          "next": "ep4_go_ventos_13"
+        },
+
+        "ep4_go_ventos_13": {
+          "portrait": "assets/images/ventos default.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "چون می‌خواستم ببینم چقدر به من اعتماد داری.",
+          "narrator": "",
+          "next": "ep4_go_ventos_14"
+        },
+
+        "ep4_go_ventos_14": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "پس اگه بهت اعتماد نمی‌کردم، می‌رفتم انبار و می‌مردم؟",
+          "narrator": "",
+          "next": "ep4_go_ventos_15"
+        },
+
+        "ep4_go_ventos_15": {
+          "portrait": "assets/images/ventos default.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "...آره.",
+          "narrator": "سینا به سمت ونتوس پرتاب می‌شود. دستش را روی فرمان ماشین ونتوس می‌گذارد.",
+          "next": "ep4_go_ventos_16"
+        },
+
+        "ep4_go_ventos_16": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "تو دیوانه‌ای!",
+          "narrator": "",
+          "next": "ep4_go_ventos_17"
+        },
+
+        "ep4_go_ventos_17": {
+          "portrait": "assets/images/ventos default.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "سینا! ول کن!",
+          "narrator": "ماشین از جاده خارج می‌شود. برف زیر چرخ‌ها. صدای برخورد. شیشه‌ها می‌شکنند. همه‌چیز سیاه می‌شود.",
+          "next": "ep4_crash_01"
+        },
+
+        "ep4_crash_01": {
           "portrait": "assets/images/sina defualt.png",
           "speaker": "",
           "dialogue": "",
-          "narrator": "نیمه‌شب. سینا توی اتاقش. برف سنگین‌تر می‌باره. گوشی روشن می‌شه. پیام از ونتوس: «حسین شفیعی رو پیدا کردی؟ دیروز یه ماشین سفید جلوی خونه‌ت رد شد. حواست باشه.» سینا به پنجره نگاه می‌کنه. یه ماشین سفید ته کوچه پارک شده. و یه سایه پشت درخت ایستاده. ناگهان پیام جدید از حسین شفیعی: «می‌دونم داری نگاهم می‌کنی. بیا پایین. تنها. می‌خوام چیزایی بهت بگم که هیچکس نمی‌دونه.»",
-          "puzzleId": "puzzle_final_decision",
-          "puzzle": {
-            "html": "<div style='text-align:center;color:#d4a846;font-family:Vazirmatn;'><h3>🚗 تصمیم نهایی</h3><p style='margin:15px 0;font-size:0.9rem;color:#ccc;direction:rtl'>ماشین سفید پایین خونه‌ست. حسین شفیعی منتظرته. چیکار می‌کنی؟</p><div style='display:flex;flex-direction:column;gap:10px;align-items:center;margin-top:15px'><button onclick='window.checkFinalDecision(\"برم پایین و روبرو بشم\")' style='padding:10px 25px;background:rgba(212,168,70,0.15);border:1px solid #d4a846;color:#d4a846;border-radius:20px;cursor:pointer;font-family:Vazirmatn;width:90%;max-width:320px;'>🔴 برم پایین و روبرو بشم</button><button onclick='window.checkFinalDecision(\"به ونتوس پیام بدم\")' style='padding:10px 25px;background:rgba(212,168,70,0.15);border:1px solid #d4a846;color:#d4a846;border-radius:20px;cursor:pointer;font-family:Vazirmatn;width:90%;max-width:320px;'>🟡 به ونتوس پیام بدم</button><button onclick='window.checkFinalDecision(\"به سایمان زنگ بزنم\")' style='padding:10px 25px;background:rgba(212,168,70,0.15);border:1px solid #d4a846;color:#d4a846;border-radius:20px;cursor:pointer;font-family:Vazirmatn;width:90%;max-width:320px;'>🟢 به سایمان زنگ بزنم</button><button onclick='window.checkFinalDecision(\"پلیس رو خبر کنم\")' style='padding:10px 25px;background:rgba(212,168,70,0.15);border:1px solid #d4a846;color:#d4a846;border-radius:20px;cursor:pointer;font-family:Vazirmatn;width:90%;max-width:320px;'>🔵 پلیس رو خبر کنم</button></div><p id='puzzleFeedback_final' style='margin-top:12px;font-size:0.8rem;min-height:20px'></p></div>"
+          "narrator": "سینا چشم‌هایش را باز می‌کند. سرش درد می‌کند. خون روی پیشانی‌اش. ماشین واژگون شده. برف از شیشه‌های شکسته وارد می‌شود.",
+          "next": "ep4_crash_02"
+        },
+
+        "ep4_crash_02": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "ونتوس!",
+          "narrator": "ونتوس کنار ماشین افتاده. حرکت نمی‌کند. سینا با زحمت از ماشین خارج می‌شود. به سمت ونتوس می‌رود.",
+          "next": "ep4_crash_03"
+        },
+
+        "ep4_crash_03": {
+          "portrait": "assets/images/ventos sad.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "...انبار تله‌ست. باید به آریا پیام بدی... بگو برن پارک ایل‌گلی.",
+          "narrator": "ونتوس چشم‌هایش را باز می‌کند. خون روی صورتش. لبخند ضعیفی می‌زند.",
+          "next": "ep4_crash_04"
+        },
+
+        "ep4_crash_04": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "پارک ایل‌گلی؟",
+          "narrator": "",
+          "next": "ep4_crash_05"
+        },
+
+        "ep4_crash_05": {
+          "portrait": "assets/images/ventos sad.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "آره... اونجا ساغر رو نگه داشته. (سرفه) ...برو. ولی تنها نرو...",
+          "narrator": "",
+          "next": "ep4_crash_06"
+        },
+
+        "ep4_crash_06": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "چرا منو به انبار فرستادی؟",
+          "narrator": "",
+          "next": "ep4_crash_07"
+        },
+
+        "ep4_crash_07": {
+          "portrait": "assets/images/ventos sad.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "چون می‌خواستم مطمئن بشم... که به کسی اعتماد نمی‌کنی...",
+          "narrator": "",
+          "next": "ep4_crash_08"
+        },
+
+        "ep4_crash_08": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "پس حالا چرا راست می‌گی؟",
+          "narrator": "",
+          "next": "ep4_crash_09"
+        },
+
+        "ep4_crash_09": {
+          "portrait": "assets/images/ventos sad.jpg",
+          "speaker": "ونتوس",
+          "dialogue": "چون دیگه وقتشه...",
+          "narrator": "سینا به ونتوس نگاه می‌کند. نمی‌داند راست می‌گوید یا باز هم دروغ. ولی چاره‌ای نیست. گوشی را برمی‌دارد.",
+          "next": "ep4_crash_phone"
+        },
+
+        "ep4_crash_phone": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "سینا به آریا پیام می‌دهد: «آریا، انبار تله‌ست. پارک ایل‌گلی مکان اصلیه. برو اونجا. سریع.»",
+          "next": "ep4_team_split"
+        },
+
+        "ep4_walk_01": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "سینا کاپشنش را پوشیده و از خانه خارج شده. برف سنگین می‌بارد. نمی‌داند کجا برود. فقط نیاز دارد راه برود، فکر کند، تصمیم بگیرد. قدم‌هایش را در برف سنگین جلو می‌برد. خیابان خلوت است. چراغ‌های نارنجی خیابان زیر برف محو شده‌اند. ناگهان، صدای قدم‌های دیگری در برف. پشت سرش.",
+          "next": "ep4_walk_02"
+        },
+
+        "ep4_walk_02": {
+          "portrait": "assets/images/hossein defualt.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "سینا. می‌دونستم تنها می‌ای.",
+          "narrator": "سینا می‌چرخد. حسین شفیعی پشت سرش ایستاده. کاپشن مشکی. کلاه. برف روی شانه‌هایش.",
+          "next": "ep4_walk_03"
+        },
+
+        "ep4_walk_03": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "...تو چطور می‌دونستی؟",
+          "narrator": "سینا یخ می‌زند. قلبش تند می‌زند.",
+          "next": "ep4_walk_04"
+        },
+
+        "ep4_walk_04": {
+          "portrait": "assets/images/hossein defualt.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "چون تو رو می‌شناسم. می‌دونستم به هیچکس اعتماد نمی‌کنی. می‌دونستم تنها می‌ای تا فکر کنی.",
+          "narrator": "",
+          "next": "ep4_walk_05"
+        },
+
+        "ep4_walk_05": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "پس چی می‌خوای؟",
+          "narrator": "",
+          "next": "ep4_walk_06"
+        },
+
+        "ep4_walk_06": {
+          "portrait": "assets/images/hossein defualt.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "ساغر زنده‌ست. تا وقتی که به حرف‌های من گوش بدی.",
+          "narrator": "",
+          "next": "ep4_walk_07"
+        },
+
+        "ep4_walk_07": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "پس بگو.",
+          "narrator": "",
+          "next": "ep4_walk_08"
+        },
+
+        "ep4_walk_08": {
+          "portrait": "assets/images/hossein defualt.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "پارک ایل‌گلی. همون جایی که اول بود. همه‌چیز از اونجا شروع شد. همه‌چیز همونجا تموم میشه.",
+          "narrator": "",
+          "next": "ep4_walk_09"
+        },
+
+        "ep4_walk_09": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "سینا",
+          "dialogue": "چرا باید بهت اعتماد کنم؟",
+          "narrator": "",
+          "next": "ep4_walk_10"
+        },
+
+        "ep4_walk_10": {
+          "portrait": "assets/images/hossein defualt.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "چون گزینه‌ی دیگه‌ای نداری. اگه نیای، ساغر رو هیچوقت نمی‌بینی.",
+          "narrator": "سینا به حسین نگاه می‌کند. دستش را توی جیبش می‌برد. گوشی.",
+          "next": "ep4_walk_11"
+        },
+
+        "ep4_walk_11": {
+          "portrait": "assets/images/hossein defualt.png",
+          "speaker": "حسین شفیعی",
+          "dialogue": "اگه می‌خوای زنگ بزنی، بزن. ولی بدون که دیگه ساغر رو نمی‌بینی.",
+          "narrator": "",
+          "next": "ep4_walk_12"
+        },
+
+        "ep4_walk_12": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "سینا دستش را از جیبش بیرون می‌آورد و به حسین نگاه می‌کند.",
+          "next": "ep4_walk_phone"
+        },
+
+        "ep4_walk_phone": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "سینا به حسین پیام می‌دهد: «باشه. میام پارک ایل‌گلی.»",
+          "next": "ep4_team_split"
+        },
+
+        "ep4_team_split": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "سینا گفت پارک ایل‌گلی مکان اصلیه. انبار تله‌ست.",
+          "narrator": "آریا پیام سینا را می‌خواند. نفس عمیقی می‌کشد. برمی‌گردد به سمت بقیه.",
+          "next": "ep4_team_split_2"
+        },
+
+        "ep4_team_split_2": {
+          "portrait": "assets/images/seyf defualt.png",
+          "speaker": "سیف",
+          "dialogue": "مطمئنی؟",
+          "narrator": "",
+          "next": "ep4_team_split_3"
+        },
+
+        "ep4_team_split_3": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "نه. ولی تنها سرنخیه که داریم.",
+          "narrator": "",
+          "next": "ep4_team_split_4"
+        },
+
+        "ep4_team_split_4": {
+          "portrait": "assets/images/seyf defualt.png",
+          "speaker": "سیف",
+          "dialogue": "پس دو تیم می‌شیم. یک تیم می‌ره پارک ایل‌گلی. یک تیم می‌مونه اینجا تا اگه تله بود، بتونیم کمک کنیم.",
+          "narrator": "",
+          "choices": [
+            {
+              "text": "تیم اول: آریا، سیف، سایمان",
+              "next": "ep4_team1_park",
+              "effects": { "memory": { "ep4Team": "team1" } }
+            },
+            {
+              "text": "تیم دوم: مهراس، سپهر، پرواسی، جوگی",
+              "next": "ep4_team2_park",
+              "effects": { "memory": { "ep4Team": "team2" } }
+            }
+          ]
+        },
+
+        "ep4_team1_park": {
+          "portrait": "assets/images/arya sad.jpg",
+          "speaker": "آریا",
+          "dialogue": "اینجا... هیچکس نیست.",
+          "narrator": "برف سنگین. پارک ایل‌گلی زیر برف پوشیده شده. همان جایی که همه‌چیز شروع شد. آریا، سیف و سایمان وارد پارک می‌شوند. همه‌چیز ساکت است.",
+          "next": "ep4_team1_park_2"
+        },
+
+        "ep4_team1_park_2": {
+          "portrait": "assets/images/seyf defualt.png",
+          "speaker": "سیف",
+          "dialogue": "تله‌ست. برمی‌گردیم.",
+          "narrator": "",
+          "next": "ep4_trap"
+        },
+
+        "ep4_team2_park": {
+          "portrait": "assets/images/mehras defualt.png",
+          "speaker": "مهراس",
+          "dialogue": "اینجا... هیچکس نیست.",
+          "narrator": "برف سنگین. پارک ایل‌گلی زیر برف پوشیده شده. مهراس، سپهر، پرواسی و جوگی وارد پارک می‌شوند.",
+          "next": "ep4_team2_park_2"
+        },
+
+        "ep4_team2_park_2": {
+          "portrait": "assets/images/mehras defualt.png",
+          "speaker": "مهراس",
+          "dialogue": "تله‌ست... همه‌چیز یه تله بوده...",
+          "narrator": "ناگهان چراغ‌ها خاموش می‌شوند. صدای قفل شدن درها. همه گیر می‌افتند.",
+          "next": "ep4_trap"
+        },
+
+        "ep4_trap": {
+          "portrait": "assets/images/sina defualt.png",
+          "speaker": "",
+          "dialogue": "",
+          "narrator": "همه گیر افتاده‌اند. پارک ایل‌گلی یک تله بوده. حالا باید فکری به حال خودشان بکنند.",
+          "addNote": {
+            "text": "پارک ایل‌گلی یک تله بود. همه گیر افتادند."
           },
-          "onSolve": "ep3_end",
-          "next": "ep3_end"
+          "next": "ep4_rahi_scene"
         },
-        "ep3_end": {
-          "portrait": "assets/images/sina defualt.png",
-          "speaker": "",
-          "dialogue": "",
-          "narrator": "پایان اپیزود ۳ — «شب بنفشه». انتخاب‌های تو مسیر اپیزود ۴ رو تعیین می‌کنن.",
+
+        "ep4_rahi_scene": {
+          "portrait": "assets/images/rehi sad.jpg",
+          "speaker": "رهی",
+          "dialogue": "این یک تله‌ست. من می‌دونم. حسین شفیعی همه‌چیز رو برنامه‌ریزی کرده.",
+          "narrator": "رهی، دیانا، کوثر و هانا توی خونه‌ی رهی نشسته‌اند. برف سنگین از پنجره پیداست. همه نگرانند.",
+          "next": "ep4_rahi_scene_2"
+        },
+
+        "ep4_rahi_scene_2": {
+          "portrait": "assets/images/rehi sad.jpg",
+          "speaker": "رهی",
+          "dialogue": "...باید بریم اونجا. همه با هم.",
+          "narrator": "رهی به پنجره نگاه می‌کند. برف سنگین‌تر می‌بارد.",
+          "addNote": {
+            "text": "تم صورتی-طلایی — کاربر وارد نقش رهی می‌شود."
+          },
+          "choices": [
+            {
+              "text": "رهی برود پارک ایل‌گلی",
+              "next": "ep4_end_go",
+              "effects": { "memory": { "ep4FinalChoice": "rahi_go" } }
+            },
+            {
+              "text": "رهی به پلیس زنگ بزند",
+              "next": "ep4_end_police",
+              "effects": { "memory": { "ep4FinalChoice": "rahi_police" } }
+            },
+            {
+              "text": "رهی منتظر بماند",
+              "next": "ep4_end_wait",
+              "effects": { "memory": { "ep4FinalChoice": "rahi_wait" } }
+            }
+          ]
+        },
+
+        "ep4_end_go": {
+          "portrait": "assets/images/rehi sad.jpg",
+          "speaker": "رهی",
+          "dialogue": "من می‌رم اونجا. نمی‌تونم منتظر بمونم.",
+          "narrator": "رهی از جا بلند می‌شود. کاپشنش را برمی‌دارد. برف سنگین می‌بارد. پایان اپیزود چهارم — «ردپا در برف».",
+          "addNote": {
+            "text": "رهی به پارک ایل‌گلی رفت تا بقیه را نجات دهد."
+          },
           "next": null,
-          "nextEpisode": 4
+          "nextEpisode": 5,
+          "episodeEnd": true
+        },
+
+        "ep4_end_police": {
+          "portrait": "assets/images/rehi sad.jpg",
+          "speaker": "رهی",
+          "dialogue": "سیف، همه گیر افتادن توی پارک ایل‌گلی. سریع نیرو بفرست.",
+          "narrator": "رهی به پلیس زنگ می‌زند. پایان اپیزود چهارم — «ردپا در برف».",
+          "addNote": {
+            "text": "رهی به پلیس زنگ زد. نیروها به سمت پارک ایل‌گلی حرکت کردند."
+          },
+          "next": null,
+          "nextEpisode": 5,
+          "episodeEnd": true
+        },
+
+        "ep4_end_wait": {
+          "portrait": "assets/images/rehi sad.jpg",
+          "speaker": "رهی",
+          "dialogue": "نه... باید صبر کنم. شاید خبری بیاد.",
+          "narrator": "رهی تصمیم می‌گیرد منتظر بماند. برف سنگین‌تر می‌بارد. پایان اپیزود چهارم — «ردپا در برف».",
+          "addNote": {
+            "text": "رهی تصمیم گرفت منتظر بماند."
+          },
+          "next": null,
+          "nextEpisode": 5,
+          "episodeEnd": true
         }
       }
     }

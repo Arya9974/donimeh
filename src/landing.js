@@ -36,24 +36,28 @@ const DEFAULT_EPISODES = [
 ];
 let episodesData = [...DEFAULT_EPISODES];
 
+// ==================== UTILITY ====================
+function escapeHTML(s) {
+  if (!s) return "";
+  const d = document.createElement("div");
+  d.textContent = s;
+  return d.innerHTML;
+}
+
 // ==================== PROGRESS ====================
-// تابع کمکی امن برای خوندن از localStorage
 function safeGet(key, fallback = null) {
   try {
     const raw = localStorage.getItem(key);
     if (raw === null || raw === undefined) return fallback;
-    // اول چک می‌کنیم ببینیم JSON معتبره یا نه
-    const parsed = JSON.parse(raw);
-    return parsed;
-  } catch (e) {
-    // اگه JSON نبود، خود مقدار خام رو برگردون (برای کلیدهای قدیمی)
-    const raw = localStorage.getItem(key);
-    // اگه مقدار خام شبیه عدد بود، عدد برگردون
-    if (raw && !isNaN(raw)) return Number(raw);
-    // اگه boolean بود
-    if (raw === "true") return true;
-    if (raw === "false") return false;
-    // در غیر این صورت fallback
+    try {
+      return JSON.parse(raw);
+    } catch {
+      if (raw && !isNaN(raw)) return Number(raw);
+      if (raw === "true") return true;
+      if (raw === "false") return false;
+      return raw;
+    }
+  } catch {
     return fallback;
   }
 }
@@ -81,9 +85,17 @@ async function loadEpisodes() {
     const r = await fetch("assets/data/episodes.json");
     if (r.ok) {
       const d = await r.json();
-      if (Array.isArray(d) && d.length) episodesData = d;
+      // چک کن که episodes داخلش باشه
+      if (d.episodes && Array.isArray(d.episodes) && d.episodes.length) {
+        episodesData = d.episodes;
+      } else if (Array.isArray(d) && d.length) {
+        episodesData = d;
+      }
     }
   } catch (e) {
+    console.warn(
+      "⚠️ نشد episodes.json رو لود کنم، از داده پیش‌فرض استفاده می‌شه",
+    );
     episodesData = [...DEFAULT_EPISODES];
   }
 }
@@ -144,13 +156,49 @@ function openBook() {
       DOM.paperLanding.classList.add("paper-landing--visible");
       DOM.customScrollbar.classList.add("custom-scrollbar--visible");
       renderLanding();
+      setTimeout(updateScrollbar, 100);
     }, 500);
   }, 2900);
 }
 
+// ==================== OPEN BOOK DIRECTLY (بدون افکت) ====================
+function openBookDirectly() {
+  if (STATE.isOpen) return;
+  STATE.isOpen = true;
+  STATE.dustPlayed = true;
+
+  // مخفی کردن کتاب و نمایش لندینگ
+  DOM.bookEntrance.classList.add("book-entrance--hidden");
+  DOM.paperLanding.classList.add("paper-landing--visible");
+  DOM.customScrollbar.classList.add("custom-scrollbar--visible");
+
+  // رندر کردن محتوا
+  renderLanding();
+  setTimeout(updateScrollbar, 100);
+}
+
 // ==================== RENDER LANDING ====================
 function renderLanding() {
+  // ✅ متغیر pg رو اینجا تعریف کن
   const pg = getProgress();
+
+  // اگه داده‌ای نیست، یه پیام نشون بده
+  if (!episodesData || episodesData.length === 0) {
+    DOM.episodeList.innerHTML = `
+      <div class="episode-item" style="text-align:center;padding:20px;color:#5c4a3a;">
+        ⏳ در حال بارگذاری داستان...
+      </div>
+    `;
+    DOM.progressPercent.textContent = "۰٪";
+    DOM.progressFill.style.width = "0%";
+    DOM.progressLabel.textContent = "۰ از ۰ اپیزود کامل شده";
+    DOM.journalStats.innerHTML = `
+      <div class="journal-row"><span class="journal-label">⏳ بارگذاری...</span></div>
+    `;
+    return;
+  }
+
+  // ===== پیشرفت =====
   const totalEps = episodesData.length;
   const curEp = pg.episode ? parseInt(pg.episode) : 0;
   const completed = pg.hasProgress ? Math.max(1, curEp) : 0;
@@ -160,14 +208,15 @@ function renderLanding() {
   DOM.progressFill.style.width = `${pct}%`;
   DOM.progressLabel.textContent = `${completed} از ${totalEps} اپیزود کامل شده`;
 
-  // اپیزودها
+  // ===== اپیزودها =====
   let epHTML = "";
   episodesData.forEach((ep, i) => {
-    const eid = ep.id || `ep${i + 1}`,
-      eo = ep.order || i + 1;
+    const eid = ep.id || `ep${i + 1}`;
+    const eo = ep.order || i + 1;
     let st = "🔒",
       cl = "",
       clk = false;
+
     if (pg.hasProgress) {
       const co = pg.episode ? parseInt(pg.episode) : 0;
       if (eo < co || (eo === co && pg.scene)) {
@@ -184,8 +233,16 @@ function renderLanding() {
       clk = true;
       cl = " episode-item--clickable";
     }
-    epHTML += `<div class="episode-item${cl}" data-ep-id="${eid}" data-clickable="${clk}"><span class="episode-status">${st}</span><div class="episode-info"><div class="episode-title">${escapeHTML(ep.title)}</div><div class="episode-subtitle">${escapeHTML(ep.subtitle || "")}</div></div></div>`;
+
+    epHTML += `<div class="episode-item${cl}" data-ep-id="${eid}" data-clickable="${clk}">
+      <span class="episode-status">${st}</span>
+      <div class="episode-info">
+        <div class="episode-title">${escapeHTML(ep.title)}</div>
+        <div class="episode-subtitle">${escapeHTML(ep.subtitle || "")}</div>
+      </div>
+    </div>`;
   });
+
   DOM.episodeList.innerHTML = epHTML;
   DOM.episodeList.querySelectorAll('[data-clickable="true"]').forEach((it) => {
     it.addEventListener("click", () => {
@@ -194,14 +251,14 @@ function renderLanding() {
     });
   });
 
-  // دفترچه
+  // ===== دفترچه =====
   DOM.journalStats.innerHTML = `
-        <div class="journal-row"><span class="journal-label">🧩 پازل‌های حل شده</span><span class="journal-value">${pg.completedPuzzles} از ۵</span></div>
-        <div class="journal-row"><span class="journal-label">🗝️ آیتم‌های جمع‌آوری شده</span><span class="journal-value">${pg.totalItems} عدد</span></div>
-        <div class="journal-row"><span class="journal-label">✍️ انتخاب‌های مهم</span><span class="journal-value">${pg.totalNotes} مورد</span></div>
-    `;
+    <div class="journal-row"><span class="journal-label">🧩 پازل‌های حل شده</span><span class="journal-value">${pg.completedPuzzles} از ۵</span></div>
+    <div class="journal-row"><span class="journal-label">🗝️ آیتم‌های جمع‌آوری شده</span><span class="journal-value">${pg.totalItems} عدد</span></div>
+    <div class="journal-row"><span class="journal-label">✍️ انتخاب‌های مهم</span><span class="journal-value">${pg.totalNotes} مورد</span></div>
+  `;
 
-  // نقشه
+  // ===== نقشه =====
   let mapHTML = "";
   episodesData.forEach((ep, i) => {
     const eo = ep.order || i + 1;
@@ -220,14 +277,17 @@ function renderLanding() {
       dc = "map-dot--active";
       lc = "";
     }
-    mapHTML += `<div class="map-point"><span class="map-dot ${dc}"></span><span class="map-label ${lc}">${escapeHTML(ep.title)}</span></div>`;
+    mapHTML += `<div class="map-point">
+      <span class="map-dot ${dc}"></span>
+      <span class="map-label ${lc}">${escapeHTML(ep.title)}</span>
+    </div>`;
   });
   DOM.storyMap.innerHTML = mapHTML;
 
-  // نقل قول‌ها
+  // ===== نقل قول‌ها =====
   renderQuotes();
 
-  // CTA
+  // ===== CTA =====
   if (pg.hasProgress) {
     DOM.btnContinue.style.display = "inline-block";
     DOM.btnRestart.textContent = "🚀 شروع از اول";
@@ -236,7 +296,7 @@ function renderLanding() {
     DOM.btnRestart.textContent = "🚀 شروع ماجرا";
   }
 
-  // Reveal on scroll
+  // ===== Reveal =====
   observeReveal();
 }
 
@@ -244,23 +304,27 @@ function renderLanding() {
 function renderQuotes() {
   const items = document.querySelectorAll(".quote-item");
   const nav = DOM.quoteNav;
+  if (!nav) return;
   nav.innerHTML = "";
   let cur = 0,
     timer;
+
   items.forEach((_, i) => {
     const d = document.createElement("div");
     d.className = "q-dot" + (i === 0 ? " active" : "");
     d.addEventListener("click", () => goTo(i));
     nav.appendChild(d);
   });
+
   function goTo(n) {
     items[cur].classList.remove("active");
-    nav.children[cur].classList.remove("active");
+    if (nav.children[cur]) nav.children[cur].classList.remove("active");
     cur = (n + items.length) % items.length;
     items[cur].classList.add("active");
-    nav.children[cur].classList.add("active");
+    if (nav.children[cur]) nav.children[cur].classList.add("active");
     resetTimer();
   }
+
   function resetTimer() {
     clearInterval(timer);
     timer = setInterval(() => goTo(cur + 1), 5000);
@@ -281,10 +345,9 @@ function observeReveal() {
   document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 }
 
-// اسکرول‌بار
-// اسکرول‌بار کاستوم
 function updateScrollbar() {
   const paper = DOM.paperLanding;
+  if (!paper) return;
   const scrollTop = paper.scrollTop;
   const scrollHeight = paper.scrollHeight;
   const clientHeight = paper.clientHeight;
@@ -296,22 +359,15 @@ function updateScrollbar() {
   }
 
   DOM.customScrollbar.classList.add("custom-scrollbar--visible");
-
-  // ارتفاع thumb متناسب با نسبت
   const thumbHeight = Math.max(
     30,
     (clientHeight / scrollHeight) * clientHeight,
   );
   DOM.scrollThumb.style.height = thumbHeight + "px";
-
-  // موقعیت thumb
   const thumbTop = (scrollTop / maxScroll) * (clientHeight - thumbHeight);
   DOM.scrollThumb.style.top = thumbTop + "px";
 }
 
-// توی DOMContentLoaded یا بعد از نمایش لندینگ:
-DOM.paperLanding.addEventListener("scroll", updateScrollbar, { passive: true });
-window.addEventListener("resize", updateScrollbar);
 // ==================== EVENTS ====================
 DOM.bookClosed.addEventListener("click", (e) => {
   e.preventDefault();
@@ -324,15 +380,38 @@ DOM.bookClosed.addEventListener("keydown", (e) => {
   }
 });
 
+// اسکرول
+DOM.paperLanding.addEventListener("scroll", updateScrollbar, { passive: true });
+window.addEventListener("resize", updateScrollbar);
+
 // ==================== INIT ====================
 async function init() {
   await loadEpisodes();
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const landingParam = urlParams.get("landing");
+
+  if (landingParam === "true") {
+    console.log("📖 بازگشت از بازی → باز کردن مستقیم کتاب");
+    setTimeout(() => {
+      if (episodesData && episodesData.length > 0) {
+        console.log("✅ اپیزودها لود شدن، باز کردن کتاب...");
+        openBookDirectly();
+      } else {
+        console.warn("⚠️ اپیزودها هنوز لود نشدن، صبر کن...");
+        setTimeout(() => {
+          if (episodesData && episodesData.length > 0) {
+            openBookDirectly();
+          } else {
+            console.error("❌ نتونستیم اپیزودها رو لود کنیم!");
+          }
+        }, 500);
+      }
+    }, 400);
+  }
+
   console.log("📖 دو نیمه آماده است");
 }
-function escapeHTML(s) {
-  if (!s) return "";
-  const d = document.createElement("div");
-  d.textContent = s;
-  return d.innerHTML;
-}
+
+// ===== اجرا =====
 document.addEventListener("DOMContentLoaded", init);

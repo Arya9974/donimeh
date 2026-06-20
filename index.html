@@ -232,7 +232,19 @@
           </a>
         </div>
       </section>
-
+      <!-- index.html — بخش داستان کامل -->
+      <!-- index.html — فقط یک دکمه، بدون onclick توی HTML -->
+      <section class="story-section">
+        <div class="story-card">
+          <div class="story-icon">📖</div>
+          <h2 class="story-title">داستان کامل</h2>
+          <p class="story-desc">
+            بعد از اتمام بازی، می‌توانی کل داستان را به صورت یک روایت یکپارچه
+            بخوانی.
+          </p>
+          <button class="story-btn" id="storyBtn">مشاهده داستان کامل</button>
+        </div>
+      </section>
       <!-- فوتر -->
       <footer class="paper-footer">
         <div class="footer-ornament">⬩ ✦ ⬩</div>
@@ -242,5 +254,173 @@
     </main>
 
     <script src="src/landing.js"></script>
+    <script type="module">
+      import { state } from "./src/engine/gameState.js";
+
+      // تابع تولید داستان
+      function generateStoryData() {
+        const choiceMap = {
+          rahi: "با رهی به قرار ونتوس رفتی",
+          mehras: "به مهراس اعتماد کردی",
+          seyf: "به پلیس رفتی",
+          alone: "تنها به ایل‌گلی برگشتی",
+          go: "به قرار ونتوس رفتی",
+          tell_seyf: "به سیف گفتی",
+          ask_arya: "از آریا کمک خواستی",
+          decline: "به قرار ونتوس نرفتی",
+          hossein: "به خونه حسین رفتی",
+          ventus: "به سراغ ونتوس رفتی",
+          walk: "قدم زدی و حسین اومد سراغت",
+          rahi_go: "رهی به پارک ایل‌گلی رفت",
+          rahi_police: "رهی به پلیس زنگ زد",
+          rahi_wait: "رهی منتظر ماند",
+        };
+
+        const blocks = [];
+        const hasProgress =
+          localStorage.getItem("donimeh_has_progress") === "true";
+
+        if (!hasProgress) {
+          blocks.push({
+            type: "paragraph",
+            text: "هنوز بازی را شروع نکرده‌ای. ابتدا یک بازی جدید شروع کن تا داستان بر اساس انتخاب‌هایت ساخته شود.",
+          });
+          return {
+            title: "دو نیمه — داستان کامل",
+            subtitle: "هنوز داستانی برای نمایش وجود ندارد",
+            blocks: blocks,
+          };
+        }
+
+        // ===== اپیزود ۱ =====
+        blocks.push({ type: "heading", text: "اپیزود ۱: دو نیمه" });
+        blocks.push({
+          type: "paragraph",
+          text: "کلانتری تاریک و سرد بود. لامپ مهتابی سوسو می‌زد. سیف روبه‌روی سینا نشسته بود و از او درباره شب ناپدید شدن ساغر سوال می‌کرد.",
+        });
+        blocks.push({
+          type: "paragraph",
+          text: "سینا به گذشته برگشت. آریا به او پیام داده بود که امشب در پارک ایل‌گلی جمع می‌شوند. سینا قبول کرد و به پارک رفت.",
+        });
+
+        const ep1Choice =
+          localStorage.getItem("donimeh_ep1_choice") ||
+          state.memory?.ep1FinalChoice;
+        if (ep1Choice) {
+          blocks.push({
+            type: "choice",
+            text: `تو انتخاب کردی ${choiceMap[ep1Choice] || "انتخاب دیگری انجام دادی"}.`,
+          });
+        }
+
+        blocks.push({
+          type: "paragraph",
+          text: "در پارک، سینا با رهی آشنا شد. دختری مرموز با زخمی روی گردن. شب به پایان رسید و ساغر ناپدید شد.",
+        });
+        blocks.push({ type: "divider" });
+
+        // ===== اپیزود ۲ =====
+        blocks.push({ type: "heading", text: "اپیزود ۲: نقطه ناپدید شدن" });
+        blocks.push({
+          type: "paragraph",
+          text: "صبح روز بعد، سینا متوجه شد مهراس ۱۴ بار با ساغر تماس داشته. تحقیقات ادامه پیدا کرد.",
+        });
+
+        const ep2Choice =
+          localStorage.getItem("donimeh_ep2_choice") ||
+          state.memory?.ep2FinalChoice;
+        if (ep2Choice) {
+          blocks.push({
+            type: "choice",
+            text: `تو انتخاب کردی ${choiceMap[ep2Choice] || "انتخاب دیگری انجام دادی"}.`,
+          });
+        }
+
+        blocks.push({
+          type: "paragraph",
+          text: "سینا سه نسخه از چت مهراس و ساغر را بررسی کرد. لاکر ساغر را پیدا کرد و متوجه شد مهراس درباره زمان دیدن ساغر دروغ گفته.",
+        });
+        blocks.push({ type: "divider" });
+
+        // ===== اپیزود ۳ =====
+        blocks.push({ type: "heading", text: "اپیزود ۳: شب بنفشه" });
+        blocks.push({
+          type: "paragraph",
+          text: "سینا به قرار ونتوس رفت. ونتوس به او گفت حسین شفیعی ساغر را دزدیده است. سینا به خشک‌شویی رفت.",
+        });
+
+        const ep3Choice = state.memory?.ep3FinalChoice;
+        if (ep3Choice) {
+          blocks.push({
+            type: "choice",
+            text: `تو انتخاب کردی ${choiceMap[ep3Choice] || "انتخاب دیگری انجام دادی"}.`,
+          });
+        }
+
+        blocks.push({
+          type: "paragraph",
+          text: "آریا و سپهر به خونه حسین رفتند و با او روبرو شدند. حسین تهدید کرد که اگه بلایی سرش بیاید، ساغر می‌میرد.",
+        });
+        blocks.push({ type: "divider" });
+
+        // ===== اپیزود ۴ =====
+        blocks.push({ type: "heading", text: "اپیزود ۴: ردپا در برف" });
+        blocks.push({
+          type: "paragraph",
+          text: "سینا تصمیم خود را گرفت و راهی شد. تیم‌ها تقسیم شدند و همه به پارک ایل‌گلی رفتند.",
+        });
+
+        const ep4Choice = state.memory?.ep4FinalChoice;
+        if (ep4Choice) {
+          blocks.push({
+            type: "choice",
+            text: `تو انتخاب کردی ${choiceMap[ep4Choice] || "انتخاب دیگری انجام دادی"}.`,
+          });
+        }
+
+        blocks.push({
+          type: "paragraph",
+          text: "پارک ایل‌گلی یک تله بود. چراغ‌ها خاموش شدند و همه گیر افتادند. رهی در خانه فهمید که این یک تله است.",
+        });
+        blocks.push({ type: "divider" });
+
+        // ===== پایان =====
+        blocks.push({ type: "heading", text: "ادامه دارد..." });
+        blocks.push({
+          type: "paragraph",
+          text: "داستان همچنان ادامه دارد... انتخاب‌های تو سرنوشت شخصیت‌ها را تعیین می‌کنند.",
+        });
+
+        return {
+          title: "دو نیمه — داستان کامل",
+          subtitle: "روایت انتخاب‌های تو در شب‌های برفی تبریز",
+          blocks: blocks,
+        };
+      }
+
+      function openStoryPage() {
+        const hasProgress =
+          localStorage.getItem("donimeh_has_progress") === "true";
+
+        if (!hasProgress) {
+          alert(
+            "هنوز بازی را شروع نکرده‌ای. ابتدا یک بازی جدید شروع کن تا داستان بر اساس انتخاب‌هایت ساخته شود.",
+          );
+          return;
+        }
+
+        const storyData = generateStoryData();
+        localStorage.setItem("twoHalves:storyData", JSON.stringify(storyData));
+        window.open("story.html", "_blank");
+      }
+
+      // ===== اتصال به دکمه =====
+      document
+        .getElementById("storyBtn")
+        ?.addEventListener("click", openStoryPage);
+
+      // ===== expose برای دیباگ =====
+      window.openStoryPage = openStoryPage;
+    </script>
   </body>
 </html>

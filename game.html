@@ -164,6 +164,24 @@
                 </div>
                 <div class="chat-messages" id="phoneChat"></div>
                 <div class="chat-choices" id="phoneChoices"></div>
+                <div class="chat-input-container" id="phoneInputContainer">
+                  <input
+                    type="text"
+                    class="chat-input-field"
+                    id="phoneInputField"
+                    placeholder="پیام بفرست..."
+                  />
+                  <button class="chat-input-send" id="phoneInputSend">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+                    </svg>
+                  </button>
+                </div>
               </div>
               <div class="app-screen screen-items hidden" id="screenItems">
                 <div class="app-header">
@@ -197,6 +215,49 @@
                     <div class="empty-emoji">📋</div>
                     یادداشتی نیست
                   </div>
+                </div>
+              </div>
+              <!-- صفحه تماس -->
+              <div class="app-screen screen-call hidden" id="screenCall">
+                <div class="app-header">
+                  <button
+                    class="back-btn-phone"
+                    onclick="window.DonimehUI.closePhone()"
+                  >
+                    ←
+                  </button>
+                  <div class="app-header-title" id="callHeader">تماس</div>
+                </div>
+                <div class="call-container">
+                  <div class="call-avatar">📞</div>
+                  <div class="call-status" id="callStatus">در حال تماس...</div>
+                  <div class="call-timer" id="callTimer">۰۰:۰۰</div>
+                  <div class="call-dialogue" id="callDialogue"></div>
+                  <button class="call-end-btn" id="callEndBtn">قطع تماس</button>
+                </div>
+              </div>
+              <!-- صفحه مخاطب -->
+              <div class="app-screen screen-contact hidden" id="screenContact">
+                <div class="app-header">
+                  <button
+                    class="back-btn-phone"
+                    onclick="window.DonimehUI.openApp('home')"
+                  >
+                    ←
+                  </button>
+                  <div class="app-header-title" id="contactHeader">مخاطب</div>
+                </div>
+                <div class="contact-container">
+                  <img
+                    class="contact-avatar"
+                    id="contactAvatar"
+                    src=""
+                    alt=""
+                  />
+                  <div class="contact-name" id="contactName"></div>
+                  <div class="contact-status" id="contactStatus"></div>
+                  <div class="contact-details" id="contactDetails"></div>
+                  <div class="contact-actions" id="contactActions"></div>
                 </div>
               </div>
             </div>

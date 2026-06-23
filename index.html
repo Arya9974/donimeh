@@ -95,7 +95,7 @@
             <h2 class="section-label">داستان</h2>
             <p class="story-body" id="story-typewriter"></p>
             <div class="story-meta">
-              <span class="meta-item">۵ فصل</span>
+              <span class="meta-item">۷ فصل</span>
               <span class="meta-dot">·</span>
               <span class="meta-item">روایت شاخه‌ای</span>
               <span class="meta-dot">·</span>
@@ -161,7 +161,6 @@
     <!-- ═══════════════════════════════════ CTA BUTTONS ═══ -->
     <section class="cta-section reveal-section" id="cta-section">
       <div class="container">
-        <!-- در بخش cta-buttons، دکمه سوم رو اضافه کن -->
         <div class="cta-buttons">
           <a href="game.html" class="btn-primary holo">
             <span class="btn-holo-bg"></span>
@@ -172,7 +171,6 @@
             <span class="btn-text">فقط خواندن داستان</span>
             <span class="btn-icon">📖</span>
           </a>
-          <!-- دکمه جدید: شروع از اول -->
           <a href="game.html?restart=true" class="btn-tertiary" id="restartBtn">
             <span class="btn-text">🔄 شروع از اول</span>
           </a>
@@ -198,97 +196,182 @@
 
     <script>
       // ═══════════════════════════════════════════════════════
-      //  داده‌های اپیزودها
+      //  داده‌های اپیزودها — بر اساس داستان شما
       // ═══════════════════════════════════════════════════════
       const EPISODES = [
         {
           num: 1,
           numFa: "اپیزود یکم",
-          title: "دو نیمه",
-          line: "کاوه در شبی بارانی با راز مرگ پدرش روبرو می‌شود.",
-          totalScenes: 12,
+          title: "آخرین قطعه",
+          line: "سینا در شبی بارانی با راز ناپدید شدن ساغر روبرو می‌شود.",
+          totalScenes: 15,
         },
         {
           num: 2,
           numFa: "اپیزود دوم",
           title: "سایه‌ها",
-          line: "ردّ پا به کوچه‌های تاریک جنوب تهران ختم می‌شود.",
-          totalScenes: 10,
+          line: "ردّ پا به کوچه‌های تاریک جنوب تهران و آشنایانِ قدیمی ساغر ختم می‌شود.",
+          totalScenes: 14,
         },
         {
           num: 3,
           numFa: "اپیزود سوم",
           title: "آینه‌ی شکسته",
-          line: "هر انتخاب، نیمه‌ای دیگر از حقیقت را آشکار می‌کند.",
-          totalScenes: 14,
+          line: "هر انتخاب، نیمه‌ای دیگر از حقیقت را دربارهٔ حسین شفیعی آشکار می‌کند.",
+          totalScenes: 16,
         },
         {
           num: 4,
           numFa: "اپیزود چهارم",
           title: "دود و آتش",
-          line: "دشمن از جایی می‌آید که انتظارش را نداری.",
-          totalScenes: 11,
+          line: "دشمن از جایی می‌آید که انتظارش را نداری — و آریا بین وفاداری و بقا گیر افتاده.",
+          totalScenes: 14,
         },
         {
           num: 5,
           numFa: "اپیزود پنجم",
+          title: "شب سرد",
+          line: "همهٔ مسیرها به خونهٔ پدری ساغر ختم می‌شوند. مهراس تصمیم می‌گیرد تنها برود.",
+          totalScenes: 18,
+        },
+        {
+          num: 6,
+          numFa: "اپیزود ششم",
+          title: "انتقام",
+          line: "آریا به عمق تاریکی می‌رود. قیمتِ حقیقت، گاهی خون است.",
+          totalScenes: 16,
+        },
+        {
+          num: 7,
+          numFa: "اپیزود هفتم",
           title: "پایان یا آغاز",
-          line: "دو نیمه برای همیشه از هم جدا می‌شوند یا به هم می‌رسند.",
-          totalScenes: 13,
+          line: "دو نیمه برای همیشه از هم جدا می‌شوند یا به هم می‌رسند؟ ساغر بالاخره پیدا می‌شود...",
+          totalScenes: 20,
         },
       ];
 
       const QUOTES = [
-        { text: "بعضی حقیقت‌ها فقط در تاریکی دیده می‌شن.", author: "کاوه" },
+        { text: "بعضی حقیقت‌ها فقط در تاریکی دیده می‌شن.", author: "سینا" },
         {
           text: "تهران با آدمش بدخلقه؛ هر چی بیشتر بشناسیش، کمتر می‌فهمیش.",
-          author: "سارا",
+          author: "ساغر",
         },
         {
           text: "انتخاب یه لبه‌ی تیغه. هر طرف که بری، خون می‌ده.",
-          author: "راوی",
+          author: "آریا",
         },
-        { text: "مرده‌ها راز ندارن. اونا که زنده موندن دارن.", author: "کاوه" },
+        {
+          text: "مرده‌ها راز ندارن. اونا که زنده موندن دارن.",
+          author: "مهراس",
+        },
         {
           text: "شهر نمی‌خواد که بدونی. فقط می‌خواد که بمونی.",
-          author: "سارا",
+          author: "رهی",
+        },
+        {
+          text: "عشقِ واقعی، مثل نوآرِ ایرانیه — همیشه یه پایانِ تاریک داره.",
+          author: "سایمان",
         },
       ];
 
       const STORY_TEXT =
-        "در تهرانِ دهه‌ی شصت، جایی میان دود و باران، کاوه — کارآگاهی که نیمه‌ای از خودش را گم کرده — " +
-        "با مرگ مرموز پدرش روبرو می‌شود. هر سرنخ او را عمیق‌تر به دلِ شهری می‌کشد که " +
-        "رازهایش از نسلی به نسل دیگر منتقل شده. در این روایت، هر انتخاب تو مسیری تازه می‌سازد — " +
-        "و هر مسیر، نیمه‌ای دیگر از حقیقت را باز می‌کند.";
+        "در تهرانِ دهه‌ی شصت، جایی میان دود و باران، سینا — زنی که نیمه‌ای از خودش را در عشقِ ساغر گم کرده — " +
+        "با ناپدید شدن مرموزِ عشقِ زندگی‌اش روبرو می‌شود. هر سرنخ او را عمیق‌تر به دلِ شهری می‌کشد که " +
+        "رازهایش از نسلی به نسل دیگر منتقل شده. در این روایتِ نوآرِ ایرانی، هر انتخاب تو مسیری تازه می‌سازد — " +
+        "و هر مسیر، نیمه‌ای دیگر از حقیقت را آشکار می‌کند.";
 
       // ═══════════════════════════════════════════════════════
-      //  localStorage
+      //  localStorage — کلیدهای یکسان با بازی
       // ═══════════════════════════════════════════════════════
       function getProgress() {
-        const ep = parseInt(localStorage.getItem("donimeh_episode") || "0", 10);
-        const scene = parseInt(
-          localStorage.getItem("donimeh_scene") || "0",
-          10,
-        );
-        return { ep, scene };
-      }
+        try {
+          // ===== اول کلیدهای جدید رو چک کن =====
+          let ep = parseInt(
+            localStorage.getItem("donimeh_currentEpisode") || "0",
+            10,
+          );
+          let sceneRaw = localStorage.getItem("donimeh_currentScene") || "0";
 
+          // ===== اگه نبود، کلیدهای قدیمی رو چک کن =====
+          if (ep === 0) {
+            ep = parseInt(localStorage.getItem("donimeh_episode") || "0", 10);
+          }
+          if (sceneRaw === "0" || sceneRaw === null) {
+            sceneRaw = localStorage.getItem("donimeh_scene") || "0";
+          }
+
+          // ===== تبدیل scene به عدد =====
+          let scene = 0;
+          if (typeof sceneRaw === "string") {
+            const match = sceneRaw.match(/\d+/);
+            if (match) {
+              scene = parseInt(match[0], 10);
+            }
+          } else {
+            scene = parseInt(sceneRaw, 10) || 0;
+          }
+
+          return { ep, scene };
+        } catch (e) {
+          console.warn("⚠️ خطا در خواندن پیشرفت:", e);
+          return { ep: 0, scene: 0 };
+        }
+      }
       function getEpisodeStatus(epNum, currentEp) {
         if (epNum < currentEp) return "done";
-        if (epNum === currentEp) return currentEp === 0 ? "locked" : "active";
+        if (epNum === currentEp) {
+          if (currentEp === 0) return "locked";
+          return "active";
+        }
         return "locked";
       }
 
       // ═══════════════════════════════════════════════════════
-      //  کارت اپیزودها
+      //  کارت اپیزودها — با مخفی‌سازی اپیزودهای آینده
       // ═══════════════════════════════════════════════════════
       function buildEpisodes() {
         const { ep: currentEp } = getProgress();
         const grid = document.getElementById("episodes-grid");
         if (!grid) return;
+        grid.innerHTML = "";
+
+        // 🔐 حداکثر اپیزودی که کاربر می‌تونه ببینه = اپیزود فعلی + ۱
+        // اگر currentEp = 0 → فقط اپیزود ۱ رو می‌بینه
+        // اگر currentEp = 1 → اپیزود ۱ و ۲ رو می‌بینه
+        const maxVisible = Math.min(currentEp + 1, EPISODES.length);
 
         EPISODES.forEach((ep, idx) => {
+          const isVisible = ep.num <= maxVisible;
           const status = getEpisodeStatus(ep.num, currentEp);
+
+          const card = document.createElement("article");
+
+          // ──────────────────────────────────────────────
+          //  ❌ اپیزودهای قفل‌شده و آینده — مخفی
+          // ──────────────────────────────────────────────
+          if (!isVisible) {
+            card.className = "episode-card status-locked hidden-episode";
+            card.style.animationDelay = `${idx * 0.1}s`;
+            card.setAttribute("aria-label", "اپیزود قفل‌شده");
+            card.innerHTML = `
+              <div class="card-num cinzel">🔒</div>
+              <div class="card-body">
+                <h3 class="card-title">فصل بعدی</h3>
+                <p class="card-line">برای دسترسی به این فصل، فصل قبلی را کامل کنید</p>
+              </div>
+              <div class="card-status status-locked">
+                <span class="status-icon" aria-hidden="true">🔒</span>
+                <span class="status-label">قفل</span>
+              </div>
+              <div class="card-glow"></div>
+            `;
+            grid.appendChild(card);
+            return;
+          }
+
+          // ──────────────────────────────────────────────
+          //  ✅ اپیزودهای قابل‌دسترس
+          // ──────────────────────────────────────────────
           const statusMap = {
             done: { icon: "✅", label: "خوانده شده", cls: "status-done" },
             active: {
@@ -298,25 +381,27 @@
             },
             locked: { icon: "🔒", label: "قفل", cls: "status-locked" },
           };
-          const s = statusMap[status];
+          const s = statusMap[status] || statusMap.locked;
 
-          const card = document.createElement("article");
           card.className = `episode-card ${s.cls}`;
-          card.style.animationDelay = `${idx * 0.12}s`;
+          card.style.animationDelay = `${idx * 0.1}s`;
           card.setAttribute("aria-label", `${ep.numFa}: ${ep.title}`);
 
+          const scenesInfo = `(${ep.totalScenes} صحنه)`;
+
           card.innerHTML = `
-        <div class="card-num cinzel">${ep.numFa}</div>
-        <div class="card-body">
-          <h3 class="card-title">${ep.title}</h3>
-          <p class="card-line">${ep.line}</p>
-        </div>
-        <div class="card-status ${s.cls}">
-          <span class="status-icon" aria-hidden="true">${s.icon}</span>
-          <span class="status-label">${s.label}</span>
-        </div>
-        <div class="card-glow"></div>
-      `;
+            <div class="card-num cinzel">${ep.numFa}</div>
+            <div class="card-body">
+              <h3 class="card-title">${ep.title}</h3>
+              <p class="card-line">${ep.line}</p>
+              <small class="card-scenes">${scenesInfo}</small>
+            </div>
+            <div class="card-status ${s.cls}">
+              <span class="status-icon" aria-hidden="true">${s.icon}</span>
+              <span class="status-label">${s.label}</span>
+            </div>
+            <div class="card-glow"></div>
+          `;
 
           if (status !== "locked") {
             card.style.cursor = "pointer";
@@ -330,19 +415,24 @@
       }
 
       // ═══════════════════════════════════════════════════════
-      //  نوار پیشرفت
+      //  نوار پیشرفت — اصلاح‌شده
       // ═══════════════════════════════════════════════════════
-      // جایگزین تابع updateProgress با این نسخه
       function updateProgress() {
         const { ep: currentEp, scene: currentScene } = getProgress();
 
+        // محاسبه تعداد کل صحنه‌ها
         const totalScenes = EPISODES.reduce((a, e) => a + e.totalScenes, 0);
-        let doneScenes = 0;
 
-        // محاسبه دقیق‌تر
+        // محاسبه صحنه‌های انجام‌شده
+        let doneScenes = 0;
         EPISODES.forEach((e) => {
-          if (e.num < currentEp) doneScenes += e.totalScenes;
-          else if (e.num === currentEp) doneScenes += currentScene || 0;
+          if (e.num < currentEp) {
+            doneScenes += e.totalScenes;
+          } else if (e.num === currentEp) {
+            // scene رو به عدد تبدیل کن
+            const sceneNum = parseInt(currentScene, 10) || 0;
+            doneScenes += sceneNum;
+          }
         });
 
         const pct = Math.min(100, Math.round((doneScenes / totalScenes) * 100));
@@ -358,12 +448,18 @@
         if (glowEl) glowEl.style.left = pct + "%";
 
         if (detailEl) {
-          const epNames = ["", "یکم", "دوم", "سوم", "چهارم", "پنجم"];
-          const epName = epNames[currentEp] || "";
-          if (currentEp > 0) {
-            const total =
-              EPISODES.find((e) => e.num === currentEp)?.totalScenes || 0;
-            detailEl.textContent = `فصل ${epName} — صحنه ${currentScene || 0} از ${total}`;
+          if (currentEp > 0 && currentEp <= EPISODES.length) {
+            const ep = EPISODES.find((e) => e.num === currentEp);
+            if (ep) {
+              const epFa =
+                ["", "یکم", "دوم", "سوم", "چهارم", "پنجم", "ششم", "هفتم"][
+                  currentEp
+                ] || "";
+              const sceneNum = parseInt(currentScene, 10) || 0;
+              detailEl.textContent = `فصل ${epFa} — ${sceneNum} از ${ep.totalScenes} صحنه`;
+            } else {
+              detailEl.textContent = "داستان در حال ادامه...";
+            }
           } else {
             detailEl.textContent = "هنوز داستان آغاز نشده";
           }
@@ -470,10 +566,12 @@
 
         const toggle = document.getElementById("nav-toggle");
         const nav = document.querySelector(".main-nav");
-        toggle.addEventListener("click", () => {
-          nav.classList.toggle("open");
-          toggle.classList.toggle("open");
-        });
+        if (toggle && nav) {
+          toggle.addEventListener("click", () => {
+            nav.classList.toggle("open");
+            toggle.classList.toggle("open");
+          });
+        }
       }
 
       // ═══════════════════════════════════════════════════════
@@ -491,15 +589,15 @@
         resize();
         window.addEventListener("resize", resize, { passive: true });
 
-        const N = 60;
+        const N = 70;
         const particles = Array.from({ length: N }, () => ({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          r: Math.random() * 1.4 + 0.3,
-          vx: (Math.random() - 0.5) * 0.25,
-          vy: -(Math.random() * 0.35 + 0.1),
+          r: Math.random() * 1.6 + 0.3,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: -(Math.random() * 0.4 + 0.1),
           a: Math.random(),
-          maxA: Math.random() * 0.55 + 0.15,
+          maxA: Math.random() * 0.6 + 0.15,
         }));
 
         function frame() {
@@ -544,20 +642,34 @@
           if (target) {
             e.preventDefault();
             target.scrollIntoView({ behavior: "smooth", block: "start" });
-            // بستن منوی موبایل
-            document.querySelector(".main-nav").classList.remove("open");
-            document.getElementById("nav-toggle").classList.remove("open");
+            const nav = document.querySelector(".main-nav");
+            const toggle = document.getElementById("nav-toggle");
+            if (nav) nav.classList.remove("open");
+            if (toggle) toggle.classList.remove("open");
           }
         });
       });
-      // در انتهای script اضافه کن
+
+      // ═══════════════════════════════════════════════════════
+      //  دکمه شروع از اول
+      // ═══════════════════════════════════════════════════════
       document.getElementById("restartBtn")?.addEventListener("click", (e) => {
-        if (!confirm("آیا مطمئنی؟ همه پیشرفت‌ت پاک میشه!")) {
+        if (!confirm("⚠️ آیا مطمئنی؟ همهٔ پیشرفت‌ت پاک می‌شه!")) {
           e.preventDefault();
           return false;
         }
-        // localStorage پاک میشه و کاربر به game.html?restart=true میرود
+        const keys = [
+          "donimeh_currentEpisode",
+          "donimeh_episode",
+          "donimeh_currentScene",
+          "donimeh_scene",
+          "donimeh_memory",
+          "donimeh_choices",
+        ];
+        keys.forEach((key) => localStorage.removeItem(key));
+        return true;
       });
+
       // ═══════════════════════════════════════════════════════
       //  اجرا
       // ═══════════════════════════════════════════════════════
@@ -571,6 +683,9 @@
         typewriterStory();
         initReveal();
         initHeader();
+
+        // به‌روزرسانی پیشرفت هنگام بازگشت به صفحه
+        window.addEventListener("focus", updateProgress);
       });
     </script>
   </body>

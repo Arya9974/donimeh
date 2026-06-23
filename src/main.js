@@ -625,37 +625,76 @@ function renderScene() {
 // ===== UPDATE PROGRESS =====
 // ================================================================
 
+// ================================================================
+// ===== UPDATE PROGRESS (کل داستان) =====
+// ================================================================
+
 function updateProgress() {
-  // پیدا کردن کل صحنه‌های اپیزود فعلی
-  const sceneKeys = Object.keys(currentEpisode.scenes);
-  const totalScenes = sceneKeys.length;
+  if (!episodesData || !episodesData.episodes) {
+    console.warn("⚠️ episodesData برای محاسبه پیشرفت موجود نیست");
+    return;
+  }
 
-  // پیدا کردن ایندکس صحنه فعلی
-  const currentIndex = sceneKeys.indexOf(state.sceneId);
-  const progress =
-    currentIndex >= 0 ? Math.round((currentIndex / totalScenes) * 100) : 0;
+  // ===== محاسبه کل صحنه‌های کل داستان =====
+  let totalScenes = 0;
+  episodesData.episodes.forEach((ep) => {
+    if (ep.scenes) {
+      totalScenes += Object.keys(ep.scenes).length;
+    }
+  });
 
-  // === به‌روزرسانی عدد درصد ===
+  // ===== محاسبه صحنه‌های طی‌شده =====
+  let doneScenes = 0;
+  const currentEpNum = parseInt(state.episodeId, 10) || 1;
+
+  for (const ep of episodesData.episodes) {
+    const epNum = parseInt(ep.id, 10) || 1;
+
+    if (epNum < currentEpNum) {
+      // اپیزودهای قبلی کامل شدن
+      if (ep.scenes) {
+        doneScenes += Object.keys(ep.scenes).length;
+      }
+    } else if (epNum === currentEpNum) {
+      // اپیزود فعلی — فقط تا صحنه فعلی
+      if (ep.scenes) {
+        const sceneKeys = Object.keys(ep.scenes);
+        const currentIndex = sceneKeys.indexOf(state.sceneId);
+        if (currentIndex >= 0) {
+          doneScenes += currentIndex + 1; // +1 چون از 0 شروع میشه
+        }
+      }
+    }
+  }
+
+  // ===== محاسبه درصد =====
+  const pct =
+    totalScenes > 0 ? Math.round((doneScenes / totalScenes) * 100) : 0;
+  const pctFa = pct.toString().replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+
+  // ===== به‌روزرسانی DOM =====
   const pctEl = document.getElementById("progressPercent");
-  if (pctEl) {
-    const pctFa = progress.toString().replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
-    pctEl.textContent = pctFa + "٪";
-  }
-
-  // === به‌روزرسانی نوار پیشرفت ===
   const fillEl = document.getElementById("progressFill");
-  if (fillEl) {
-    fillEl.style.width = progress + "%";
-  }
-
-  // === به‌روزرسانی نقطه طلایی ===
   const dotEl = document.getElementById("progressDot");
-  if (dotEl) {
-    dotEl.style.left = progress + "%";
+  const detailEl = document.getElementById("progressDetail");
+
+  if (pctEl) pctEl.textContent = pctFa + "٪";
+  if (fillEl) fillEl.style.width = pct + "%";
+  if (dotEl) dotEl.style.left = pct + "%";
+
+  if (detailEl) {
+    const epFa =
+      ["", "یکم", "دوم", "سوم", "چهارم", "پنجم", "ششم", "هفتم"][currentEpNum] ||
+      "";
+    const sceneNum = getSceneNumber(state.sceneId);
+    const totalInEp = currentEpisode?.scenes
+      ? Object.keys(currentEpisode.scenes).length
+      : 0;
+    detailEl.textContent = `فصل ${epFa} — ${sceneNum} از ${totalInEp} صحنه`;
   }
 
   console.log(
-    `📊 پیشرفت: ${progress}% (صحنه ${currentIndex + 1}/${totalScenes})`,
+    `📊 پیشرفت کل داستان: ${pct}% (${doneScenes}/${totalScenes} صحنه)`,
   );
 }
 // ================================================================
@@ -832,24 +871,71 @@ function goToNextScene() {
 // ===== SAVE =====
 // ================================================================
 
+// ================================================================
+// ===== SAVE =====
+// ================================================================
+
 function saveProgress() {
   try {
-    localStorage.setItem("donimeh_episode", state.episodeId);
-    localStorage.setItem("donimeh_scene", state.sceneId);
+    // ===== کلیدهای اصلی (با scene به‌صورت عدد) =====
+    const episodeNum = parseInt(state.episodeId, 10) || 1;
+    const sceneNum = getSceneNumber(state.sceneId);
+
+    // ذخیره با کلیدهای جدید
+    localStorage.setItem("donimeh_currentEpisode", episodeNum);
+    localStorage.setItem("donimeh_currentScene", sceneNum);
+
+    // ذخیره با کلیدهای قدیمی (برای سازگاری)
+    localStorage.setItem("donimeh_episode", episodeNum);
+    localStorage.setItem("donimeh_scene", sceneNum);
     localStorage.setItem("donimeh_has_progress", "true");
+
+    // بقیه داده‌ها
     localStorage.setItem(
       "donimeh_chatHistory",
       JSON.stringify(state.memory.chatHistory || {}),
     );
+
     if (state.memory.ep1FinalChoice) {
       localStorage.setItem("donimeh_ep1_choice", state.memory.ep1FinalChoice);
     }
     if (state.memory.ep2FinalChoice) {
       localStorage.setItem("donimeh_ep2_choice", state.memory.ep2FinalChoice);
     }
+
+    console.log(
+      `💾 ذخیره شد: اپیزود ${episodeNum}, صحنه ${sceneNum} (${state.sceneId})`,
+    );
   } catch (e) {
     console.warn("⚠️ خطا در ذخیره‌سازی:", e);
   }
+}
+
+// ===== تابع کمکی برای تبدیل sceneId به عدد =====
+function getSceneNumber(sceneId) {
+  if (!sceneId) return 0;
+
+  // اگه عدد هست، برگردون
+  if (!isNaN(parseInt(sceneId, 10))) {
+    return parseInt(sceneId, 10);
+  }
+
+  // اگه رشته هست، عدد داخلش رو پیدا کن
+  const match = sceneId.match(/\d+/);
+  if (match) {
+    return parseInt(match[0], 10);
+  }
+
+  // اگه هیچ عددی نبود، از لیست صحنه‌ها پیدا کن
+  if (currentEpisode && currentEpisode.scenes) {
+    const keys = Object.keys(currentEpisode.scenes);
+    const index = keys.indexOf(sceneId);
+    if (index >= 0) {
+      return index + 1; // 1-based index
+    }
+  }
+
+  return 0;
 }
 
 // ================================================================

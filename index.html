@@ -3,424 +3,575 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>دو نیمه | Donimeh</title>
+    <title>دو نیمه — یک روایتِ نوآرِ ایرانی</title>
+    <link rel="stylesheet" href="landing.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;1,400;1,600&family=Vazirmatn:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/style/landing.css" />
-    <link
-      rel="preload"
-      href="assets/data/episodes.json"
-      as="fetch"
-      crossorigin="anonymous"
-    />
   </head>
   <body>
-    <!-- ============================================================ -->
-    <!-- مرحله ۱: صحنه کتاب بسته                                     -->
-    <!-- ============================================================ -->
-    <div class="book-entrance" id="bookEntrance">
-      <div class="entrance-bg">
-        <div class="snow-fall" aria-hidden="true"></div>
-        <div class="entrance-vignette" aria-hidden="true"></div>
+    <!-- ═══════════════════════════════════ CANVAS ═══ -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- ═══════════════════════════════════ FOG LAYERS ═══ -->
+    <div class="fog fog-1"></div>
+    <div class="fog fog-2"></div>
+    <div class="fog fog-3"></div>
+    <div class="vignette"></div>
+
+    <!-- ═══════════════════════════════════ HEADER ═══ -->
+    <header class="site-header" id="site-header">
+      <div class="header-inner">
+        <a href="#hero" class="logo" aria-label="دو نیمه — صفحه اصلی">
+          <span class="logo-latin">دو نیمه</span>
+        </a>
+        <nav class="main-nav" aria-label="ناوبری اصلی">
+          <a href="#hero" class="nav-link">خانه</a>
+          <a href="#story-intro" class="nav-link">داستان</a>
+          <a href="#episodes" class="nav-link">فصل‌ها</a>
+          <a href="#about" class="nav-link">درباره</a>
+        </nav>
+        <button class="nav-toggle" id="nav-toggle" aria-label="باز کردن منو">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ═══════════════════════════════════ HERO ═══ -->
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="eyebrow-line"></span>
+          <span class="eyebrow-text">یک روایتِ نوآرِ ایرانی</span>
+          <span class="eyebrow-line"></span>
+        </div>
+
+        <h1 class="hero-title">
+          <span class="title-char" id="title-typewriter"></span>
+          <span class="title-cursor">|</span>
+        </h1>
+
+        <div class="hero-divider">
+          <span class="divider-line left"></span>
+          <span class="divider-ornament">✦</span>
+          <span class="divider-line right"></span>
+        </div>
+
+        <div class="quotes-carousel" aria-live="polite">
+          <div class="quote-slide active" id="quote-display">
+            <p class="quote-text"></p>
+            <cite class="quote-author"></cite>
+          </div>
+        </div>
+
+        <a href="#episodes" class="cta-scroll" id="cta-scroll">
+          <span class="cta-text">کاوش در داستان</span>
+          <span class="cta-arrow">↓</span>
+        </a>
       </div>
 
-      <div class="book-closed-wrapper" id="bookClosedWrapper">
-        <div
-          class="book-closed"
-          id="bookClosed"
-          role="button"
-          tabindex="0"
-          aria-label="کتاب بسته - کلیک کنید تا باز شود"
-        >
-          <div class="book-cover-front">
-            <div class="cover-texture"></div>
-            <div class="cover-worn-tl"></div>
-            <div class="cover-worn-br"></div>
-            <div class="cover-ornament-top">✦ ⬩ ✦</div>
-            <h1 class="cover-title">دو نیمه</h1>
-            <div class="cover-subtitle">Donimeh</div>
-            <div class="cover-ornament-bottom">⬩ ✦ ⬩</div>
-            <div class="cover-border-frame"></div>
+      <!-- گرد طلایی روی هیرو -->
+      <div class="hero-glow"></div>
+    </section>
+
+    <!-- ═══════════════════════════════════ STORY INTRO ═══ -->
+    <section class="story-intro reveal-section" id="story-intro">
+      <div class="container">
+        <div class="story-grid">
+          <div class="story-book-icon" aria-hidden="true">
+            <div class="book">
+              <div class="book-cover"></div>
+              <div class="book-page page-1"></div>
+              <div class="book-page page-2"></div>
+              <div class="book-spine"></div>
+              <div class="book-glow"></div>
+            </div>
           </div>
-          <div class="book-spine" aria-hidden="true"></div>
-          <div class="book-edge" aria-hidden="true"></div>
+          <div class="story-text">
+            <h2 class="section-label">داستان</h2>
+            <p class="story-body" id="story-typewriter"></p>
+            <div class="story-meta">
+              <span class="meta-item">۵ فصل</span>
+              <span class="meta-dot">·</span>
+              <span class="meta-item">روایت شاخه‌ای</span>
+              <span class="meta-dot">·</span>
+              <span class="meta-item">نوآر ایرانی</span>
+            </div>
+          </div>
         </div>
-        <p class="entrance-hint">برای کشف راز، کتاب را لمس کن</p>
       </div>
+    </section>
 
-      <div class="book-shadow" id="bookShadow" aria-hidden="true"></div>
-      <div class="dust-overlay" id="dustOverlay" aria-hidden="true"></div>
-    </div>
+    <!-- ═══════════════════════════════════ EPISODES ═══ -->
+    <section class="episodes reveal-section" id="episodes">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title cinzel">فصل‌های داستان</h2>
+          <div class="title-underline">
+            <span class="underline-line"></span>
+            <span class="underline-gem">◆</span>
+            <span class="underline-line"></span>
+          </div>
+        </div>
 
-    <!-- ============================================================ -->
-    <!-- مرحله ۲: لندینگ روی کاغذ کتاب                               -->
-    <!-- ============================================================ -->
-    <main class="paper-landing" id="paperLanding" aria-hidden="true">
-      <!-- اسکرول‌بار کاستوم -->
-      <div class="custom-scrollbar" id="customScrollbar" aria-hidden="true">
-        <div class="custom-scrollbar-thumb" id="scrollThumb"></div>
+        <div class="episodes-grid" id="episodes-grid">
+          <!-- کارت‌ها با جاوااسکریپت ساخته می‌شوند -->
+        </div>
       </div>
+    </section>
 
-      <!-- بافت کاغذ -->
-      <div class="paper-texture" aria-hidden="true"></div>
-
-      <!-- خطوط دفترچه -->
-      <div class="paper-lines" aria-hidden="true"></div>
-
-      <!-- لکه‌های چای و کهنگی -->
-      <div class="tea-stain tea-stain--1" aria-hidden="true"></div>
-      <div class="tea-stain tea-stain--2" aria-hidden="true"></div>
-      <div class="tea-stain tea-stain--3" aria-hidden="true"></div>
-      <div class="ink-blot ink-blot--1" aria-hidden="true"></div>
-      <div class="ink-blot ink-blot--2" aria-hidden="true"></div>
-
-      <!-- گوشه‌ی تا شده -->
-      <div class="paper-fold" aria-hidden="true"></div>
-      <!-- گوشه پاره شده -->
-      <div class="paper-tear" aria-hidden="true"></div>
-
-      <!-- ============ HERO ============ -->
-      <section class="paper-section hero-section reveal">
-        <div class="paper-ornament">✦</div>
-        <p class="paper-eyebrow">داستانی معمایی در شب‌های برفی تبریز</p>
-        <h2 class="paper-title">دو نیمه</h2>
-        <div class="paper-rule"></div>
-        <p class="paper-desc">
-          در کوچه‌های سنگفرش‌شده‌ی تبریز، جایی که برف همه‌چیز را در سکوت سفیدپوش
-          می‌کند،
-          <strong>رازی کهنه</strong> در دل یک خانه‌ی قدیمی خفته است.
-        </p>
-        <p class="paper-desc">
-          هر دانه‌ی برف، قطعه‌ای از یک پازل است. هر سایه، نشانه‌ای از حقیقتی
-          پنهان. و هر انتخاب تو، <strong>مسیر داستان را تغییر می‌دهد</strong>.
-        </p>
-        <p
-          class="paper-desc"
-          style="font-size: 13px; color: #5c4a3a; margin-top: 8px"
-        >
-          آماده‌ای پرده از این راز برداری؟
-        </p>
-      </section>
-
-      <!-- ============ راهنمای مسیر ============ -->
-      <section class="paper-section reveal">
-        <h3 class="paper-section-title">🧭 راهنمای مسیر</h3>
-        <div class="guide-cards">
-          <div class="guide-card">
-            <span class="guide-icon">📖</span>
-            <span class="guide-label">۵ اپیزود</span>
-            <span class="guide-desc"
-              >هر اپیزود یک پرده از راز را فاش می‌کند</span
-            >
+    <!-- ═══════════════════════════════════ PROGRESS ═══ -->
+    <section class="progress-section reveal-section" id="progress-section">
+      <div class="container">
+        <div class="progress-wrap">
+          <div class="progress-label">
+            <span class="progress-pct" id="progress-pct">۰٪</span>
+            <span class="progress-desc">از داستان کاوش شده</span>
           </div>
-          <div class="guide-card">
-            <span class="guide-icon">🧩</span>
-            <span class="guide-label">پازل‌های مرموز</span>
-            <span class="guide-desc">با حل معماها مسیرت را باز کن</span>
+          <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+            <div class="progress-glow" id="progress-glow"></div>
           </div>
-          <div class="guide-card">
-            <span class="guide-icon">🎯</span>
-            <span class="guide-label">انتخاب‌های سرنوشت‌ساز</span>
-            <span class="guide-desc">هر تصمیم، پایان داستان را عوض می‌کند</span>
+          <div class="progress-scenes">
+            <span id="progress-detail">هنوز داستان آغاز نشده</span>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ============ فضاسازی ============ -->
-      <section class="paper-section reveal">
-        <h3 class="paper-section-title">🌙 تبریز در شب</h3>
-        <p class="paper-desc">
-          تصور کن: ساعت از نیمه‌شب گذشته. برف آرام آرام روی سنگفرش‌های خیابان
-          تربیت می‌نشیند. چراغ‌های گازی سوسو می‌زنند. از پنجره‌ی یک خانه‌ی
-          قدیمی، نور شمعی دیده می‌شود.
-        </p>
-        <p class="paper-desc">
-          اینجا تبریز است — شهری که
-          <strong>رازهایش را به هر کسی نمی‌گوید</strong>. باید گوش بسپاری. باید
-          ببینی. باید انتخاب کنی.
-        </p>
-        <div class="atmosphere-note">
-          <span class="atmosphere-icon">🕯️</span>
-          <p>
-            «تبریز یه جوری آدم رو می‌بلعه. نه یهو — آروم آروم، مثل برف که روش رد
-            می‌شه.»
-          </p>
+    <!-- ═══════════════════════════════════ CLOSING QUOTE ═══ -->
+    <section class="closing-quote reveal-section" id="closing-quote">
+      <div class="container">
+        <div class="closing-quote-inner">
+          <span class="quote-mark-open">"</span>
+          <blockquote class="closing-text">
+            تهران شهری‌ست که هر کوچه‌اش یک راز دارد،<br />
+            و هر راز، دو نیمه‌ی متضاد.
+          </blockquote>
+          <span class="quote-mark-close">"</span>
+          <cite class="closing-author">— سینا فصل اول</cite>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ============ پیشرفت ============ -->
-      <section class="paper-section reveal">
-        <h3 class="paper-section-title">📊 پیشرفت داستان</h3>
-        <div class="progress-widget" id="progressWidget">
-          <div class="progress-big-num" id="progressPercent">۰٪</div>
-          <div class="progress-bar-wrap">
-            <div
-              class="progress-bar-fill"
-              id="progressFill"
-              style="width: 0%"
-            ></div>
-          </div>
-          <p class="progress-label" id="progressLabel">
-            ۰ از ۵ اپیزود کامل شده
-          </p>
-        </div>
-      </section>
-
-      <!-- ============ اپیزودها ============ -->
-      <section class="paper-section reveal">
-        <h3 class="paper-section-title">📋 اپیزودها</h3>
-        <div class="episode-list" id="episodeList"></div>
-      </section>
-
-      <!-- ============ دفترچه خاطرات ============ -->
-      <section class="paper-section reveal">
-        <h3 class="paper-section-title">📓 دفترچه خاطرات</h3>
-        <div class="journal-lines" id="journalStats"></div>
-        <p class="journal-note">
-          <em>این صفحات با پیشرفت در داستان پر می‌شوند...</em>
-        </p>
-      </section>
-
-      <!-- ============ نقشه داستان ============ -->
-      <section class="paper-section reveal">
-        <h3 class="paper-section-title">🗺️ نقشه داستان</h3>
-        <div class="story-map" id="storyMap"></div>
-      </section>
-
-      <!-- ============ نقل قول‌ها ============ -->
-      <section class="paper-section reveal">
-        <h3 class="paper-section-title">💬 صداهایی از داستان</h3>
-        <div class="quote-track">
-          <div class="quote-item active" data-quote="0">
-            <span class="quote-mark">"</span>
-            <p>بعضی رازها رو فقط برف می‌دونه. و برف حرف نمی‌زنه.</p>
-            <span class="quote-source">— تبریز، شب اول</span>
-          </div>
-          <div class="quote-item" data-quote="1">
-            <span class="quote-mark">"</span>
-            <p>هر کوچه‌ی این شهر یه قصه داره. فقط باید بلد باشی گوش کنی.</p>
-            <span class="quote-source">— پیرمرد چای‌فروش</span>
-          </div>
-          <div class="quote-item" data-quote="2">
-            <span class="quote-mark">"</span>
-            <p>
-              فکر می‌کردم دارم دنبال حقیقت می‌گردم. غافل از اینکه حقیقت داشت منو
-              پیدا می‌کرد.
-            </p>
-            <span class="quote-source">— راوی داستان</span>
-          </div>
-        </div>
-        <div class="quote-nav" id="quoteNav"></div>
-      </section>
-
-      <!-- ============ CTA ============ -->
-      <section class="paper-section cta-section reveal">
-        <div class="cta-ornament">✦</div>
-        <p class="cta-question">«آماده‌ای؟ داستان از همین جا شروع می‌شود...»</p>
+    <!-- ═══════════════════════════════════ CTA BUTTONS ═══ -->
+    <section class="cta-section reveal-section" id="cta-section">
+      <div class="container">
+        <!-- در بخش cta-buttons، دکمه سوم رو اضافه کن -->
         <div class="cta-buttons">
-          <a href="game.html" class="btn-ink btn-ink--primary" id="btnContinue">
-            📖 ادامه خواندن
+          <a href="game.html" class="btn-primary holo">
+            <span class="btn-holo-bg"></span>
+            <span class="btn-text">ورود به بازی</span>
+            <span class="btn-icon">◈</span>
           </a>
-          <a
-            href="game.html?restart=true"
-            class="btn-ink btn-ink--secondary"
-            id="btnRestart"
-          >
-            🚀 شروع ماجرا
+          <a href="story.html" class="btn-secondary">
+            <span class="btn-text">فقط خواندن داستان</span>
+            <span class="btn-icon">📖</span>
+          </a>
+          <!-- دکمه جدید: شروع از اول -->
+          <a href="game.html?restart=true" class="btn-tertiary" id="restartBtn">
+            <span class="btn-text">🔄 شروع از اول</span>
           </a>
         </div>
-      </section>
-      <!-- index.html — بخش داستان کامل -->
-      <!-- index.html — فقط یک دکمه، بدون onclick توی HTML -->
-      <section class="story-section">
-        <div class="story-card">
-          <div class="story-icon">📖</div>
-          <h2 class="story-title">داستان کامل</h2>
-          <p class="story-desc">
-            بعد از اتمام بازی، می‌توانی کل داستان را به صورت یک روایت یکپارچه
-            بخوانی.
-          </p>
-          <button class="story-btn" id="storyBtn">مشاهده داستان کامل</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════ FOOTER ═══ -->
+    <footer class="site-footer" id="about">
+      <div class="container">
+        <div class="footer-ornament">
+          <span class="orn-line"></span>
+          <span class="orn-sym">✦ د.ن ✦</span>
+          <span class="orn-line"></span>
         </div>
-      </section>
-      <!-- فوتر -->
-      <footer class="paper-footer">
-        <div class="footer-ornament">⬩ ✦ ⬩</div>
-        <p>دو نیمه · داستانی از شب‌های تبریز</p>
-        <p class="footer-sub">تمام حقوق محفوظ است © ۱۴۰۴</p>
-      </footer>
-    </main>
+        <p class="footer-credit">
+          نوشته و کارگردانی شده توسط <span class="credit-name">نویسنده</span>
+        </p>
+        <p class="footer-year">۱۴۰۴ — تمامی حقوق محفوظ است</p>
+        <p class="footer-tagline">«دو نیمه» — یک روایتِ نوآرِ ایرانی</p>
+      </div>
+    </footer>
 
-    <script src="src/landing.js"></script>
-    <script type="module">
-      import { state } from "./src/engine/gameState.js";
+    <script>
+      // ═══════════════════════════════════════════════════════
+      //  داده‌های اپیزودها
+      // ═══════════════════════════════════════════════════════
+      const EPISODES = [
+        {
+          num: 1,
+          numFa: "اپیزود یکم",
+          title: "دو نیمه",
+          line: "کاوه در شبی بارانی با راز مرگ پدرش روبرو می‌شود.",
+          totalScenes: 12,
+        },
+        {
+          num: 2,
+          numFa: "اپیزود دوم",
+          title: "سایه‌ها",
+          line: "ردّ پا به کوچه‌های تاریک جنوب تهران ختم می‌شود.",
+          totalScenes: 10,
+        },
+        {
+          num: 3,
+          numFa: "اپیزود سوم",
+          title: "آینه‌ی شکسته",
+          line: "هر انتخاب، نیمه‌ای دیگر از حقیقت را آشکار می‌کند.",
+          totalScenes: 14,
+        },
+        {
+          num: 4,
+          numFa: "اپیزود چهارم",
+          title: "دود و آتش",
+          line: "دشمن از جایی می‌آید که انتظارش را نداری.",
+          totalScenes: 11,
+        },
+        {
+          num: 5,
+          numFa: "اپیزود پنجم",
+          title: "پایان یا آغاز",
+          line: "دو نیمه برای همیشه از هم جدا می‌شوند یا به هم می‌رسند.",
+          totalScenes: 13,
+        },
+      ];
 
-      // تابع تولید داستان
-      function generateStoryData() {
-        const choiceMap = {
-          rahi: "با رهی به قرار ونتوس رفتی",
-          mehras: "به مهراس اعتماد کردی",
-          seyf: "به پلیس رفتی",
-          alone: "تنها به ایل‌گلی برگشتی",
-          go: "به قرار ونتوس رفتی",
-          tell_seyf: "به سیف گفتی",
-          ask_arya: "از آریا کمک خواستی",
-          decline: "به قرار ونتوس نرفتی",
-          hossein: "به خونه حسین رفتی",
-          ventus: "به سراغ ونتوس رفتی",
-          walk: "قدم زدی و حسین اومد سراغت",
-          rahi_go: "رهی به پارک ایل‌گلی رفت",
-          rahi_police: "رهی به پلیس زنگ زد",
-          rahi_wait: "رهی منتظر ماند",
-        };
+      const QUOTES = [
+        { text: "بعضی حقیقت‌ها فقط در تاریکی دیده می‌شن.", author: "کاوه" },
+        {
+          text: "تهران با آدمش بدخلقه؛ هر چی بیشتر بشناسیش، کمتر می‌فهمیش.",
+          author: "سارا",
+        },
+        {
+          text: "انتخاب یه لبه‌ی تیغه. هر طرف که بری، خون می‌ده.",
+          author: "راوی",
+        },
+        { text: "مرده‌ها راز ندارن. اونا که زنده موندن دارن.", author: "کاوه" },
+        {
+          text: "شهر نمی‌خواد که بدونی. فقط می‌خواد که بمونی.",
+          author: "سارا",
+        },
+      ];
 
-        const blocks = [];
-        const hasProgress =
-          localStorage.getItem("donimeh_has_progress") === "true";
+      const STORY_TEXT =
+        "در تهرانِ دهه‌ی شصت، جایی میان دود و باران، کاوه — کارآگاهی که نیمه‌ای از خودش را گم کرده — " +
+        "با مرگ مرموز پدرش روبرو می‌شود. هر سرنخ او را عمیق‌تر به دلِ شهری می‌کشد که " +
+        "رازهایش از نسلی به نسل دیگر منتقل شده. در این روایت، هر انتخاب تو مسیری تازه می‌سازد — " +
+        "و هر مسیر، نیمه‌ای دیگر از حقیقت را باز می‌کند.";
 
-        if (!hasProgress) {
-          blocks.push({
-            type: "paragraph",
-            text: "هنوز بازی را شروع نکرده‌ای. ابتدا یک بازی جدید شروع کن تا داستان بر اساس انتخاب‌هایت ساخته شود.",
-          });
-          return {
-            title: "دو نیمه — داستان کامل",
-            subtitle: "هنوز داستانی برای نمایش وجود ندارد",
-            blocks: blocks,
+      // ═══════════════════════════════════════════════════════
+      //  localStorage
+      // ═══════════════════════════════════════════════════════
+      function getProgress() {
+        const ep = parseInt(localStorage.getItem("donimeh_episode") || "0", 10);
+        const scene = parseInt(
+          localStorage.getItem("donimeh_scene") || "0",
+          10,
+        );
+        return { ep, scene };
+      }
+
+      function getEpisodeStatus(epNum, currentEp) {
+        if (epNum < currentEp) return "done";
+        if (epNum === currentEp) return currentEp === 0 ? "locked" : "active";
+        return "locked";
+      }
+
+      // ═══════════════════════════════════════════════════════
+      //  کارت اپیزودها
+      // ═══════════════════════════════════════════════════════
+      function buildEpisodes() {
+        const { ep: currentEp } = getProgress();
+        const grid = document.getElementById("episodes-grid");
+        if (!grid) return;
+
+        EPISODES.forEach((ep, idx) => {
+          const status = getEpisodeStatus(ep.num, currentEp);
+          const statusMap = {
+            done: { icon: "✅", label: "خوانده شده", cls: "status-done" },
+            active: {
+              icon: "🔄",
+              label: "در حال خواندن",
+              cls: "status-active",
+            },
+            locked: { icon: "🔒", label: "قفل", cls: "status-locked" },
           };
-        }
+          const s = statusMap[status];
 
-        // ===== اپیزود ۱ =====
-        blocks.push({ type: "heading", text: "اپیزود ۱: دو نیمه" });
-        blocks.push({
-          type: "paragraph",
-          text: "کلانتری تاریک و سرد بود. لامپ مهتابی سوسو می‌زد. سیف روبه‌روی سینا نشسته بود و از او درباره شب ناپدید شدن ساغر سوال می‌کرد.",
+          const card = document.createElement("article");
+          card.className = `episode-card ${s.cls}`;
+          card.style.animationDelay = `${idx * 0.12}s`;
+          card.setAttribute("aria-label", `${ep.numFa}: ${ep.title}`);
+
+          card.innerHTML = `
+        <div class="card-num cinzel">${ep.numFa}</div>
+        <div class="card-body">
+          <h3 class="card-title">${ep.title}</h3>
+          <p class="card-line">${ep.line}</p>
+        </div>
+        <div class="card-status ${s.cls}">
+          <span class="status-icon" aria-hidden="true">${s.icon}</span>
+          <span class="status-label">${s.label}</span>
+        </div>
+        <div class="card-glow"></div>
+      `;
+
+          if (status !== "locked") {
+            card.style.cursor = "pointer";
+            card.addEventListener("click", () => {
+              window.location.href = `game.html?episode=${ep.num}`;
+            });
+          }
+
+          grid.appendChild(card);
         });
-        blocks.push({
-          type: "paragraph",
-          text: "سینا به گذشته برگشت. آریا به او پیام داده بود که امشب در پارک ایل‌گلی جمع می‌شوند. سینا قبول کرد و به پارک رفت.",
-        });
-
-        const ep1Choice =
-          localStorage.getItem("donimeh_ep1_choice") ||
-          state.memory?.ep1FinalChoice;
-        if (ep1Choice) {
-          blocks.push({
-            type: "choice",
-            text: `تو انتخاب کردی ${choiceMap[ep1Choice] || "انتخاب دیگری انجام دادی"}.`,
-          });
-        }
-
-        blocks.push({
-          type: "paragraph",
-          text: "در پارک، سینا با رهی آشنا شد. دختری مرموز با زخمی روی گردن. شب به پایان رسید و ساغر ناپدید شد.",
-        });
-        blocks.push({ type: "divider" });
-
-        // ===== اپیزود ۲ =====
-        blocks.push({ type: "heading", text: "اپیزود ۲: نقطه ناپدید شدن" });
-        blocks.push({
-          type: "paragraph",
-          text: "صبح روز بعد، سینا متوجه شد مهراس ۱۴ بار با ساغر تماس داشته. تحقیقات ادامه پیدا کرد.",
-        });
-
-        const ep2Choice =
-          localStorage.getItem("donimeh_ep2_choice") ||
-          state.memory?.ep2FinalChoice;
-        if (ep2Choice) {
-          blocks.push({
-            type: "choice",
-            text: `تو انتخاب کردی ${choiceMap[ep2Choice] || "انتخاب دیگری انجام دادی"}.`,
-          });
-        }
-
-        blocks.push({
-          type: "paragraph",
-          text: "سینا سه نسخه از چت مهراس و ساغر را بررسی کرد. لاکر ساغر را پیدا کرد و متوجه شد مهراس درباره زمان دیدن ساغر دروغ گفته.",
-        });
-        blocks.push({ type: "divider" });
-
-        // ===== اپیزود ۳ =====
-        blocks.push({ type: "heading", text: "اپیزود ۳: شب بنفشه" });
-        blocks.push({
-          type: "paragraph",
-          text: "سینا به قرار ونتوس رفت. ونتوس به او گفت حسین شفیعی ساغر را دزدیده است. سینا به خشک‌شویی رفت.",
-        });
-
-        const ep3Choice = state.memory?.ep3FinalChoice;
-        if (ep3Choice) {
-          blocks.push({
-            type: "choice",
-            text: `تو انتخاب کردی ${choiceMap[ep3Choice] || "انتخاب دیگری انجام دادی"}.`,
-          });
-        }
-
-        blocks.push({
-          type: "paragraph",
-          text: "آریا و سپهر به خونه حسین رفتند و با او روبرو شدند. حسین تهدید کرد که اگه بلایی سرش بیاید، ساغر می‌میرد.",
-        });
-        blocks.push({ type: "divider" });
-
-        // ===== اپیزود ۴ =====
-        blocks.push({ type: "heading", text: "اپیزود ۴: ردپا در برف" });
-        blocks.push({
-          type: "paragraph",
-          text: "سینا تصمیم خود را گرفت و راهی شد. تیم‌ها تقسیم شدند و همه به پارک ایل‌گلی رفتند.",
-        });
-
-        const ep4Choice = state.memory?.ep4FinalChoice;
-        if (ep4Choice) {
-          blocks.push({
-            type: "choice",
-            text: `تو انتخاب کردی ${choiceMap[ep4Choice] || "انتخاب دیگری انجام دادی"}.`,
-          });
-        }
-
-        blocks.push({
-          type: "paragraph",
-          text: "پارک ایل‌گلی یک تله بود. چراغ‌ها خاموش شدند و همه گیر افتادند. رهی در خانه فهمید که این یک تله است.",
-        });
-        blocks.push({ type: "divider" });
-
-        // ===== پایان =====
-        blocks.push({ type: "heading", text: "ادامه دارد..." });
-        blocks.push({
-          type: "paragraph",
-          text: "داستان همچنان ادامه دارد... انتخاب‌های تو سرنوشت شخصیت‌ها را تعیین می‌کنند.",
-        });
-
-        return {
-          title: "دو نیمه — داستان کامل",
-          subtitle: "روایت انتخاب‌های تو در شب‌های برفی تبریز",
-          blocks: blocks,
-        };
       }
 
-      function openStoryPage() {
-        const hasProgress =
-          localStorage.getItem("donimeh_has_progress") === "true";
+      // ═══════════════════════════════════════════════════════
+      //  نوار پیشرفت
+      // ═══════════════════════════════════════════════════════
+      // جایگزین تابع updateProgress با این نسخه
+      function updateProgress() {
+        const { ep: currentEp, scene: currentScene } = getProgress();
 
-        if (!hasProgress) {
-          alert(
-            "هنوز بازی را شروع نکرده‌ای. ابتدا یک بازی جدید شروع کن تا داستان بر اساس انتخاب‌هایت ساخته شود.",
-          );
-          return;
+        const totalScenes = EPISODES.reduce((a, e) => a + e.totalScenes, 0);
+        let doneScenes = 0;
+
+        // محاسبه دقیق‌تر
+        EPISODES.forEach((e) => {
+          if (e.num < currentEp) doneScenes += e.totalScenes;
+          else if (e.num === currentEp) doneScenes += currentScene || 0;
+        });
+
+        const pct = Math.min(100, Math.round((doneScenes / totalScenes) * 100));
+        const pctFa = pct.toString().replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+
+        const pctEl = document.getElementById("progress-pct");
+        const fillEl = document.getElementById("progress-fill");
+        const glowEl = document.getElementById("progress-glow");
+        const detailEl = document.getElementById("progress-detail");
+
+        if (pctEl) pctEl.textContent = pctFa + "٪";
+        if (fillEl) fillEl.style.width = pct + "%";
+        if (glowEl) glowEl.style.left = pct + "%";
+
+        if (detailEl) {
+          const epNames = ["", "یکم", "دوم", "سوم", "چهارم", "پنجم"];
+          const epName = epNames[currentEp] || "";
+          if (currentEp > 0) {
+            const total =
+              EPISODES.find((e) => e.num === currentEp)?.totalScenes || 0;
+            detailEl.textContent = `فصل ${epName} — صحنه ${currentScene || 0} از ${total}`;
+          } else {
+            detailEl.textContent = "هنوز داستان آغاز نشده";
+          }
         }
-
-        const storyData = generateStoryData();
-        localStorage.setItem("twoHalves:storyData", JSON.stringify(storyData));
-        window.open("story.html", "_blank");
+      }
+      // ═══════════════════════════════════════════════════════
+      //  تایپ‌رایتر تایتل
+      // ═══════════════════════════════════════════════════════
+      function typewriterTitle() {
+        const el = document.getElementById("title-typewriter");
+        const text = "دو نیمه";
+        let i = 0;
+        function tick() {
+          if (i <= text.length) {
+            el.textContent = text.slice(0, i);
+            i++;
+            setTimeout(tick, i === 1 ? 600 : 120);
+          }
+        }
+        setTimeout(tick, 800);
       }
 
-      // ===== اتصال به دکمه =====
-      document
-        .getElementById("storyBtn")
-        ?.addEventListener("click", openStoryPage);
+      // ═══════════════════════════════════════════════════════
+      //  تایپ‌رایتر معرفی داستان
+      // ═══════════════════════════════════════════════════════
+      function typewriterStory() {
+        const el = document.getElementById("story-typewriter");
+        if (!el) return;
+        let i = 0;
+        function tick() {
+          if (i <= STORY_TEXT.length) {
+            el.textContent = STORY_TEXT.slice(0, i);
+            i++;
+            setTimeout(tick, 18);
+          }
+        }
+        const obs = new IntersectionObserver(
+          (entries) => {
+            if (entries[0].isIntersecting) {
+              tick();
+              obs.disconnect();
+            }
+          },
+          { threshold: 0.3 },
+        );
+        obs.observe(el);
+      }
 
-      // ===== expose برای دیباگ =====
-      window.openStoryPage = openStoryPage;
+      // ═══════════════════════════════════════════════════════
+      //  چرخش نقل‌قول‌ها
+      // ═══════════════════════════════════════════════════════
+      function initQuotes() {
+        let idx = 0;
+        const textEl = document.querySelector(".quote-text");
+        const authorEl = document.querySelector(".quote-author");
+        const slideEl = document.getElementById("quote-display");
+
+        function show(i) {
+          slideEl.classList.remove("active");
+          setTimeout(() => {
+            textEl.textContent = QUOTES[i].text;
+            authorEl.textContent = "— " + QUOTES[i].author;
+            slideEl.classList.add("active");
+          }, 400);
+        }
+
+        show(0);
+        setInterval(() => {
+          idx = (idx + 1) % QUOTES.length;
+          show(idx);
+        }, 4000);
+      }
+
+      // ═══════════════════════════════════════════════════════
+      //  تخته برگ‌ها (scroll reveal)
+      // ═══════════════════════════════════════════════════════
+      function initReveal() {
+        const els = document.querySelectorAll(".reveal-section, .episode-card");
+        const obs = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("revealed");
+              }
+            });
+          },
+          { threshold: 0.08 },
+        );
+        els.forEach((el) => obs.observe(el));
+      }
+
+      // ═══════════════════════════════════════════════════════
+      //  هدر blur هنگام اسکرول
+      // ═══════════════════════════════════════════════════════
+      function initHeader() {
+        const header = document.getElementById("site-header");
+        window.addEventListener(
+          "scroll",
+          () => {
+            header.classList.toggle("scrolled", window.scrollY > 60);
+          },
+          { passive: true },
+        );
+
+        const toggle = document.getElementById("nav-toggle");
+        const nav = document.querySelector(".main-nav");
+        toggle.addEventListener("click", () => {
+          nav.classList.toggle("open");
+          toggle.classList.toggle("open");
+        });
+      }
+
+      // ═══════════════════════════════════════════════════════
+      //  ذرات طلایی
+      // ═══════════════════════════════════════════════════════
+      function initParticles() {
+        const canvas = document.getElementById("particles-canvas");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+
+        function resize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener("resize", resize, { passive: true });
+
+        const N = 60;
+        const particles = Array.from({ length: N }, () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.4 + 0.3,
+          vx: (Math.random() - 0.5) * 0.25,
+          vy: -(Math.random() * 0.35 + 0.1),
+          a: Math.random(),
+          maxA: Math.random() * 0.55 + 0.15,
+        }));
+
+        function frame() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          particles.forEach((p) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.a += 0.004;
+            if (p.y < -10) {
+              p.y = canvas.height + 10;
+              p.x = Math.random() * canvas.width;
+            }
+
+            const alpha = Math.abs(Math.sin(p.a)) * p.maxA;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(201,168,76,${alpha})`;
+            ctx.fill();
+          });
+          requestAnimationFrame(frame);
+        }
+        frame();
+      }
+
+      // ═══════════════════════════════════════════════════════
+      //  خط طلایی هیرو
+      // ═══════════════════════════════════════════════════════
+      function initDivider() {
+        setTimeout(() => {
+          document.querySelectorAll(".divider-line").forEach((el) => {
+            el.style.width = "140px";
+          });
+        }, 1800);
+      }
+
+      // ═══════════════════════════════════════════════════════
+      //  اسکرول روان
+      // ═══════════════════════════════════════════════════════
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const target = document.querySelector(a.getAttribute("href"));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+            // بستن منوی موبایل
+            document.querySelector(".main-nav").classList.remove("open");
+            document.getElementById("nav-toggle").classList.remove("open");
+          }
+        });
+      });
+      // در انتهای script اضافه کن
+      document.getElementById("restartBtn")?.addEventListener("click", (e) => {
+        if (!confirm("آیا مطمئنی؟ همه پیشرفت‌ت پاک میشه!")) {
+          e.preventDefault();
+          return false;
+        }
+        // localStorage پاک میشه و کاربر به game.html?restart=true میرود
+      });
+      // ═══════════════════════════════════════════════════════
+      //  اجرا
+      // ═══════════════════════════════════════════════════════
+      window.addEventListener("DOMContentLoaded", () => {
+        initParticles();
+        typewriterTitle();
+        initQuotes();
+        initDivider();
+        buildEpisodes();
+        updateProgress();
+        typewriterStory();
+        initReveal();
+        initHeader();
+      });
     </script>
   </body>
 </html>

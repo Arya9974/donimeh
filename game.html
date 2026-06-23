@@ -6,279 +6,352 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>دونیمه — بازی</title>
+    <title>دو نیمه</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-font-face.css"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="assets/style/game.css" />
   </head>
-  <body>
-    <div class="game-root" id="gameRoot">
-      <canvas class="atmosphere-canvas" id="atmosphereCanvas"></canvas>
-      <div class="vignette-overlay"></div>
+  <body class="theme-sina">
+    <!-- ═══════════════════════════════════════════
+       لایه‌های پس‌زمینه سینمایی
+  ═══════════════════════════════════════════ -->
+    <!-- داخل header یا کنار هدر -->
+    <button
+      class="back-to-landing"
+      id="backToLanding"
+      aria-label="بازگشت به صفحه اصلی"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M3 12h18M3 12l4-4M3 12l4 4" />
+      </svg>
+      <span>خانه</span>
+    </button>
+    <canvas
+      id="filmGrain"
+      class="bg-layer film-grain-canvas"
+      aria-hidden="true"
+    ></canvas>
 
-      <div class="scene-area" id="sceneArea">
-        <!-- پرتره -->
-        <div class="portrait-stage" id="portraitStage">
-          <div class="portrait-frame-gold">
-            <div class="portrait-frame-inner">
-              <img class="portrait-image" id="portraitImg" src="" alt="" />
-            </div>
-            <div class="portrait-frame-border"></div>
-            <div class="portrait-frame-corner corner-tl"></div>
-            <div class="portrait-frame-corner corner-tr"></div>
-            <div class="portrait-frame-corner corner-bl"></div>
-            <div class="portrait-frame-corner corner-br"></div>
-          </div>
-          <div class="portrait-shadow"></div>
-        </div>
+    <div class="bg-layer smoke-layer" aria-hidden="true">
+      <div class="smoke smoke-1"></div>
+      <div class="smoke smoke-2"></div>
+      <div class="smoke smoke-3"></div>
+    </div>
 
-        <!-- ردیف افقی: دیالوگ + تصمیم -->
-        <div class="dialogue-choice-row">
-          <div class="dialogue-panel" id="dialoguePanel">
-            <div class="speaker-line" id="speakerLine"></div>
-            <div class="dialogue-line" id="dialogueLine">
-              <span class="typing-cursor"></span>
-            </div>
-            <div class="continue-hint" id="continueHint">
-              <span class="hint-text">Space یا کلیک</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-                <path d="M12 5v14M19 12l-7 7-7-7" />
-              </svg>
-            </div>
-          </div>
-          <div class="choices-panel" id="choicesPanel">
-            <div class="choices-list" id="choicesList"></div>
-          </div>
-        </div>
+    <div class="bg-layer rays-layer" aria-hidden="true">
+      <div class="ray ray-1"></div>
+      <div class="ray ray-2"></div>
+      <div class="ray ray-3"></div>
+    </div>
 
-        <div class="puzzle-overlay" id="puzzleOverlay">
-          <div class="puzzle-content" id="puzzleContent"></div>
-        </div>
+    <div class="bg-layer particles-layer" aria-hidden="true">
+      <span class="particle"></span><span class="particle"></span>
+      <span class="particle"></span><span class="particle"></span>
+      <span class="particle"></span><span class="particle"></span>
+      <span class="particle"></span><span class="particle"></span>
+      <span class="particle"></span><span class="particle"></span>
+      <span class="particle"></span><span class="particle"></span>
+      <span class="particle"></span><span class="particle"></span>
+      <span class="particle"></span><span class="particle"></span>
+      <span class="particle"></span><span class="particle"></span>
+      <span class="particle"></span><span class="particle"></span>
+    </div>
 
-        <button class="back-btn" id="backBtn" title="بازگشت">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <button class="audio-btn" id="audioBtn" title="صدا">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-            <path d="M11 5L6 9H2v6h4l5 4V5z" />
-            <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" />
-          </svg>
-        </button>
-        <button class="phone-open-btn" id="phoneOpenBtn" title="گوشی">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-            <rect x="5" y="2" width="14" height="20" rx="2" />
-            <line x1="12" y1="18" x2="12.01" y2="18" />
-          </svg>
-        </button>
-        <button class="inv-btn" id="invBtn" title="کیف">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-            <path
-              d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-            />
-          </svg>
-        </button>
-
-        <!-- گوشی -->
-        <div class="phone-stage" id="phoneOverlay">
-          <div class="phone-device">
-            <div class="phone-status-bar">
-              <span class="status-time" id="statusTime">۱۲:۳۰</span>
-              <div class="status-icons">
-                <span>▲</span><span>●●●</span><span>▮▮▮</span>
-              </div>
-            </div>
-            <div class="phone-notch"></div>
-            <div class="phone-screen" id="phoneScreen">
-              <div class="app-screen screen-home" id="screenHome">
-                <button
-                  class="phone-close-btn"
-                  onclick="window.DonimehUI.closePhone()"
-                >
-                  ✕
-                </button>
-                <div style="height: 36px"></div>
-                <div class="home-time" id="homeTime">۱۲:۳۰</div>
-                <div class="home-date" id="homeDate">سه‌شنبه، ۲۶ خرداد</div>
-                <div class="home-apps">
-                  <div
-                    class="app-icon"
-                    onclick="window.DonimehUI.openApp('chat')"
-                  >
-                    <div class="app-icon-emoji">💬</div>
-                    <div class="app-icon-info">
-                      <span class="app-icon-name">Chat</span
-                      ><span class="app-icon-sub">پیام‌ها</span>
-                    </div>
-                  </div>
-                  <div
-                    class="app-icon"
-                    onclick="window.DonimehUI.openApp('items')"
-                  >
-                    <div class="app-icon-emoji">🎒</div>
-                    <div class="app-icon-info">
-                      <span class="app-icon-name">Items</span
-                      ><span class="app-icon-sub">اشیاء</span>
-                    </div>
-                  </div>
-                  <div
-                    class="app-icon"
-                    onclick="window.DonimehUI.openApp('notes')"
-                  >
-                    <div class="app-icon-emoji">📋</div>
-                    <div class="app-icon-info">
-                      <span class="app-icon-name">Notes</span
-                      ><span class="app-icon-sub">یادداشت‌ها</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="app-screen screen-chat hidden" id="screenChat">
-                <div class="app-header">
-                  <button
-                    class="back-btn-phone"
-                    onclick="window.DonimehUI.openApp('home')"
-                  >
-                    ←
-                  </button>
-                  <div class="app-header-title">Chat</div>
-                </div>
-                <div class="list-screen" id="contactsList"></div>
-              </div>
-              <div
-                class="app-screen screen-chat-convo hidden"
-                id="screenChatConvo"
-              >
-                <div class="app-header">
-                  <button
-                    class="back-btn-phone"
-                    onclick="window.DonimehUI.openApp('chat')"
-                  >
-                    ←
-                  </button>
-                  <div class="app-header-title" id="chatHeader">Chat</div>
-                  <div class="app-header-dot"></div>
-                </div>
-                <div class="chat-messages" id="phoneChat"></div>
-                <div class="chat-choices" id="phoneChoices"></div>
-                <div class="chat-input-container" id="phoneInputContainer">
-                  <input
-                    type="text"
-                    class="chat-input-field"
-                    id="phoneInputField"
-                    placeholder="پیام بفرست..."
-                  />
-                  <button class="chat-input-send" id="phoneInputSend">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div class="app-screen screen-items hidden" id="screenItems">
-                <div class="app-header">
-                  <button
-                    class="back-btn-phone"
-                    onclick="window.DonimehUI.openApp('home')"
-                  >
-                    ←
-                  </button>
-                  <div class="app-header-title">🎒 Items</div>
-                </div>
-                <div class="list-screen" id="itemsList">
-                  <div class="empty-state">
-                    <div class="empty-emoji">🎒</div>
-                    موجودی خالی
-                  </div>
-                </div>
-              </div>
-              <div class="app-screen screen-notes hidden" id="screenNotes">
-                <div class="app-header">
-                  <button
-                    class="back-btn-phone"
-                    onclick="window.DonimehUI.openApp('home')"
-                  >
-                    ←
-                  </button>
-                  <div class="app-header-title">📋 Notes</div>
-                </div>
-                <div class="list-screen" id="notesList">
-                  <div class="empty-state">
-                    <div class="empty-emoji">📋</div>
-                    یادداشتی نیست
-                  </div>
-                </div>
-              </div>
-              <!-- صفحه تماس -->
-              <div class="app-screen screen-call hidden" id="screenCall">
-                <div class="app-header">
-                  <button
-                    class="back-btn-phone"
-                    onclick="window.DonimehUI.closePhone()"
-                  >
-                    ←
-                  </button>
-                  <div class="app-header-title" id="callHeader">تماس</div>
-                </div>
-                <div class="call-container">
-                  <div class="call-avatar">📞</div>
-                  <div class="call-status" id="callStatus">در حال تماس...</div>
-                  <div class="call-timer" id="callTimer">۰۰:۰۰</div>
-                  <div class="call-dialogue" id="callDialogue"></div>
-                  <button class="call-end-btn" id="callEndBtn">قطع تماس</button>
-                </div>
-              </div>
-              <!-- صفحه مخاطب -->
-              <div class="app-screen screen-contact hidden" id="screenContact">
-                <div class="app-header">
-                  <button
-                    class="back-btn-phone"
-                    onclick="window.DonimehUI.openApp('home')"
-                  >
-                    ←
-                  </button>
-                  <div class="app-header-title" id="contactHeader">مخاطب</div>
-                </div>
-                <div class="contact-container">
-                  <img
-                    class="contact-avatar"
-                    id="contactAvatar"
-                    src=""
-                    alt=""
-                  />
-                  <div class="contact-name" id="contactName"></div>
-                  <div class="contact-status" id="contactStatus"></div>
-                  <div class="contact-details" id="contactDetails"></div>
-                  <div class="contact-actions" id="contactActions"></div>
-                </div>
-              </div>
-            </div>
-            <div class="phone-home-btn"></div>
-          </div>
-        </div>
+    <!-- ═══════════════════════════════════════════
+       هدر سینمایی
+  ═══════════════════════════════════════════ -->
+    <header class="game-header" id="gameHeader">
+      <div class="header-logo">
+        <span class="logo-monogram">DN</span>
+        <span class="logo-divider"></span>
+        <span class="logo-title">دو نیمه</span>
       </div>
 
-      <div id="inventoryDrawer" class="inv-drawer-closed">
-        <div id="inventoryBackdrop"></div>
-        <div id="inventoryPanel">
-          <div id="inventoryHeader">
-            <span>🎒 کیف آیتم‌ها</span><button id="inventoryClose">✕</button>
+      <div class="header-episode" id="episodeInfo">
+        <span class="episode-label">EP</span>
+        <span class="episode-number" id="episodeNumber">۱</span>
+        <span class="episode-separator">—</span>
+        <span class="episode-name" id="episodeName">آغاز</span>
+      </div>
+
+      <div class="header-role">
+        <button class="role-badge" id="roleBadge">
+          <span class="role-dot"></span>
+         <span class="role-name" id="currentRoleName">سینا</span>
+        </button>
+      </div>
+
+      <div class="header-line"></div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════
+       دکمه‌های کناری (بالا چپ)
+  ═══════════════════════════════════════════ -->
+    <div class="side-controls">
+      <button class="side-btn sound-btn" id="audioBtn" aria-label="صدا">
+        <span class="side-btn-glow"></span>
+        <span class="side-btn-icon">🔊</span>
+      </button>
+
+      <button class="side-btn phone-btn" id="phoneOpenBtn" aria-label="گوشی">
+        <span class="side-btn-glow"></span>
+        <span class="side-btn-icon">📱</span>
+        <span class="side-btn-badge" id="phoneBadge" hidden>۰</span>
+      </button>
+
+      <button class="side-btn bag-btn" id="invBtn" aria-label="کیف">
+        <span class="side-btn-glow"></span>
+        <span class="side-btn-icon">🎒</span>
+        <span class="side-btn-badge" id="bagBadge" hidden>۰</span>
+      </button>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+       محتوای اصلی بازی
+  ═══════════════════════════════════════════ -->
+
+    <main class="game-main" id="gameMain">
+      <!-- ===== ستون پرتره ===== -->
+      <aside class="portrait-column" id="portraitColumn">
+        <div class="portrait-frame-wrapper">
+          <div class="portrait-glow"></div>
+          <div class="portrait-frame" id="portraitFrame">
+            <span class="frame-corner fc-tl"></span>
+            <span class="frame-corner fc-tr"></span>
+            <span class="frame-corner fc-bl"></span>
+            <span class="frame-corner fc-br"></span>
+
+            <div class="portrait-image" id="portraitStage">
+              <img
+                id="portraitImg"
+                src="assets/images/sina defualt.png"
+                alt="پرتره شخصیت"
+              />
+            </div>
           </div>
-          <div id="inventoryGrid"></div>
-          <div id="inventoryEmpty">هیچ آیتمی وجود ندارد</div>
+
+          <div class="portrait-name-wrapper">
+            <div class="portrait-name-line"></div>
+            <span class="portrait-name" id="characterName">سینا</span>
+            <div class="portrait-name-line"></div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ===== ستون محتوا ===== -->
+      <section class="content-column">
+        <!-- باکس دیالوگ -->
+        <div class="dialogue-container">
+          <div class="speaker-indicator">
+            <span class="speaker-dot"></span>
+            <span class="speaker-label" id="speakerLine">سینا</span>
+          </div>
+
+          <div class="dialogue-box" id="dialogueBox">
+            <p id="dialogueLine" class="dialogue-text"></p>
+            <span
+              class="typing-cursor"
+              id="typingCursor"
+              aria-hidden="true"
+            ></span>
+          </div>
+
+          <div class="dialogue-underline">
+            <span class="underline-fill" id="underlineFill"></span>
+          </div>
+        </div>
+
+        <!-- انتخاب‌ها -->
+        <div class="choices-container" id="choicesContainer">
+          <div id="continueHint" style="display: none">Space یا کلیک</div>
+          <!-- توسط game.js پر می‌شود -->
+        </div>
+
+        <!-- نوار پیشرفت -->
+        <!-- نوار پیشرفت -->
+        <div class="progress-section">
+          <div class="progress-bar-wrapper">
+            <div class="progress-track">
+              <div
+                class="progress-fill"
+                id="progressFill"
+                style="width: 0%"
+              ></div>
+              <div class="progress-dot" id="progressDot"></div>
+            </div>
+          </div>
+          <div class="progress-info">
+            <span class="progress-label">پیشرفت داستان</span>
+            <span class="progress-percent" id="progressPercent">۰٪</span>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- قبل از فوتر یا داخل فوتر -->
+    <div class="scene-nav" id="sceneNav">
+      <button
+        class="scene-nav-btn prev"
+        id="prevSceneBtn"
+        aria-label="صحنه قبلی"
+        disabled
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+        <span>قبلی</span>
+      </button>
+
+      <span class="scene-nav-indicator" id="navIndicator">0/0</span>
+
+      <button
+        class="scene-nav-btn next"
+        id="nextSceneBtn"
+        aria-label="صحنه بعدی"
+      >
+        <span>بعدی</span>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M9 18l6-6-6-6" />
+        </svg>
+      </button>
+    </div>
+    <!-- ═══════════════════════════════════════════
+     اوورلی انتقال تم (Theme Transition)
+═══════════════════════════════════════════ -->
+    <div
+      class="theme-transition-overlay"
+      id="themeTransition"
+      aria-hidden="true"
+    >
+      <div class="transition-smoke"></div>
+      <div class="transition-content">
+        <div class="transition-line">
+          <span class="t-line t-line-left"></span>
+          <span class="t-line t-line-right"></span>
+        </div>
+        <div class="transition-message" id="character-switch-message">
+          <span class="t-msg-label">اکنون در نقش</span>
+          <span class="t-msg-name" id="transitionRoleName">رهی</span>
+          <span class="t-msg-label">هستید</span>
+        </div>
+        <div class="transition-arrow">
+          <span class="t-arrow">❯</span>
+          <!-- فلش‌ها -->
+          <div id="golden-flash" aria-hidden="true"></div>
+          <div id="scene-flash" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+    <!-- ═══════════════════════════════════════════
+       فوتر سینمایی
+  ═══════════════════════════════════════════ -->
+    <footer class="game-footer" id="gameFooter">
+      <div class="footer-line"></div>
+      <div class="footer-inner">
+        <span class="footer-brand">DO NIMEH</span>
+        <span class="footer-separator">◆</span>
+      </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════
+       پیام‌های سیستم
+  ═══════════════════════════════════════════ -->
+    <div class="system-messages" id="systemMessages"></div>
+
+    <!-- ═══════════════════════════════════════════
+       گوشی (ساختار مورد نیاز game.js)
+  ═══════════════════════════════════════════ -->
+    <div id="phoneOverlay" class="phone-overlay" hidden>
+      <!-- game.js این بخش رو مدیریت میکنه -->
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+     اینونتوری (Inventory Drawer)
+═══════════════════════════════════════════ -->
+    <div id="inventoryDrawer" class="inventory-drawer" hidden>
+      <!-- پس‌زمینه تیره -->
+      <div id="inventoryBackdrop"></div>
+
+      <!-- پنل اصلی -->
+      <div id="inventoryPanel">
+        <!-- هدر -->
+        <div id="inventoryHeader">
+          <span>🎒 کیف آیتم‌ها</span>
+          <button id="inventoryClose" aria-label="بستن کیف">✕</button>
+        </div>
+
+        <!-- گرید آیتم‌ها -->
+        <div id="inventoryGrid"></div>
+
+        <!-- حالت خالی -->
+        <div id="inventoryEmpty" class="inv-visible">
+          <div class="empty-icon">🎒</div>
+          <div class="empty-text">هیچ آیتمی وجود ندارد</div>
+          <div class="empty-sub">
+            در طول داستان آیتم‌ها را جمع‌آوری خواهید کرد
+          </div>
         </div>
       </div>
     </div>
 
+    <!-- ═══════════════════════════════════════════
+       اسکریپت‌ها
+  ═══════════════════════════════════════════ -->
     <script src="src/game.js"></script>
     <script type="module" src="src/main.js"></script>
+    <script>
+      // دانه‌های فیلم (فقط بصری)
+      (function () {
+        const canvas = document.getElementById("filmGrain");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        function resize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+        function drawGrain() {
+          const w = canvas.width,
+            h = canvas.height;
+          const imageData = ctx.createImageData(w, h);
+          const data = imageData.data;
+          for (let i = 0; i < data.length; i += 4) {
+            const v = (Math.random() * 30) | 0;
+            data[i] = v;
+            data[i + 1] = v;
+            data[i + 2] = v;
+            data[i + 3] = (Math.random() * 18) | 0;
+          }
+          ctx.putImageData(imageData, 0, 0);
+          requestAnimationFrame(drawGrain);
+        }
+        resize();
+        window.addEventListener("resize", resize);
+        drawGrain();
+      })();
+    </script>
   </body>
 </html>

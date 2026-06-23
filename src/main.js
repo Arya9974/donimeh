@@ -1,5 +1,3 @@
-// src/main.js — نسخه کامل و اصلاح‌شده
-
 import { state } from "./engine/gameState.js";
 import {
   getScene,
@@ -8,14 +6,14 @@ import {
 } from "./engine/storyEngine.js";
 
 // ================================================================
-// ===== EXPOSE STATE GLOBALLY =====
+// ===== EXPOSE STATE =====
 // ================================================================
 
 window.__gameState = state;
 window.state = state;
 
 // ================================================================
-// ===== INIT MEMORY =====
+// ===== MEMORY =====
 // ================================================================
 
 if (!state.memory) state.memory = {};
@@ -35,13 +33,13 @@ let currentScene = null;
 let isTyping = false;
 
 // ================================================================
-// ===== WAIT FOR DonimehUI =====
+// ===== WAIT FOR UI =====
 // ================================================================
 
 function waitForUI() {
   if (window.DonimehUI) {
     UI = window.DonimehUI;
-    console.log("✅ DonimehUI آماده است، بازی شروع میشه...");
+    console.log("✅ DonimehUI آماده است");
     initGame();
   } else {
     console.log("⏳ منتظر DonimehUI...");
@@ -63,16 +61,40 @@ async function initGame() {
     }
 
     episodesData = await res.json();
-    console.log("✅ episodes.json لود شد:", episodesData);
+    console.log("✅ episodes.json لود شد");
 
-    loadCurrentEpisode();
+    // تصحیح ساختار
+    if (!episodesData.episodes && Array.isArray(episodesData)) {
+      episodesData = { episodes: episodesData };
+    }
 
-    // ===== دریافت پارامترهای URL =====
+    // ===== چک کردن restart =====
     const urlParams = new URLSearchParams(window.location.search);
-    const epParam = urlParams.get("ep");
     const restart = urlParams.get("restart") === "true";
+    const epParam = urlParams.get("ep");
 
-    // ===== اگه پارامتر ep وجود داره، اپیزود رو تغییر بده =====
+    // ===== مدیریت restart =====
+    if (restart) {
+      console.log("🔄 ریست کامل بازی...");
+      localStorage.clear();
+
+      state.episodeId = 1;
+      state.sceneId = "station_intro";
+      state.history = [];
+      state.historyIndex = -1;
+      state.memory = {};
+      state.memory.inventory = [];
+      state.memory.notes = [];
+      state.memory.chatHistory = {};
+      state.memory.puzzleProgress = {};
+
+      loadCurrentEpisode();
+      renderScene();
+      console.log("✅ بازی از اول شروع شد");
+      return;
+    }
+
+    // ===== مدیریت پارامتر ep =====
     if (epParam) {
       const epId = parseInt(epParam);
       const found = episodesData.episodes.find((e) => e.id === epId);
@@ -81,99 +103,29 @@ async function initGame() {
         state.sceneId = found.startScene || Object.keys(found.scenes)[0];
         loadCurrentEpisode();
         console.log(`📺 رفتن به اپیزود ${epId}`);
+        renderScene();
+        return;
       }
     }
 
-    // ===== مدیریت restart =====
-    if (restart) {
-      localStorage.removeItem("donimeh_scene");
-      localStorage.removeItem("donimeh_episode");
-      localStorage.removeItem("donimeh_ep1_choice");
-      localStorage.removeItem("donimeh_ep2_choice");
+    // ===== بارگذاری معمولی از localStorage =====
+    const savedEpisode = localStorage.getItem("donimeh_episode");
+    const savedScene = localStorage.getItem("donimeh_scene");
+
+    state.episodeId = savedEpisode ? parseInt(savedEpisode) : 1;
+    loadCurrentEpisode();
+
+    if (savedScene && currentEpisode?.scenes[savedScene]) {
+      state.sceneId = savedScene;
+      console.log(`📂 sceneId بازیابی شد: ${savedScene}`);
+    } else {
       state.sceneId =
         currentEpisode?.startScene ||
         Object.keys(currentEpisode?.scenes || {})[0];
-      console.log("🔄 ریست انجام شد");
-    } else {
-      // ===== بازیابی پیشرفت از localStorage =====
-      if (!epParam) {
-        const se = localStorage.getItem("donimeh_episode");
-        const ss = localStorage.getItem("donimeh_scene");
-
-        if (se) {
-          const savedEp = parseInt(se);
-          const maxEp = episodesData.episodes.length;
-          state.episodeId = savedEp <= maxEp && savedEp >= 1 ? savedEp : 1;
-          loadCurrentEpisode();
-        } else {
-          state.episodeId = 1;
-          loadCurrentEpisode();
-        }
-
-        // sceneId رو ست کن
-        if (ss && currentEpisode?.scenes[ss]) {
-          state.sceneId = ss;
-          console.log(`📂 sceneId بازیابی شد: ${ss}`);
-        } else if (currentEpisode) {
-          state.sceneId =
-            currentEpisode.startScene || Object.keys(currentEpisode.scenes)[0];
-          console.log(`📂 sceneId پیش‌فرض: ${state.sceneId}`);
-        }
-      }
+      console.log(`📂 sceneId پیش‌فرض: ${state.sceneId}`);
     }
 
-    // ============================================================
-    // ===== هدایت‌های بعد از بازیابی =====
-    // ============================================================
-
-    // ===== هدایت بر اساس انتخاب اپیزود ۱ =====
-    if (state.episodeId === 2) {
-      const ep1Choice =
-        state.memory.ep1FinalChoice ||
-        localStorage.getItem("donimeh_ep1_choice");
-      if (ep1Choice) {
-        const sceneMap = {
-          rahi: "ep2_rahi_house",
-          mehras: "ep2_mehras_basement",
-          seyf: "ep2_seyf_station",
-          alone: "ep2_alone_elgoli",
-        };
-        if (
-          sceneMap[ep1Choice] &&
-          currentEpisode?.scenes[sceneMap[ep1Choice]]
-        ) {
-          state.sceneId = sceneMap[ep1Choice];
-          console.log(`🗺️ هدایت به ${ep1Choice}: ${state.sceneId}`);
-        }
-      }
-    }
-
-    // ===== هدایت بر اساس انتخاب اپیزود ۲ (شاخه‌ی آریا) =====
-    if (state.episodeId === 3) {
-      if (!currentEpisode) loadCurrentEpisode();
-
-      let ep2Choice = state.memory.ep2FinalChoice;
-      if (!ep2Choice) {
-        ep2Choice = localStorage.getItem("donimeh_ep2_choice");
-      }
-
-      if (ep2Choice === "ask_arya") {
-        if (currentEpisode?.scenes["ep3_with_arya_meeting"]) {
-          state.sceneId = "ep3_with_arya_meeting";
-          console.log("🗺️ هدایت به شاخه آریا");
-        } else {
-          console.warn("⚠️ صحنه ep3_with_arya_meeting پیدا نشد!");
-        }
-      }
-    }
-
-    // ============================================================
-    // ===== رندر نهایی =====
-    // ============================================================
-
-    console.log(`🎯 sceneId نهایی: ${state.sceneId}`);
-    console.log(`📺 اپیزود نهایی: ${state.episodeId}`);
-
+    console.log(`📺 اپیزود ${state.episodeId}، صحنه ${state.sceneId}`);
     renderScene();
   } catch (err) {
     console.error("❌ خطا در initGame:", err);
@@ -185,13 +137,17 @@ async function initGame() {
 // ================================================================
 
 function loadCurrentEpisode() {
-  if (!episodesData) {
-    console.warn("⚠️ episodesData خالی است!");
+  console.log(
+    `📖 loadCurrentEpisode called, state.episodeId: ${state.episodeId}`,
+  );
+
+  if (!episodesData || !episodesData.episodes) {
+    console.warn("⚠️ episodesData یا episodesData.episodes خالی است!");
     return;
   }
 
   currentEpisode = episodesData.episodes.find(
-    (ep) => ep.id === state.episodeId,
+    (ep) => Number(ep.id) === Number(state.episodeId),
   );
 
   if (!currentEpisode) {
@@ -200,14 +156,136 @@ function loadCurrentEpisode() {
     state.episodeId = 1;
   }
 
-  console.log(`📖 اپیزود ${state.episodeId} لود شد: ${currentEpisode.title}`);
+  console.log(`📖 اپیزود ${state.episodeId} لود شد: ${currentEpisode?.title}`);
+}
+
+// ================================================================
+// ===== NAVIGATION =====
+// ================================================================
+
+function updateNavButtons() {
+  const prevBtn = document.getElementById("prevSceneBtn");
+  const nextBtn = document.getElementById("nextSceneBtn");
+  const indicator = document.getElementById("navIndicator");
+
+  if (!prevBtn || !nextBtn || !indicator) return;
+
+  const total = state.history.length;
+  const current = state.historyIndex + 1;
+
+  prevBtn.disabled = state.historyIndex <= 0;
+
+  const hasNext = currentScene?.next || currentScene?.nextEpisode;
+  const isEnd = state.historyIndex >= total - 1;
+  nextBtn.disabled = isEnd && !hasNext;
+
+  indicator.textContent = total > 0 ? `${current}/${total}` : "0/0";
+}
+
+function hideNavControls(hide) {
+  const controls = document.querySelector(".nav-controls");
+  if (controls) {
+    controls.classList.toggle("hidden", hide);
+  }
+}
+
+// ================================================================
+// ===== ADVANCE SCENE (مهم!) =====
+// ================================================================
+
+function advanceScene() {
+  console.log("🔍 advanceScene called");
+  console.log("📍 state.episodeId:", state.episodeId);
+  console.log("📍 state.sceneId:", state.sceneId);
+  console.log("📍 currentScene:", currentScene);
+  console.log("📍 currentScene?.next:", currentScene?.next);
+  console.log("📍 currentScene?.nextEpisode:", currentScene?.nextEpisode);
+
+  if (!UI || !currentEpisode) {
+    console.warn("⚠️ UI یا currentEpisode آماده نیست!");
+    return;
+  }
+
+  if (UI.isPhoneVisible?.()) {
+    console.log("📱 گوشی باز است، advanceScene متوقف شد");
+    return;
+  }
+
+  if (isTyping) {
+    console.log("⌨️ تایپ در حال انجام، skip می‌شود");
+    UI.skipTyping();
+    isTyping = false;
+    return;
+  }
+
+  const choices = getValidChoices(currentScene, state);
+  if (choices.length > 0) {
+    console.log("ℹ️ انتخاب وجود دارد، advanceScene متوقف شد");
+    return;
+  }
+
+  // ===== STEP 1: چک کردن nextEpisode (اولویت اول) =====
+  if (currentScene?.nextEpisode != null) {
+    const nextEp = Number(currentScene.nextEpisode);
+    console.log(`📺 رفتن به اپیزود ${nextEp}`);
+
+    UI.closePhone();
+    UI.hidePuzzle();
+
+    state.episodeId = nextEp;
+    loadCurrentEpisode();
+
+    if (!currentEpisode) {
+      console.error(`❌ اپیزود ${state.episodeId} لود نشد!`);
+      return;
+    }
+
+    // ریست کردن history برای اپیزود جدید
+    state.history = [];
+    state.historyIndex = -1;
+
+    state.sceneId =
+      currentEpisode.startScene || Object.keys(currentEpisode.scenes)[0];
+    console.log(`✅ اپیزود ${state.episodeId} شروع شد، صحنه: ${state.sceneId}`);
+
+    hideNavControls(false);
+    saveProgress();
+    renderScene();
+    return;
+  }
+
+  // ===== STEP 2: چک کردن next =====
+  if (currentScene?.next) {
+    console.log(`➡️ رفتن به صحنه بعدی: ${currentScene.next}`);
+
+    // اعتبارسنجی: آیا صحنه بعدی وجود داره؟
+    if (!currentEpisode.scenes[currentScene.next]) {
+      console.error(`❌ صحنه ${currentScene.next} وجود ندارد!`);
+      console.log(`📌 صحنه‌های موجود:`, Object.keys(currentEpisode.scenes));
+      return;
+    }
+
+    UI.closePhone();
+    UI.hidePuzzle();
+
+    state.sceneId = currentScene.next;
+    hideNavControls(false);
+    saveProgress();
+    renderScene();
+    return;
+  }
+
+  console.log("📭 در انتهای داستان هستید، صحنه بعدی وجود ندارد");
 }
 
 // ================================================================
 // ===== RENDER SCENE =====
 // ================================================================
 
+// ===== RENDER SCENE =====
 function renderScene() {
+  console.log(`🎬 renderScene called, state.sceneId: ${state.sceneId}`);
+
   if (!currentEpisode) {
     console.warn("⚠️ currentEpisode خالی است!");
     return;
@@ -222,28 +300,204 @@ function renderScene() {
   currentScene = currentEpisode.scenes[state.sceneId];
 
   if (!currentScene) {
-    console.warn(`⚠️ صحنه ${state.sceneId} پیدا نشد!`);
-    // تلاش برای پیدا کردن اولین صحنه
+    console.error(`❌ صحنه ${state.sceneId} پیدا نشد!`);
     const firstScene = Object.keys(currentEpisode.scenes)[0];
     if (firstScene) {
+      console.log(`🔄 رفتن به اولین صحنه: ${firstScene}`);
       state.sceneId = firstScene;
       currentScene = currentEpisode.scenes[firstScene];
-      console.log(`🔄 رفتن به اولین صحنه: ${firstScene}`);
     } else {
       console.error("❌ هیچ صحنه‌ای در اپیزود وجود ندارد!");
       return;
     }
   }
 
-  console.log(`🎬 رندر صحنه: ${state.sceneId}`);
+  console.log(`🎬 رندر: ${state.sceneId} (اپیزود ${state.episodeId})`);
   saveProgress();
+  // ===== به‌روزرسانی اطلاعات اپیزود در هدر =====
+  updateEpisodeInfo();
 
-  // ===== پازل =====
+  // ============================================================
+  // ===== به‌روزرسانی نوار پیشرفت =====
+  // ============================================================
+  updateProgress();
+
+  // ============================================================
+  // ===== اجرای onEnter =====
+  // ============================================================
+  if (currentScene.onEnter) {
+    console.log("🎯 onEnter پیدا شد:", currentScene.onEnter);
+
+    if (currentScene.onEnter.setCharacter) {
+      console.log(`👤 تغییر شخصیت به: ${currentScene.onEnter.setCharacter}`);
+
+      // حذف کلاس‌های تم قبلی
+      document.body.classList.remove(
+        "theme-sina",
+        "theme-rahi",
+        "theme-mehras",
+        "theme-cream-gold",
+        "theme-blood-gold",
+      );
+
+      // ===== تعریف یکبار متغیرها =====
+      const roleNameEl = document.getElementById("currentRoleName");
+      const characterNameEl = document.getElementById("characterName");
+
+      if (currentScene.onEnter.setCharacter === "rahi") {
+        document.body.classList.add("theme-rahi");
+
+        if (roleNameEl) roleNameEl.textContent = "رهی";
+        if (characterNameEl) characterNameEl.textContent = "رهی";
+
+        if (window.DonimehUI && window.DonimehUI.showCharacterSwitch) {
+          window.DonimehUI.showCharacterSwitch(
+            "رهی",
+            "rahi",
+            currentScene.onEnter.showMessage ||
+              "🎭 شما در نقش رهی هستید | تم: صورتی-طلایی",
+          );
+        }
+        state.currentCharacter = "rahi";
+        state.theme = "pink-gold";
+        try {
+          localStorage.setItem("gameTheme", "pink-gold");
+          localStorage.setItem("currentCharacter", "rahi");
+        } catch (e) {}
+      } else if (currentScene.onEnter.setCharacter === "mehras") {
+        document.body.classList.add("theme-mehras");
+
+        if (roleNameEl) roleNameEl.textContent = "مهراس";
+        if (characterNameEl) characterNameEl.textContent = "مهراس";
+
+        if (window.DonimehUI && window.DonimehUI.showCharacterSwitch) {
+          window.DonimehUI.showCharacterSwitch(
+            "مهراس",
+            "mehras",
+            currentScene.onEnter.showMessage ||
+              "🎭 شما در نقش مهراس هستید | تم: آبی-طلایی",
+          );
+        }
+        state.currentCharacter = "mehras";
+        state.theme = "blue-gold";
+        try {
+          localStorage.setItem("gameTheme", "blue-gold");
+          localStorage.setItem("currentCharacter", "mehras");
+        } catch (e) {}
+      } else if (currentScene.onEnter.setCharacter === "seyf") {
+        document.body.classList.add("theme-cream-gold");
+
+        if (roleNameEl) roleNameEl.textContent = "سیف";
+        if (characterNameEl) characterNameEl.textContent = "سیف";
+
+        if (window.DonimehUI && window.DonimehUI.showCharacterSwitch) {
+          window.DonimehUI.showCharacterSwitch(
+            "سیف",
+            "seyf",
+            currentScene.onEnter.showMessage ||
+              "🎭 شما در نقش سیف هستید | تم: خامه‌ای-طلایی",
+          );
+        }
+        state.currentCharacter = "seyf";
+        state.theme = "cream-gold";
+        try {
+          localStorage.setItem("gameTheme", "cream-gold");
+          localStorage.setItem("currentCharacter", "seyf");
+        } catch (e) {}
+      } else if (currentScene.onEnter.setCharacter === "arya") {
+        document.body.classList.add("theme-blood-gold");
+
+        if (roleNameEl) roleNameEl.textContent = "آریا";
+        if (characterNameEl) characterNameEl.textContent = "آریا";
+
+        if (window.DonimehUI && window.DonimehUI.showCharacterSwitch) {
+          window.DonimehUI.showCharacterSwitch(
+            "آریا",
+            "arya",
+            currentScene.onEnter.showMessage ||
+              "🎭 شما در نقش آریا هستید | تم: قرمز خونی-طلایی",
+          );
+        }
+        state.currentCharacter = "arya";
+        state.theme = "blood-gold";
+        try {
+          localStorage.setItem("gameTheme", "blood-gold");
+          localStorage.setItem("currentCharacter", "arya");
+        } catch (e) {}
+      } else if (currentScene.onEnter.setCharacter === "sina") {
+        document.body.classList.add("theme-sina");
+
+        if (roleNameEl) roleNameEl.textContent = "سینا";
+        if (characterNameEl) characterNameEl.textContent = "سینا";
+
+        if (window.DonimehUI && window.DonimehUI.showCharacterSwitch) {
+          window.DonimehUI.showCharacterSwitch(
+            "سینا",
+            "sina",
+            currentScene.onEnter.showMessage || "🎭 بازگشت به نقش سینا",
+          );
+        }
+        state.currentCharacter = "sina";
+        state.theme = "dark-gold";
+        try {
+          localStorage.setItem("gameTheme", "dark-gold");
+          localStorage.setItem("currentCharacter", "sina");
+        } catch (e) {}
+      }
+    }
+
+    if (currentScene.onEnter.showMessage && UI && UI.showSystemMessage) {
+      setTimeout(() => {
+        UI.showSystemMessage(currentScene.onEnter.showMessage, 3500);
+      }, 500);
+    }
+  }
+  // ===== ذخیره در history =====
+  const entry = {
+    episodeId: state.episodeId,
+    sceneId: state.sceneId,
+    timestamp: Date.now(),
+  };
+
+  if (state.historyIndex < state.history.length - 1) {
+    state.history = state.history.slice(0, state.historyIndex + 1);
+  }
+
+  const last = state.history[state.history.length - 1];
+  if (
+    !last ||
+    last.sceneId !== state.sceneId ||
+    last.episodeId !== state.episodeId
+  ) {
+    state.history.push(entry);
+    state.historyIndex = state.history.length - 1;
+    if (state.history.length > 50) {
+      state.history = state.history.slice(-50);
+      state.historyIndex = state.history.length - 1;
+    }
+  }
+
+  updateNavButtons();
+  // ===== به‌روزرسانی اطلاعات اپیزود در هدر =====
+  function updateEpisodeInfo() {
+    const epNumberEl = document.getElementById("episodeNumber");
+    const epNameEl = document.getElementById("episodeName");
+
+    if (epNumberEl) {
+      epNumberEl.textContent = currentEpisode?.id || "?";
+    }
+
+    if (epNameEl) {
+      epNameEl.textContent = currentEpisode?.title || "بدون عنوان";
+    }
+  }
+  // ===== پازل قفل‌شده =====
   if (
     currentScene.puzzleId &&
     !state.memory.puzzleProgress[currentScene.puzzleId]
   ) {
     if (currentScene.puzzle) {
+      hideNavControls(true);
       UI.showPuzzle(currentScene.puzzle.html || "");
       window._resolvePuzzle = (success) => {
         UI.hidePuzzle();
@@ -253,55 +507,67 @@ function renderScene() {
             state.sceneId = currentScene.onSolve;
           }
         }
+        hideNavControls(false);
         renderScene();
       };
       return;
     }
   }
 
-  // ===== نمایش پرتره =====
-  const activeCharImg = currentScene.portrait || null;
-  if (activeCharImg) {
-    UI.showPortrait(activeCharImg);
+  // ===== پرتره =====
+  if (currentScene.portrait) {
+    UI.showPortrait(currentScene.portrait);
   } else {
     UI.showPortrait(null);
   }
 
-  // ===== نمایش دیالوگ =====
-  const speaker = currentScene.speaker || currentScene.bubble?.name || "";
-  const text = currentScene.dialogue || currentScene.bubble?.text || "";
-  const narratorText = currentScene.narrator || "";
-  window._lastText = text || narratorText;
+  // ===== دیالوگ =====
+  const speaker = currentScene.speaker || "";
+  const text = currentScene.dialogue || "";
+  const narrator = currentScene.narrator || "";
+  window._lastText = text || narrator;
 
-  const validChoices = getValidChoices(currentScene, state);
+  const choices = getValidChoices(currentScene, state);
   const phoneData = currentScene.phone;
+  const hasChoices = choices.length > 0;
 
   // ===== تایپ متن =====
   UI.onTypeEnd(() => {
     isTyping = false;
+
+    if (phoneData) {
+      hideNavControls(true);
+    } else {
+      hideNavControls(false);
+    }
+
     if (!phoneData) {
-      const mapped = validChoices.map((c) => ({
+      const mapped = choices.map((c) => ({
         label: c.text,
         onSelect: () => applyChoice(c),
       }));
       UI.showChoices(mapped);
+      hideNavControls(hasChoices);
     }
   });
 
   isTyping = true;
-  UI.showDialogue(speaker, text || narratorText);
+  UI.showDialogue(speaker, text || narrator);
 
   // ===== گوشی =====
   if (phoneData) {
+    hideNavControls(true);
+
     if (phoneData.header && phoneData.messages) {
       if (!state.memory.chatHistory) state.memory.chatHistory = {};
-      if (!state.memory.chatHistory[phoneData.header])
+      if (!state.memory.chatHistory[phoneData.header]) {
         state.memory.chatHistory[phoneData.header] = [];
+      }
       phoneData.messages.forEach((msg) => {
-        const already = state.memory.chatHistory[phoneData.header].some(
+        const exists = state.memory.chatHistory[phoneData.header].some(
           (m) => m.text === msg.text && m.sent === msg.sent,
         );
-        if (!already) {
+        if (!exists) {
           state.memory.chatHistory[phoneData.header].push({
             text: msg.text,
             sent: msg.sent,
@@ -310,6 +576,7 @@ function renderScene() {
         }
       });
     }
+
     setTimeout(() => {
       UI.openPhone(phoneData.header);
       UI.setPhoneChat(
@@ -320,16 +587,19 @@ function renderScene() {
           onSelect: () => {
             applyChoice(c);
             UI.closePhone();
+            hideNavControls(false);
           },
         })),
         phoneData.input || null,
       );
+
       if (!phoneData.choices || phoneData.choices.length === 0) {
-        const ns = phoneData.next || currentScene.next;
-        if (ns) {
+        const next = phoneData.next || currentScene.next;
+        if (next) {
           setTimeout(() => {
             UI.closePhone();
-            state.sceneId = ns;
+            state.sceneId = next;
+            hideNavControls(false);
             renderScene();
           }, 4000);
         }
@@ -337,10 +607,14 @@ function renderScene() {
     }, 500);
   } else {
     UI.closePhone();
+    if (!hasChoices) {
+      hideNavControls(false);
+    }
   }
 
-  // ===== پازل =====
+  // ===== پازل غیرقفل =====
   if (currentScene.puzzle && !currentScene.puzzleId) {
+    hideNavControls(true);
     UI.showPuzzle(currentScene.puzzle.html || "");
   } else if (!currentScene.puzzleId) {
     UI.hidePuzzle();
@@ -348,10 +622,114 @@ function renderScene() {
 }
 
 // ================================================================
+// ===== UPDATE PROGRESS =====
+// ================================================================
+
+function updateProgress() {
+  // پیدا کردن کل صحنه‌های اپیزود فعلی
+  const sceneKeys = Object.keys(currentEpisode.scenes);
+  const totalScenes = sceneKeys.length;
+
+  // پیدا کردن ایندکس صحنه فعلی
+  const currentIndex = sceneKeys.indexOf(state.sceneId);
+  const progress =
+    currentIndex >= 0 ? Math.round((currentIndex / totalScenes) * 100) : 0;
+
+  // === به‌روزرسانی عدد درصد ===
+  const pctEl = document.getElementById("progressPercent");
+  if (pctEl) {
+    const pctFa = progress.toString().replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+    pctEl.textContent = pctFa + "٪";
+  }
+
+  // === به‌روزرسانی نوار پیشرفت ===
+  const fillEl = document.getElementById("progressFill");
+  if (fillEl) {
+    fillEl.style.width = progress + "%";
+  }
+
+  // === به‌روزرسانی نقطه طلایی ===
+  const dotEl = document.getElementById("progressDot");
+  if (dotEl) {
+    dotEl.style.left = progress + "%";
+  }
+
+  console.log(
+    `📊 پیشرفت: ${progress}% (صحنه ${currentIndex + 1}/${totalScenes})`,
+  );
+}
+// ================================================================
+// ===== دکمه برگشت به لندینگ =====
+// ================================================================
+
+document.getElementById("backToLanding")?.addEventListener("click", () => {
+  window.location.href = "index.html";
+});
+
+// ================================================================
+// ===== دکمه‌های ناوبری =====
+// ================================================================
+
+// این کدها قبلاً توی main.js هستن، ولی مطمئن شو که وجود دارن:
+// document.getElementById("prevSceneBtn")?.addEventListener("click", goToPreviousScene);
+// document.getElementById("nextSceneBtn")?.addEventListener("click", goToNextScene);
+
+// تابع updateNavButtons هم باید توی main.js باشه که وضعیت دکمه‌ها رو به‌روز کنه.
+// ================================================================
+// ===== ITEM SYSTEM =====
+// ================================================================
+
+// تابع برای دریافت آیتم (از هر جای بازی قابل صدا زدن)
+function receiveItem(itemId, itemName, itemIcon, itemDescription) {
+  const item = {
+    id: itemId,
+    name: itemName,
+    icon: itemIcon || "📦",
+    description: itemDescription || "",
+  };
+
+  // اضافه به inventory
+  if (!state.memory.inventory) state.memory.inventory = [];
+  if (state.memory.inventory.some((it) => it.id === itemId)) {
+    if (UI && UI.showSystemMessage) {
+      UI.showSystemMessage(`📦 ${itemIcon} ${itemName} — از قبل دارید`);
+    }
+    return;
+  }
+
+  state.memory.inventory.push(item);
+
+  // نمایش پیام
+  if (UI && UI.showSystemMessage) {
+    UI.showSystemMessage(`📦 ${itemIcon} ${itemName} — دریافت شد!`);
+  }
+
+  // فلش طلایی
+  const flash = document.getElementById("golden-flash");
+  if (flash) {
+    flash.classList.add("flash");
+    setTimeout(() => flash.classList.remove("flash"), 400);
+  }
+
+  // به‌روزرسانی badge
+  const badge = document.getElementById("bag-badge");
+  if (badge) {
+    const current = parseInt(badge.textContent) || 0;
+    badge.textContent = current + 1;
+  }
+
+  saveProgress();
+}
+
+// اکسپوز کردن تابع
+window.receiveItem = receiveItem;
+// ================================================================
 // ===== APPLY CHOICE =====
 // ================================================================
 
 function applyChoice(choice) {
+  console.log(`🔀 انتخاب: ${choice.text}`);
+
   state.history.push({
     episode: state.episodeId,
     scene: state.sceneId,
@@ -381,245 +759,77 @@ function applyChoice(choice) {
     }
   }
 
-  if (choice.next) {
-    state.sceneId = choice.next;
-    renderScene();
-  } else if (choice.nextEpisode) {
+  // ===== اول: چک کردن nextEpisode =====
+  if (choice.nextEpisode) {
+    console.log(`📺 رفتن به اپیزود ${choice.nextEpisode} (از طریق انتخاب)`);
     state.episodeId = choice.nextEpisode;
     loadCurrentEpisode();
     state.sceneId =
       currentEpisode?.startScene ||
       Object.keys(currentEpisode?.scenes || {})[0];
     renderScene();
-  }
-}
-// ================================================================
-// ===== داستان کامل — story.html =====
-// ================================================================
-
-// تابع تولید داستان از انتخاب‌های کاربر
-function generateStoryData() {
-  const choiceMap = {
-    // اپیزود ۱
-    rahi: "با رهی به قرار ونتوس رفتی",
-    mehras: "به مهراس اعتماد کردی",
-    seyf: "به پلیس رفتی",
-    alone: "تنها به ایل‌گلی برگشتی",
-    // اپیزود ۲
-    go: "به قرار ونتوس رفتی",
-    tell_seyf: "به سیف گفتی",
-    ask_arya: "از آریا کمک خواستی",
-    decline: "به قرار ونتوس نرفتی",
-    // اپیزود ۳
-    hossein: "به خونه حسین رفتی",
-    ventus: "به سراغ ونتوس رفتی",
-    walk: "قدم زدی و حسین اومد سراغت",
-    // اپیزود ۴
-    rahi_go: "رهی به پارک ایل‌گلی رفت",
-    rahi_police: "رهی به پلیس زنگ زد",
-    rahi_wait: "رهی منتظر ماند",
-  };
-
-  const blocks = [];
-  const hasProgress = localStorage.getItem("donimeh_has_progress") === "true";
-
-  if (!hasProgress) {
-    blocks.push({
-      type: "paragraph",
-      text: "هنوز بازی را شروع نکرده‌ای. ابتدا یک بازی جدید شروع کن تا داستان بر اساس انتخاب‌هایت ساخته شود.",
-    });
-    return {
-      title: "دو نیمه — داستان کامل",
-      subtitle: "هنوز داستانی برای نمایش وجود ندارد",
-      blocks: blocks,
-    };
-  }
-
-  // ===== اپیزود ۱ =====
-  blocks.push({ type: "heading", text: "اپیزود ۱: دو نیمه" });
-  blocks.push({
-    type: "paragraph",
-    text: "کلانتری تاریک و سرد بود. لامپ مهتابی سوسو می‌زد. سیف روبه‌روی سینا نشسته بود و از او درباره شب ناپدید شدن ساغر سوال می‌کرد.",
-  });
-  blocks.push({
-    type: "paragraph",
-    text: "سینا به گذشته برگشت. آریا به او پیام داده بود که امشب در پارک ایل‌گلی جمع می‌شوند. سینا قبول کرد و به پارک رفت.",
-  });
-
-  if (state.memory.ep1FinalChoice) {
-    const choiceText =
-      choiceMap[state.memory.ep1FinalChoice] || "انتخاب دیگری انجام دادی";
-    blocks.push({ type: "choice", text: `تو انتخاب کردی ${choiceText}.` });
-  }
-
-  blocks.push({
-    type: "paragraph",
-    text: "در پارک، سینا با رهی آشنا شد. دختری مرموز با زخمی روی گردن. شب به پایان رسید و ساغر ناپدید شد. سینا و رهی ردپاهایی پیدا کردند و پیام مرموزی دریافت کردند.",
-  });
-  blocks.push({ type: "divider" });
-
-  // ===== اپیزود ۲ =====
-  blocks.push({ type: "heading", text: "اپیزود ۲: نقطه ناپدید شدن" });
-  blocks.push({
-    type: "paragraph",
-    text: "صبح روز بعد، سینا متوجه شد مهراس ۱۴ بار با ساغر تماس داشته. تحقیقات ادامه پیدا کرد و سینا با مهراس روبرو شد. مهراس ادعا کرد ساغر را تهدید می‌کرده‌اند.",
-  });
-
-  if (state.memory.ep2FinalChoice) {
-    const choiceText =
-      choiceMap[state.memory.ep2FinalChoice] || "انتخاب دیگری انجام دادی";
-    blocks.push({ type: "choice", text: `تو انتخاب کردی ${choiceText}.` });
-  }
-
-  blocks.push({
-    type: "paragraph",
-    text: "سینا سه نسخه از چت مهراس و ساغر را بررسی کرد. یکی از آنها واقعی بود. لاکر ساغر را پیدا کرد و متوجه شد مهراس درباره زمان دیدن ساغر دروغ گفته.",
-  });
-  blocks.push({
-    type: "paragraph",
-    text: "سایمان کیف نگار را پیدا کرد. در پایان، ونتوس به سینا پیام داد که او را به خیابان شریعتی دعوت کرد.",
-  });
-  blocks.push({ type: "divider" });
-
-  // ===== اپیزود ۳ =====
-  blocks.push({ type: "heading", text: "اپیزود ۳: شب بنفشه" });
-  blocks.push({
-    type: "paragraph",
-    text: "سینا به قرار ونتوس رفت. ونتوس به او گفت حسین شفیعی ساغر را دزدیده است. سینا به خشک‌شویی رفت و از ناصر آدرس خونه حسین را گرفت.",
-  });
-  blocks.push({
-    type: "paragraph",
-    text: "آریا در کلانتری با بینام آشنا شد. بینام ادعا کرد ماشین سفید را دیده. آریا و سپهر به خونه حسین رفتند و با او روبرو شدند.",
-  });
-
-  if (state.memory.ep3FinalChoice) {
-    const choiceText =
-      choiceMap[state.memory.ep3FinalChoice] || "انتخاب دیگری انجام دادی";
-    blocks.push({ type: "choice", text: `تو انتخاب کردی ${choiceText}.` });
-  }
-
-  blocks.push({
-    type: "paragraph",
-    text: "حسین شفیعی آرام و کنترل‌کننده بود. به سپهر گفت: «ساغر تازه برات مهم شده.» و تهدید کرد که اگه بلایی سرش بیاید، ساغر می‌میرد.",
-  });
-  blocks.push({
-    type: "paragraph",
-    text: "سینا دو پیام همزمان از حسین و ونتوس دریافت کرد. باید تصمیم می‌گرفت که به کدام یک اعتماد کند.",
-  });
-  blocks.push({ type: "divider" });
-
-  // ===== اپیزود ۴ =====
-  blocks.push({ type: "heading", text: "اپیزود ۴: ردپا در برف" });
-  blocks.push({
-    type: "paragraph",
-    text: "سینا تصمیم خود را گرفت. راهی شد به سمت مقصدی که انتخاب کرده بود.",
-  });
-
-  if (state.memory.ep4FinalChoice) {
-    const choiceText =
-      choiceMap[state.memory.ep4FinalChoice] || "انتخاب دیگری انجام دادی";
-    blocks.push({ type: "choice", text: `تو انتخاب کردی ${choiceText}.` });
-  }
-
-  blocks.push({
-    type: "paragraph",
-    text: "تیم‌ها تقسیم شدند. همه به پارک ایل‌گلی رفتند، اما آنجا یک تله بود. چراغ‌ها خاموش شدند و همه گیر افتادند.",
-  });
-  blocks.push({
-    type: "paragraph",
-    text: "رهی در خانه با دیانا، کوثر و هانا منتظر بود. فهمید که این یک تله است و تصمیم گرفت کاری کند.",
-  });
-  blocks.push({ type: "divider" });
-
-  // ===== پایان =====
-  blocks.push({ type: "heading", text: "پایان راه" });
-  blocks.push({
-    type: "paragraph",
-    text: "داستان همچنان ادامه دارد... انتخاب‌های تو سرنوشت شخصیت‌ها را تعیین می‌کنند. در اپیزودهای بعدی، خواهی دید که هر تصمیم چه پیامدی دارد.",
-  });
-  blocks.push({
-    type: "paragraph",
-    text: "برف همچنان می‌بارد و شهر زیر سکوتی سنگین خوابیده است. اما در میان این سکوت، حقیقتی در حال آشکار شدن است.",
-  });
-
-  return {
-    title: "دو نیمه — داستان کامل",
-    subtitle: "روایت انتخاب‌های تو در شب‌های برفی تبریز",
-    blocks: blocks,
-  };
-}
-
-// تابع باز کردن صفحه داستان
-function openStoryPage() {
-  const hasProgress = localStorage.getItem("donimeh_has_progress") === "true";
-
-  if (!hasProgress) {
-    alert(
-      "هنوز بازی را شروع نکرده‌ای. ابتدا یک بازی جدید شروع کن تا داستان بر اساس انتخاب‌هایت ساخته شود.",
-    );
     return;
   }
 
-  const storyData = generateStoryData();
-  localStorage.setItem("twoHalves:storyData", JSON.stringify(storyData));
-  window.open("story.html", "_blank");
-}
-
-// expose برای استفاده در HTML
-window.openStoryPage = openStoryPage;
-window.generateStoryData = generateStoryData;
-// ================================================================
-// ===== ADVANCE SCENE =====
-// ================================================================
-
-function advanceScene() {
-  if (UI.isPhoneVisible?.()) return;
-
-  if (isTyping) {
-    UI.skipTyping();
-    isTyping = false;
-    return;
-  }
-
-  const valid = currentScene ? getValidChoices(currentScene, state) : [];
-  if (valid.length > 0) return;
-
-  if (currentScene?.addItem) {
-    if (!state.memory.inventory) state.memory.inventory = [];
-    if (
-      !state.memory.inventory.some((it) => it.id === currentScene.addItem.id)
-    ) {
-      state.memory.inventory.push({
-        id: currentScene.addItem.id,
-        name: currentScene.addItem.name,
-        icon: currentScene.addItem.icon || "📦",
-        description: currentScene.addItem.description || "",
-      });
-    }
-  }
-
-  if (currentScene?.addNote) {
-    if (!state.memory.notes) state.memory.notes = [];
-    state.memory.notes.push({
-      text: currentScene.addNote.text || currentScene.addNote,
-    });
-  }
-
-  if (currentScene?.next) {
-    state.sceneId = currentScene.next;
+  // ===== دوم: چک کردن next =====
+  if (choice.next) {
+    console.log(`➡️ رفتن به صحنه ${choice.next} (از طریق انتخاب)`);
+    state.sceneId = choice.next;
     renderScene();
-  } else if (currentScene?.nextEpisode) {
-    state.episodeId = currentScene.nextEpisode;
+    return;
+  }
+}
+
+// ================================================================
+// ===== GO TO PREVIOUS/NEXT SCENE (برای دکمه‌های ناوبری) =====
+// ================================================================
+
+function goToPreviousScene() {
+  if (state.historyIndex <= 0) {
+    console.log("📭 در ابتدای تاریخچه هستید");
+    return;
+  }
+
+  UI.closePhone();
+  UI.hidePuzzle();
+
+  state.historyIndex--;
+  const entry = state.history[state.historyIndex];
+
+  if (entry) {
+    state.episodeId = entry.episodeId;
+    state.sceneId = entry.sceneId;
     loadCurrentEpisode();
-    state.sceneId =
-      currentEpisode?.startScene ||
-      Object.keys(currentEpisode?.scenes || {})[0];
+    hideNavControls(false);
     renderScene();
+    console.log(`⬅️ برگشت به: ${state.sceneId}`);
+  }
+}
+
+function goToNextScene() {
+  if (state.historyIndex >= state.history.length - 1) {
+    console.log("📭 در انتهای تاریخچه هستید");
+    return;
+  }
+
+  UI.closePhone();
+  UI.hidePuzzle();
+
+  state.historyIndex++;
+  const entry = state.history[state.historyIndex];
+
+  if (entry) {
+    state.episodeId = entry.episodeId;
+    state.sceneId = entry.sceneId;
+    loadCurrentEpisode();
+    hideNavControls(false);
+    renderScene();
+    console.log(`➡️ رفتن به: ${state.sceneId}`);
   }
 }
 
 // ================================================================
-// ===== SAVE PROGRESS =====
+// ===== SAVE =====
 // ================================================================
 
 function saveProgress() {
@@ -631,7 +841,6 @@ function saveProgress() {
       "donimeh_chatHistory",
       JSON.stringify(state.memory.chatHistory || {}),
     );
-
     if (state.memory.ep1FinalChoice) {
       localStorage.setItem("donimeh_ep1_choice", state.memory.ep1FinalChoice);
     }
@@ -644,19 +853,21 @@ function saveProgress() {
 }
 
 // ================================================================
-// ===== EXPOSE FUNCTIONS FOR DEBUGGING =====
+// ===== EXPOSE =====
 // ================================================================
 
-window.renderScene = renderScene;
-window.loadCurrentEpisode = loadCurrentEpisode;
-window.applyChoice = applyChoice;
 window.advanceScene = advanceScene;
+window.renderScene = renderScene;
+window.applyChoice = applyChoice;
 window.saveProgress = saveProgress;
-window.currentEpisode = () => currentEpisode;
-window.currentScene = () => currentScene;
+window.goToPreviousScene = goToPreviousScene;
+window.goToNextScene = goToNextScene;
+window.getState = () => state;
+window.getCurrentEpisode = () => currentEpisode;
+window.getCurrentScene = () => currentScene;
 
 // ================================================================
-// ===== EVENT LISTENERS =====
+// ===== EVENTS =====
 // ================================================================
 
 document.addEventListener("keydown", (e) => {
@@ -664,18 +875,13 @@ document.addEventListener("keydown", (e) => {
     e.preventDefault();
     advanceScene();
   }
-  if (e.key === "i" || e.key === "I" || e.key === "ی") {
-    if (
-      document.activeElement.tagName === "INPUT" ||
-      document.activeElement.tagName === "TEXTAREA"
-    ) {
-      return;
-    }
-    UI?.toggleInventory(state.memory?.inventory || []);
+  if (e.key === "ArrowLeft") {
+    e.preventDefault();
+    goToPreviousScene();
   }
-  if (e.key === "Escape") {
-    UI?.closePhone();
-    UI?.closeInventory();
+  if (e.key === "ArrowRight") {
+    e.preventDefault();
+    goToNextScene();
   }
 });
 
@@ -696,8 +902,16 @@ document.getElementById("backBtn")?.addEventListener("click", () => {
   window.location.href = "index.html?landing=true";
 });
 
+// اتصال دکمه‌های ناوبری
+document
+  .getElementById("prevSceneBtn")
+  ?.addEventListener("click", goToPreviousScene);
+document
+  .getElementById("nextSceneBtn")
+  ?.addEventListener("click", goToNextScene);
+
 // ================================================================
-// ===== START THE GAME =====
+// ===== START =====
 // ================================================================
 
 console.log("🎮 دو نیمه — در حال راه‌اندازی...");

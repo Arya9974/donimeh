@@ -1,6 +1,6 @@
 // src/engine/storyEngine.js
 
-import { state } from "./gameState.js";
+import { state, setCharacter, applyThemeToDOM } from "./gameState.js";
 
 let episodeData = null;
 
@@ -104,9 +104,44 @@ export function applyEffects(effects, state) {
     if (!state.memory.notes) state.memory.notes = [];
     state.memory.notes.push({ text: effects.addNote, timestamp: Date.now() });
   }
+
+  // ===== جدید: تغییر شخصیت و تم =====
+  if (effects.setCharacter) {
+    setCharacter(effects.setCharacter);
+  }
+
+  if (effects.changeTheme) {
+    applyThemeToDOM(effects.changeTheme);
+    state.theme = effects.changeTheme;
+  }
 }
 
 export function getValidChoices(scene, state) {
   if (!scene.choices) return [];
   return scene.choices.filter((c) => checkCondition(c.require, state));
+}
+
+// ===== جدید: تابع بررسی ورود به صحنه =====
+export function onSceneEnter(sceneId) {
+  // وقتی کاربر به صحنه ep4_rahi_react میرسه، شخصیت به رهی تغییر میکنه
+  if (sceneId === "ep4_rahi_react") {
+    setCharacter("rahi");
+    return {
+      character: "rahi",
+      theme: "pink-gold",
+      message: "🎭 شما در نقش رهی هستید | تم: صورتی-طلایی",
+    };
+  }
+
+  // برگشت به سینا (در صورت نیاز)
+  if (sceneId === "ep4_common_end" || sceneId === "ep5_start") {
+    setCharacter("sina");
+    return {
+      character: "sina",
+      theme: "dark-gold",
+      message: "🎭 بازگشت به نقش سینا",
+    };
+  }
+
+  return null;
 }

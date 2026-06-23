@@ -1,32 +1,158 @@
-// src/game.js — DonimehUI Golden Edition (Fully Debugged)
+// src/game.js — DonimehUI — نسخه کاملاً سازگار با ساختار جدید
 window.DonimehUI = (function () {
-  // ===== DOM Elements =====
+  "use strict";
+
+  // ================================================================
+  // ===== DOM ELEMENTS (با fallback) =====
+  // ================================================================
+
   const portraitImg = document.getElementById("portraitImg");
-  const portraitStage = document.getElementById("portraitStage");
+  const portraitStage =
+    document.getElementById("portraitStage") ||
+    document.getElementById("portraitFrame");
   const speakerLine = document.getElementById("speakerLine");
   const dialogueLine = document.getElementById("dialogueLine");
-  const choicesList = document.getElementById("choicesList");
+  const choicesContainer = document.getElementById("choicesContainer");
   const continueHint = document.getElementById("continueHint");
   const puzzleOverlay = document.getElementById("puzzleOverlay");
   const puzzleContent = document.getElementById("puzzleContent");
 
-  // ===== Variables =====
-  let typingTimer = null,
-    onTypingDone = null,
-    currentPortrait = "";
-  let ambientAudio = null,
-    isAudioOn = false;
-  let _isPhoneOpen = false,
-    _currentApp = "home",
-    _currentChatType = "chat";
+  // ================================================================
+  // ===== VARIABLES =====
+  // ================================================================
+
+  let typingTimer = null;
+  let onTypingDone = null;
+  let currentPortrait = "";
+  let ambientAudio = null;
+  let isAudioOn = false;
+  let _isPhoneOpen = false;
+  let _currentApp = "home";
+  let _currentChatType = "chat";
   let _invOpen = false;
   let _phoneCallback = null;
+  let _phoneStructureReady = false;
 
   // ================================================================
-  // ===== PUZZLE FUNCTIONS (Globally Available) =====
+  // ===== BUILD PHONE STRUCTURE IF MISSING =====
   // ================================================================
 
-  // ----- پازل اپیزود ۲: دروغ‌سنج -----
+  function ensurePhoneStructure() {
+    if (_phoneStructureReady) return;
+    const overlay = document.getElementById("phoneOverlay");
+    if (!overlay) return;
+
+    // اگر گوشی ساختار داخلی نداره، می‌سازیمش
+    if (!overlay.querySelector(".phone-device")) {
+      overlay.innerHTML = `
+        <div class="phone-device">
+          <div class="phone-status-bar">
+            <span class="status-time" id="statusTime">۱۲:۳۰</span>
+            <div class="status-icons"><span>▲</span><span>●●●</span><span>▮▮▮</span></div>
+          </div>
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <!-- صفحه خانه -->
+            <div class="app-screen screen-home" id="screenHome">
+              <button class="phone-close-btn" onclick="window.DonimehUI.closePhone()">✕</button>
+              <div style="height:36px"></div>
+              <div class="home-time" id="homeTime">۱۲:۳۰</div>
+              <div class="home-date" id="homeDate">سه‌شنبه، ۲۶ خرداد</div>
+              <div class="home-apps">
+                <div class="app-icon" onclick="window.DonimehUI.openApp('chat')">
+                  <div class="app-icon-emoji">💬</div>
+                  <div class="app-icon-info"><span class="app-icon-name">Chat</span><span class="app-icon-sub">پیام‌ها</span></div>
+                </div>
+                <div class="app-icon" onclick="window.DonimehUI.openApp('items')">
+                  <div class="app-icon-emoji">🎒</div>
+                  <div class="app-icon-info"><span class="app-icon-name">Items</span><span class="app-icon-sub">اشیاء</span></div>
+                </div>
+                <div class="app-icon" onclick="window.DonimehUI.openApp('notes')">
+                  <div class="app-icon-emoji">📋</div>
+                  <div class="app-icon-info"><span class="app-icon-name">Notes</span><span class="app-icon-sub">یادداشت‌ها</span></div>
+                </div>
+              </div>
+            </div>
+            <!-- صفحه چت -->
+            <div class="app-screen screen-chat hidden" id="screenChat">
+              <div class="app-header">
+                <button class="back-btn-phone" onclick="window.DonimehUI.openApp('home')">←</button>
+                <div class="app-header-title">Chat</div>
+              </div>
+              <div class="list-screen" id="contactsList"></div>
+            </div>
+            <!-- صفحه مکالمه -->
+            <div class="app-screen screen-chat-convo hidden" id="screenChatConvo">
+              <div class="app-header">
+                <button class="back-btn-phone" onclick="window.DonimehUI.openApp('chat')">←</button>
+                <div class="app-header-title" id="chatHeader">Chat</div>
+                <div class="app-header-dot"></div>
+              </div>
+              <div class="chat-messages" id="phoneChat"></div>
+              <div class="chat-choices" id="phoneChoices"></div>
+              <div class="chat-input-container" id="phoneInputContainer">
+                <input type="text" class="chat-input-field" id="phoneInputField" placeholder="پیام بفرست..." />
+                <button class="chat-input-send" id="phoneInputSend">➤</button>
+              </div>
+            </div>
+            <!-- صفحه آیتم‌ها -->
+            <div class="app-screen screen-items hidden" id="screenItems">
+              <div class="app-header">
+                <button class="back-btn-phone" onclick="window.DonimehUI.openApp('home')">←</button>
+                <div class="app-header-title">🎒 Items</div>
+              </div>
+              <div class="list-screen" id="itemsList"></div>
+            </div>
+            <!-- صفحه یادداشت‌ها -->
+            <div class="app-screen screen-notes hidden" id="screenNotes">
+              <div class="app-header">
+                <button class="back-btn-phone" onclick="window.DonimehUI.openApp('home')">←</button>
+                <div class="app-header-title">📋 Notes</div>
+              </div>
+              <div class="list-screen" id="notesList"></div>
+            </div>
+            <!-- صفحه تماس -->
+            <div class="app-screen screen-call hidden" id="screenCall">
+              <div class="app-header">
+                <button class="back-btn-phone" onclick="window.DonimehUI.closePhone()">←</button>
+                <div class="app-header-title" id="callHeader">تماس</div>
+              </div>
+              <div class="call-container">
+                <div class="call-avatar">📞</div>
+                <div class="call-status" id="callStatus">در حال تماس...</div>
+                <div class="call-timer" id="callTimer">۰۰:۰۰</div>
+                <div class="call-dialogue" id="callDialogue"></div>
+                <button class="call-end-btn" id="callEndBtn">قطع تماس</button>
+              </div>
+            </div>
+            <!-- صفحه مخاطب -->
+            <div class="app-screen screen-contact hidden" id="screenContact">
+              <div class="app-header">
+                <button class="back-btn-phone" onclick="window.DonimehUI.openApp('home')">←</button>
+                <div class="app-header-title" id="contactHeader">مخاطب</div>
+              </div>
+              <div class="contact-container">
+                <img class="contact-avatar" id="contactAvatar" src="" alt="" />
+                <div class="contact-name" id="contactName"></div>
+                <div class="contact-status" id="contactStatus"></div>
+                <div class="contact-details" id="contactDetails"></div>
+                <div class="contact-actions" id="contactActions"></div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-home-btn"></div>
+        </div>
+      `;
+      _phoneStructureReady = true;
+    } else {
+      _phoneStructureReady = true;
+    }
+  }
+
+  // ================================================================
+  // ===== PUZZLE FUNCTIONS =====
+  // ================================================================
+
   window.checkLie = function (person) {
     const fb = document.getElementById("lieFeedback");
     if (!fb) {
@@ -45,7 +171,6 @@ window.DonimehUI = (function () {
     }
   };
 
-  // ----- پازل اپیزود ۲: رمز لاکر -----
   window.checkCodePuzzle = function () {
     const input = document.getElementById("puzzleInput");
     const fb = document.getElementById("puzzleFeedback");
@@ -67,7 +192,6 @@ window.DonimehUI = (function () {
     }
   };
 
-  // ----- پازل اپیزود ۳: عدد ۷۸۲۱ -----
   window.check7821 = function (person) {
     const fb = document.getElementById("puzzleFeedback_7821");
     if (!fb) {
@@ -87,7 +211,6 @@ window.DonimehUI = (function () {
     }
   };
 
-  // ----- پازل اپیزود ۳: پیام به حسین -----
   window.checkHosseinMessage = function (selectedText) {
     const fb = document.getElementById("puzzleFeedback_hossein");
     if (!fb) {
@@ -106,7 +229,6 @@ window.DonimehUI = (function () {
     }
   };
 
-  // ----- پازل اپیزود ۳: تصمیم نهایی -----
   window.checkFinalDecision = function (decision) {
     const fb = document.getElementById("puzzleFeedback_final");
     if (!fb) {
@@ -129,7 +251,6 @@ window.DonimehUI = (function () {
     }, 800);
   };
 
-  // ----- پازل اپیزود ۴: پین گوشی حسین -----
   window.checkPhonePin = function (pin) {
     const fb = document.getElementById("puzzleFeedback_pin");
     if (!fb) {
@@ -148,7 +269,6 @@ window.DonimehUI = (function () {
     }
   };
 
-  // ----- پازل اپیزود ۵: نقشه خونه‌ی حسین -----
   window.checkMapAnswer = function (answer) {
     const fb = document.getElementById("puzzleFeedback_map");
     if (!fb) {
@@ -168,7 +288,6 @@ window.DonimehUI = (function () {
     }
   };
 
-  // ----- پازل اپیزود ۵: قفل پنجره -----
   window.checkLockAnswer = function (answer) {
     const fb = document.getElementById("puzzleFeedback_lock");
     if (!fb) {
@@ -187,7 +306,6 @@ window.DonimehUI = (function () {
     }
   };
 
-  // ----- پازل اپیزود ۵: ورودی مخفی -----
   window.checkEntranceAnswer = function (answer) {
     const fb = document.getElementById("puzzleFeedback_entrance");
     if (!fb) {
@@ -353,33 +471,73 @@ window.DonimehUI = (function () {
   // ================================================================
 
   function showChoices(choices) {
-    const choicesPanel = document.getElementById("choicesPanel");
-    if (!choicesList || !choicesPanel) return;
-    choicesList.innerHTML = "";
-    if (continueHint) continueHint.style.display = "none";
-
-    if (!choices || !choices.length) {
-      choicesPanel.style.display = "none";
-      if (continueHint) continueHint.style.display = "flex";
+    const container = choicesContainer;
+    if (!container) {
+      console.warn("⚠️ choicesContainer پیدا نشد!");
       return;
     }
 
-    choicesPanel.style.display = "block";
-    choices.forEach((c) => {
+    // پیدا کردن continueHint داخل container
+    const hint = container.querySelector("#continueHint") || continueHint;
+
+    container.innerHTML = "";
+    if (hint) hint.style.display = "none";
+
+    if (!choices || !choices.length) {
+      container.style.display = "none";
+      if (hint) hint.style.display = "flex";
+      return;
+    }
+
+    container.style.display = "flex";
+    container.style.flexDirection = "column";
+    container.style.gap = "10px";
+
+    choices.forEach((c, index) => {
       const b = document.createElement("button");
       b.className = "choice-btn";
-      b.textContent = c.label || c.text || "";
-      b.addEventListener("click", () => {
-        choicesList.innerHTML = "";
-        choicesPanel.style.display = "none";
+      b.setAttribute("data-index", index);
+
+      const numSpan = document.createElement("span");
+      numSpan.className = "choice-number";
+      numSpan.textContent = index + 1 + ".";
+
+      const textSpan = document.createElement("span");
+      textSpan.className = "choice-text";
+      textSpan.textContent = c.label || c.text || "";
+
+      const ripple = document.createElement("span");
+      ripple.className = "choice-ripple";
+
+      b.appendChild(numSpan);
+      b.appendChild(textSpan);
+      b.appendChild(ripple);
+
+      b.addEventListener("click", function (e) {
+        const rect = this.getBoundingClientRect();
+        ripple.style.setProperty(
+          "--rx",
+          ((e.clientX - rect.left) / rect.width) * 100 + "%",
+        );
+        ripple.style.setProperty(
+          "--ry",
+          ((e.clientY - rect.top) / rect.height) * 100 + "%",
+        );
+        ripple.style.opacity = "1";
+        setTimeout(() => (ripple.style.opacity = "0"), 400);
+
+        container.innerHTML = "";
+        container.style.display = "none";
         if (c.onSelect) c.onSelect();
       });
-      choicesList.appendChild(b);
+
+      container.appendChild(b);
     });
   }
 
   function showContinueHint(show) {
-    if (continueHint) continueHint.style.display = show ? "flex" : "none";
+    const hint = document.getElementById("continueHint");
+    if (hint) hint.style.display = show ? "flex" : "none";
   }
 
   // ================================================================
@@ -392,14 +550,12 @@ window.DonimehUI = (function () {
       ambientAudio.loop = true;
       ambientAudio.volume = 0.3;
     }
-    ambientAudio.play().catch(() => {});
+    ambientAudio.play().catch(function () {});
     isAudioOn = true;
   }
 
   function stopAmbient() {
-    if (ambientAudio) {
-      ambientAudio.pause();
-    }
+    if (ambientAudio) ambientAudio.pause();
     isAudioOn = false;
   }
 
@@ -408,7 +564,7 @@ window.DonimehUI = (function () {
   }
 
   // ================================================================
-  // ===== PUZZLE OVERLAY =====
+  // ===== PUZZLE =====
   // ================================================================
 
   function showPuzzle(html) {
@@ -428,22 +584,24 @@ window.DonimehUI = (function () {
   // ================================================================
 
   function _renderInventory(items) {
-    const grid = document.getElementById("inventoryGrid"),
-      empty = document.getElementById("inventoryEmpty");
+    const grid = document.getElementById("inventoryGrid");
+    const empty = document.getElementById("inventoryEmpty");
     if (!grid) return;
+
     grid.innerHTML = "";
     if (!items || !items.length) {
-      empty.classList.add("inv-visible");
+      if (empty) empty.classList.add("inv-visible");
       return;
     }
-    empty.classList.remove("inv-visible");
-    items.forEach((item) => {
+    if (empty) empty.classList.remove("inv-visible");
+
+    items.forEach(function (item) {
       const card = document.createElement("div");
       card.className = "inv-item-card";
       card.innerHTML = `
         <div class="inv-item-icon">${item.icon || "📦"}</div>
         <p class="inv-item-name">${item.name || ""}</p>
-        ${item.description ? `<p class="inv-item-desc">${item.description}</p>` : ""}
+        ${item.description ? '<p class="inv-item-desc">' + item.description + "</p>" : ""}
       `;
       grid.appendChild(card);
     });
@@ -453,16 +611,18 @@ window.DonimehUI = (function () {
     const d = document.getElementById("inventoryDrawer");
     if (!d) return;
     _renderInventory(items);
-    d.classList.add("inv-drawer-open");
-    d.classList.remove("inv-drawer-closed");
+    d.removeAttribute("hidden");
+    d.style.transform = "translateY(0)";
     _invOpen = true;
   }
 
   function closeInventory() {
     const d = document.getElementById("inventoryDrawer");
     if (!d) return;
-    d.classList.remove("inv-drawer-open");
-    d.classList.add("inv-drawer-closed");
+    d.style.transform = "translateY(100%)";
+    setTimeout(function () {
+      d.setAttribute("hidden", "hidden");
+    }, 400);
     _invOpen = false;
   }
 
@@ -472,13 +632,13 @@ window.DonimehUI = (function () {
   }
 
   // ================================================================
-  // ===== PHONE - CORE =====
+  // ===== PHONE =====
   // ================================================================
 
   function updatePhoneClock() {
     const now = new Date();
-    const h = now.getHours().toString().padStart(2, "0");
-    const m = now.getMinutes().toString().padStart(2, "0");
+    const h = String(now.getHours()).padStart(2, "0");
+    const m = String(now.getMinutes()).padStart(2, "0");
     const t = h + ":" + m;
     const sEl = document.getElementById("statusTime");
     const hEl = document.getElementById("homeTime");
@@ -520,13 +680,26 @@ window.DonimehUI = (function () {
   }
 
   function openPhone(header, callback) {
+    ensurePhoneStructure();
     const p = document.getElementById("phoneOverlay");
     if (!p) return;
     _isPhoneOpen = true;
     _phoneCallback = callback || null;
-    p.classList.add("open");
+    p.removeAttribute("hidden");
+    p.style.display = "flex";
+    p.style.opacity = "0";
+    p.style.transform = "scale(0.95)";
+
+    setTimeout(function () {
+      p.style.opacity = "1";
+      p.style.transform = "scale(1)";
+    }, 10);
+
     updatePhoneClock();
-    if (header) document.getElementById("chatHeader").textContent = header;
+    if (header) {
+      const h = document.getElementById("chatHeader");
+      if (h) h.textContent = header;
+    }
     openApp("home");
   }
 
@@ -535,9 +708,14 @@ window.DonimehUI = (function () {
     if (!p) return;
     _isPhoneOpen = false;
     _currentChatType = "chat";
-    p.classList.remove("open");
+    p.style.opacity = "0";
+    p.style.transform = "scale(0.95)";
+    setTimeout(function () {
+      p.setAttribute("hidden", "hidden");
+      p.style.display = "none";
+    }, 300);
     if (_phoneCallback) {
-      const cb = _phoneCallback;
+      var cb = _phoneCallback;
       _phoneCallback = null;
       cb();
     }
@@ -549,7 +727,7 @@ window.DonimehUI = (function () {
 
   function openApp(name) {
     _currentApp = name;
-    const screens = [
+    var screens = [
       "screenHome",
       "screenChat",
       "screenChatConvo",
@@ -558,45 +736,46 @@ window.DonimehUI = (function () {
       "screenCall",
       "screenContact",
     ];
-    screens.forEach((id) => {
-      const el = document.getElementById(id);
+    screens.forEach(function (id) {
+      var el = document.getElementById(id);
       if (el) el.classList.add("hidden");
     });
 
     if (name === "home") {
-      const el = document.getElementById("screenHome");
-      if (el) el.classList.remove("hidden");
+      var elHome = document.getElementById("screenHome");
+      if (elHome) elHome.classList.remove("hidden");
     } else if (name === "chat") {
-      const el = document.getElementById("screenChat");
-      if (el) el.classList.remove("hidden");
+      var elChat = document.getElementById("screenChat");
+      if (elChat) elChat.classList.remove("hidden");
       renderContacts();
     } else if (name === "items") {
-      const el = document.getElementById("screenItems");
-      if (el) el.classList.remove("hidden");
-      setTimeout(() => renderPhoneItems(), 50);
+      var elItems = document.getElementById("screenItems");
+      if (elItems) elItems.classList.remove("hidden");
+      setTimeout(renderPhoneItems, 50);
     } else if (name === "notes") {
-      const el = document.getElementById("screenNotes");
-      if (el) el.classList.remove("hidden");
+      var elNotes = document.getElementById("screenNotes");
+      if (elNotes) elNotes.classList.remove("hidden");
       renderPhoneNotes();
     } else if (name === "call") {
-      const el = document.getElementById("screenCall");
-      if (el) el.classList.remove("hidden");
+      var elCall = document.getElementById("screenCall");
+      if (elCall) elCall.classList.remove("hidden");
     } else if (name === "contact") {
-      const el = document.getElementById("screenContact");
-      if (el) el.classList.remove("hidden");
+      var elContact = document.getElementById("screenContact");
+      if (elContact) elContact.classList.remove("hidden");
     }
   }
 
   // ================================================================
-  // ===== PHONE - CHAT TYPES =====
+  // ===== PHONE - CHAT =====
   // ================================================================
 
   function setPhoneChat(header, messages, choices, inputConfig) {
-    const chatScreen = document.getElementById("screenChat");
-    const convoScreen = document.getElementById("screenChatConvo");
-    const callScreen = document.getElementById("screenCall");
-    const contactScreen = document.getElementById("screenContact");
-    const chatHeader = document.getElementById("chatHeader");
+    ensurePhoneStructure();
+    var chatScreen = document.getElementById("screenChat");
+    var convoScreen = document.getElementById("screenChatConvo");
+    var callScreen = document.getElementById("screenCall");
+    var contactScreen = document.getElementById("screenContact");
+    var chatHeader = document.getElementById("chatHeader");
 
     if (chatScreen) chatScreen.classList.add("hidden");
     if (convoScreen) convoScreen.classList.remove("hidden");
@@ -606,35 +785,35 @@ window.DonimehUI = (function () {
 
     _currentChatType = "chat";
 
-    const chatEl = document.getElementById("phoneChat");
+    var chatEl = document.getElementById("phoneChat");
     if (chatEl && messages) {
       chatEl.innerHTML = "";
-      messages.forEach((msg, i) => {
-        const div = document.createElement("div");
+      messages.forEach(function (msg, i) {
+        var div = document.createElement("div");
         div.className = "chat-msg " + (msg.sent ? "outgoing" : "incoming");
         div.textContent = msg.text;
         div.style.animationDelay = (msg.delay || i * 0.4) + "s";
-        const time = document.createElement("div");
+        var time = document.createElement("div");
         time.className = "chat-msg-time";
-        const now = new Date();
+        var now = new Date();
         time.textContent =
-          now.getHours().toString().padStart(2, "0") +
+          String(now.getHours()).padStart(2, "0") +
           ":" +
-          now.getMinutes().toString().padStart(2, "0");
+          String(now.getMinutes()).padStart(2, "0");
         div.appendChild(time);
         chatEl.appendChild(div);
       });
       chatEl.scrollTop = chatEl.scrollHeight;
     }
 
-    const choicesEl = document.getElementById("phoneChoices");
+    var choicesEl = document.getElementById("phoneChoices");
     if (choicesEl && choices) {
       choicesEl.innerHTML = "";
-      choices.forEach((c) => {
-        const btn = document.createElement("button");
+      choices.forEach(function (c) {
+        var btn = document.createElement("button");
         btn.className = "phone-choice-btn";
         btn.textContent = c.label || c.text || "";
-        btn.addEventListener("click", () => {
+        btn.addEventListener("click", function () {
           choicesEl.innerHTML = "";
           if (c.onSelect) c.onSelect();
         });
@@ -642,9 +821,9 @@ window.DonimehUI = (function () {
       });
     }
 
-    const inputContainer = document.getElementById("phoneInputContainer");
-    const inputField = document.getElementById("phoneInputField");
-    const inputSend = document.getElementById("phoneInputSend");
+    var inputContainer = document.getElementById("phoneInputContainer");
+    var inputField = document.getElementById("phoneInputField");
+    var inputSend = document.getElementById("phoneInputSend");
 
     if (inputConfig && inputConfig.responses) {
       if (inputContainer) inputContainer.style.display = "flex";
@@ -654,51 +833,51 @@ window.DonimehUI = (function () {
         inputField.focus();
       }
 
-      const handleInput = () => {
+      var handleInput = function () {
         if (!inputField) return;
-        const val = inputField.value.trim();
+        var val = inputField.value.trim();
         if (!val) return;
-        const matched = inputConfig.responses.find(
-          (r) => r.text === val || r.match === val,
-        );
+        var matched = inputConfig.responses.find(function (r) {
+          return r.text === val || r.match === val;
+        });
         if (matched) {
           inputField.value = "";
-          const chatEl = document.getElementById("phoneChat");
-          if (chatEl) {
-            const div = document.createElement("div");
-            div.className = "chat-msg outgoing";
-            div.textContent = val;
-            chatEl.appendChild(div);
-            chatEl.scrollTop = chatEl.scrollHeight;
+          var chatEl2 = document.getElementById("phoneChat");
+          if (chatEl2) {
+            var div2 = document.createElement("div");
+            div2.className = "chat-msg outgoing";
+            div2.textContent = val;
+            chatEl2.appendChild(div2);
+            chatEl2.scrollTop = chatEl2.scrollHeight;
           }
           if (matched.next) {
             if (matched.effects && window.applyEffectsDirect) {
               window.applyEffectsDirect(matched.effects);
             }
-            setTimeout(() => {
+            setTimeout(function () {
               if (window._phoneChoiceCallback) {
                 window._phoneChoiceCallback(matched);
               }
             }, 300);
           }
         } else {
-          const chatEl = document.getElementById("phoneChat");
-          if (chatEl) {
-            const div = document.createElement("div");
-            div.className = "chat-msg outgoing";
-            div.textContent = val;
-            chatEl.appendChild(div);
-            chatEl.scrollTop = chatEl.scrollHeight;
+          var chatEl3 = document.getElementById("phoneChat");
+          if (chatEl3) {
+            var div3 = document.createElement("div");
+            div3.className = "chat-msg outgoing";
+            div3.textContent = val;
+            chatEl3.appendChild(div3);
+            chatEl3.scrollTop = chatEl3.scrollHeight;
           }
-          setTimeout(() => {
-            const chatEl = document.getElementById("phoneChat");
-            if (chatEl) {
-              const div = document.createElement("div");
-              div.className = "chat-msg incoming";
-              div.textContent =
+          setTimeout(function () {
+            var chatEl4 = document.getElementById("phoneChat");
+            if (chatEl4) {
+              var div4 = document.createElement("div");
+              div4.className = "chat-msg incoming";
+              div4.textContent =
                 "متوجه نشدم. لطفاً یکی از گزینه‌ها رو انتخاب کن.";
-              chatEl.appendChild(div);
-              chatEl.scrollTop = chatEl.scrollHeight;
+              chatEl4.appendChild(div4);
+              chatEl4.scrollTop = chatEl4.scrollHeight;
             }
           }, 600);
         }
@@ -706,7 +885,7 @@ window.DonimehUI = (function () {
 
       if (inputSend) inputSend.onclick = handleInput;
       if (inputField) {
-        inputField.onkeydown = (e) => {
+        inputField.onkeydown = function (e) {
           if (e.key === "Enter") handleInput();
         };
       }
@@ -716,11 +895,12 @@ window.DonimehUI = (function () {
   }
 
   function setPhoneGroupChat(header, messages, choices) {
-    const chatScreen = document.getElementById("screenChat");
-    const convoScreen = document.getElementById("screenChatConvo");
-    const callScreen = document.getElementById("screenCall");
-    const contactScreen = document.getElementById("screenContact");
-    const chatHeader = document.getElementById("chatHeader");
+    ensurePhoneStructure();
+    var chatScreen = document.getElementById("screenChat");
+    var convoScreen = document.getElementById("screenChatConvo");
+    var callScreen = document.getElementById("screenCall");
+    var contactScreen = document.getElementById("screenContact");
+    var chatHeader = document.getElementById("chatHeader");
 
     if (chatScreen) chatScreen.classList.add("hidden");
     if (convoScreen) convoScreen.classList.remove("hidden");
@@ -730,20 +910,20 @@ window.DonimehUI = (function () {
 
     _currentChatType = "group";
 
-    const chatEl = document.getElementById("phoneChat");
+    var chatEl = document.getElementById("phoneChat");
     if (chatEl && messages) {
       chatEl.innerHTML = "";
-      messages.forEach((msg, i) => {
-        const div = document.createElement("div");
+      messages.forEach(function (msg, i) {
+        var div = document.createElement("div");
         div.className =
           "chat-msg " + (msg.sent ? "outgoing" : "incoming") + " group-msg";
         if (msg.sender && !msg.sent) {
-          const sender = document.createElement("div");
+          var sender = document.createElement("div");
           sender.className = "chat-sender";
           sender.textContent = msg.sender;
           div.appendChild(sender);
         }
-        const text = document.createElement("span");
+        var text = document.createElement("span");
         text.textContent = msg.text;
         div.appendChild(text);
         div.style.animationDelay = (msg.delay || i * 0.4) + "s";
@@ -752,30 +932,31 @@ window.DonimehUI = (function () {
       chatEl.scrollTop = chatEl.scrollHeight;
     }
 
-    const choicesEl = document.getElementById("phoneChoices");
+    var choicesEl = document.getElementById("phoneChoices");
     if (choicesEl && choices) {
       choicesEl.innerHTML = "";
-      choices.forEach((c) => {
-        const btn = document.createElement("button");
+      choices.forEach(function (c) {
+        var btn = document.createElement("button");
         btn.className = "phone-choice-btn";
         btn.textContent = c.label || c.text || "";
-        btn.addEventListener("click", () => {
+        btn.addEventListener("click", function () {
           choicesEl.innerHTML = "";
           if (c.onSelect) c.onSelect();
         });
         choicesEl.appendChild(btn);
       });
     }
-    const inputContainer = document.getElementById("phoneInputContainer");
+    var inputContainer = document.getElementById("phoneInputContainer");
     if (inputContainer) inputContainer.style.display = "none";
   }
 
   function setPhoneCall(header, duration, dialogue, onEnd) {
-    const chatScreen = document.getElementById("screenChat");
-    const convoScreen = document.getElementById("screenChatConvo");
-    const callScreen = document.getElementById("screenCall");
-    const contactScreen = document.getElementById("screenContact");
-    const callHeader = document.getElementById("callHeader");
+    ensurePhoneStructure();
+    var chatScreen = document.getElementById("screenChat");
+    var convoScreen = document.getElementById("screenChatConvo");
+    var callScreen = document.getElementById("screenCall");
+    var contactScreen = document.getElementById("screenContact");
+    var callHeader = document.getElementById("callHeader");
 
     if (chatScreen) chatScreen.classList.add("hidden");
     if (convoScreen) convoScreen.classList.add("hidden");
@@ -785,46 +966,46 @@ window.DonimehUI = (function () {
 
     _currentChatType = "call";
 
-    const callStatus = document.getElementById("callStatus");
-    const callTimer = document.getElementById("callTimer");
-    const callDialogue = document.getElementById("callDialogue");
-    const callEndBtn = document.getElementById("callEndBtn");
+    var callStatus = document.getElementById("callStatus");
+    var callTimer = document.getElementById("callTimer");
+    var callDialogue = document.getElementById("callDialogue");
+    var callEndBtn = document.getElementById("callEndBtn");
 
-    let seconds = 0;
-    let dialogueIndex = 0;
+    var seconds = 0;
+    var dialogueIndex = 0;
 
     if (callStatus) callStatus.textContent = "در حال تماس...";
     if (callTimer) callTimer.textContent = "00:00";
 
-    const timer = setInterval(() => {
+    var timer = setInterval(function () {
       seconds++;
-      const m = String(Math.floor(seconds / 60)).padStart(2, "0");
-      const s = String(seconds % 60).padStart(2, "0");
+      var m = String(Math.floor(seconds / 60)).padStart(2, "0");
+      var s = String(seconds % 60).padStart(2, "0");
       if (callTimer) callTimer.textContent = m + ":" + s;
     }, 1000);
 
     if (dialogue && dialogue.length) {
-      const showDialogue = () => {
+      var showDialogueFn = function () {
         if (dialogueIndex < dialogue.length) {
-          const d = dialogue[dialogueIndex];
+          var d = dialogue[dialogueIndex];
           if (callStatus)
             callStatus.textContent = d.speaker + " در حال صحبت...";
           if (callDialogue) callDialogue.textContent = d.text;
           dialogueIndex++;
-          setTimeout(showDialogue, d.duration || 3000);
+          setTimeout(showDialogueFn, d.duration || 3000);
         } else {
           if (callStatus) callStatus.textContent = "مکالمه تمام شد";
-          setTimeout(() => {
+          setTimeout(function () {
             if (onEnd) onEnd();
           }, 1000);
         }
       };
-      setTimeout(showDialogue, 1000);
+      setTimeout(showDialogueFn, 1000);
     } else {
       setTimeout(
-        () => {
+        function () {
           if (callStatus) callStatus.textContent = "مکالمه تمام شد";
-          setTimeout(() => {
+          setTimeout(function () {
             if (onEnd) onEnd();
           }, 1000);
         },
@@ -833,11 +1014,11 @@ window.DonimehUI = (function () {
     }
 
     if (callEndBtn) {
-      callEndBtn.onclick = () => {
+      callEndBtn.onclick = function () {
         clearInterval(timer);
         if (callStatus) callStatus.textContent = "تماس قطع شد";
         if (callDialogue) callDialogue.textContent = "";
-        setTimeout(() => {
+        setTimeout(function () {
           if (onEnd) onEnd();
         }, 500);
       };
@@ -845,11 +1026,12 @@ window.DonimehUI = (function () {
   }
 
   function setPhoneContact(header, info, actions) {
-    const chatScreen = document.getElementById("screenChat");
-    const convoScreen = document.getElementById("screenChatConvo");
-    const callScreen = document.getElementById("screenCall");
-    const contactScreen = document.getElementById("screenContact");
-    const contactHeader = document.getElementById("contactHeader");
+    ensurePhoneStructure();
+    var chatScreen = document.getElementById("screenChat");
+    var convoScreen = document.getElementById("screenChatConvo");
+    var callScreen = document.getElementById("screenCall");
+    var contactScreen = document.getElementById("screenContact");
+    var contactHeader = document.getElementById("contactHeader");
 
     if (chatScreen) chatScreen.classList.add("hidden");
     if (convoScreen) convoScreen.classList.add("hidden");
@@ -859,11 +1041,11 @@ window.DonimehUI = (function () {
 
     _currentChatType = "contact";
 
-    const avatar = document.getElementById("contactAvatar");
-    const name = document.getElementById("contactName");
-    const status = document.getElementById("contactStatus");
-    const details = document.getElementById("contactDetails");
-    const actionsEl = document.getElementById("contactActions");
+    var avatar = document.getElementById("contactAvatar");
+    var name = document.getElementById("contactName");
+    var status = document.getElementById("contactStatus");
+    var details = document.getElementById("contactDetails");
+    var actionsEl = document.getElementById("contactActions");
 
     if (avatar && info.avatar) avatar.src = info.avatar;
     if (name) name.textContent = info.name || header;
@@ -871,8 +1053,8 @@ window.DonimehUI = (function () {
     if (details) {
       details.innerHTML = "";
       if (info.details) {
-        info.details.forEach((d) => {
-          const p = document.createElement("p");
+        info.details.forEach(function (d) {
+          var p = document.createElement("p");
           p.textContent = d;
           details.appendChild(p);
         });
@@ -881,8 +1063,8 @@ window.DonimehUI = (function () {
     if (actionsEl) {
       actionsEl.innerHTML = "";
       if (actions) {
-        actions.forEach((a) => {
-          const btn = document.createElement("button");
+        actions.forEach(function (a) {
+          var btn = document.createElement("button");
           btn.className = "phone-choice-btn";
           btn.textContent = a.label;
           btn.onclick = a.onClick;
@@ -897,14 +1079,15 @@ window.DonimehUI = (function () {
   // ================================================================
 
   function showChatLog(header, messages) {
-    const chatHeader = document.getElementById("chatHeader");
+    ensurePhoneStructure();
+    var chatHeader = document.getElementById("chatHeader");
     if (chatHeader && header) chatHeader.textContent = header;
 
-    const chatEl = document.getElementById("phoneChat");
+    var chatEl = document.getElementById("phoneChat");
     if (chatEl && messages) {
       chatEl.innerHTML = "";
-      messages.forEach((msg) => {
-        const div = document.createElement("div");
+      messages.forEach(function (msg) {
+        var div = document.createElement("div");
         div.className = "chat-msg " + (msg.sent ? "outgoing" : "incoming");
         div.textContent = msg.text;
         chatEl.appendChild(div);
@@ -912,48 +1095,48 @@ window.DonimehUI = (function () {
       chatEl.scrollTop = chatEl.scrollHeight;
     }
 
-    const choicesEl = document.getElementById("phoneChoices");
+    var choicesEl = document.getElementById("phoneChoices");
     if (choicesEl) choicesEl.innerHTML = "";
 
-    const inputContainer = document.getElementById("phoneInputContainer");
+    var inputContainer = document.getElementById("phoneInputContainer");
     if (inputContainer) inputContainer.style.display = "none";
 
-    const chatScreen = document.getElementById("screenChat");
-    const convoScreen = document.getElementById("screenChatConvo");
+    var chatScreen = document.getElementById("screenChat");
+    var convoScreen = document.getElementById("screenChatConvo");
     if (chatScreen) chatScreen.classList.add("hidden");
     if (convoScreen) convoScreen.classList.remove("hidden");
   }
 
   function getMessagesFor(name) {
-    const history = window.__gameState?.memory?.chatHistory;
+    var history = window.__gameState?.memory?.chatHistory;
     return (history && history[name]) || [];
   }
 
   function renderContacts() {
-    const el = document.getElementById("contactsList");
+    var el = document.getElementById("contactsList");
     if (!el) return;
-    const history = window.__gameState?.memory?.chatHistory || {};
-    const contactNames = Object.keys(history);
+    var history = window.__gameState?.memory?.chatHistory || {};
+    var contactNames = Object.keys(history);
     el.innerHTML = "";
     if (contactNames.length === 0) {
       el.innerHTML =
         '<div class="empty-state"><div class="empty-emoji">💬</div>هنوز چتی ثبت نشده</div>';
       return;
     }
-    contactNames.forEach((name) => {
-      const messages = history[name];
-      const lastMsg =
+    contactNames.forEach(function (name) {
+      var messages = history[name];
+      var lastMsg =
         messages.length > 0 ? messages[messages.length - 1].text : "";
-      const row = document.createElement("div");
+      var row = document.createElement("div");
       row.className = "list-item";
       row.style.cursor = "pointer";
-      row.innerHTML = `
-        <div style="flex:1">
-          <div style="font-weight:500;color:#e8d5b0">${name}</div>
-          <div style="font-size:0.7rem;color:rgba(212,168,70,0.5);margin-top:2px">${lastMsg.length > 30 ? lastMsg.slice(0, 30) + "..." : lastMsg}</div>
-        </div>
-      `;
-      row.addEventListener("click", () => {
+      row.innerHTML =
+        '<div style="flex:1"><div style="font-weight:500;color:#e8d5b0">' +
+        name +
+        '</div><div style="font-size:0.7rem;color:rgba(212,168,70,0.5);margin-top:2px">' +
+        (lastMsg.length > 30 ? lastMsg.slice(0, 30) + "..." : lastMsg) +
+        "</div></div>";
+      row.addEventListener("click", function () {
         showChatLog(name, messages);
       });
       el.appendChild(row);
@@ -961,9 +1144,9 @@ window.DonimehUI = (function () {
   }
 
   function renderPhoneItems() {
-    const el = document.getElementById("itemsList");
+    var el = document.getElementById("itemsList");
     if (!el) return;
-    let items = [];
+    var items = [];
     if (window.__gameState?.memory?.inventory)
       items = window.__gameState.memory.inventory;
     else if (window.state?.memory?.inventory)
@@ -974,45 +1157,135 @@ window.DonimehUI = (function () {
         '<div class="empty-state"><div class="empty-emoji">🎒</div><div style="color:#a89070;font-size:0.9rem;">موجودی خالی است</div></div>';
       return;
     }
-    items.forEach((item) => {
-      const row = document.createElement("div");
+    items.forEach(function (item) {
+      var row = document.createElement("div");
       row.className = "list-item";
-      row.innerHTML = `
-        <div style="display:flex;align-items:center;gap:12px;width:100%;padding:4px 0;">
-          <span style="font-size:1.5rem;width:36px;text-align:center;">${item.icon || "📦"}</span>
-          <div style="flex:1;min-width:0;">
-            <div style="font-weight:500;color:#e8d5b0;font-size:0.95rem;">${item.name || "آیتم"}</div>
-            ${item.description ? `<div style="font-size:0.8rem;color:#a89070;margin-top:2px;line-height:1.3;">${item.description}</div>` : ""}
-          </div>
-        </div>
-      `;
+      row.innerHTML =
+        '<div style="display:flex;align-items:center;gap:12px;width:100%;padding:4px 0;"><span style="font-size:1.5rem;width:36px;text-align:center;">' +
+        (item.icon || "📦") +
+        '</span><div style="flex:1;min-width:0;"><div style="font-weight:500;color:#e8d5b0;font-size:0.95rem;">' +
+        (item.name || "آیتم") +
+        "</div>" +
+        (item.description
+          ? '<div style="font-size:0.8rem;color:#a89070;margin-top:2px;line-height:1.3;">' +
+            item.description +
+            "</div>"
+          : "") +
+        "</div></div>";
       el.appendChild(row);
     });
   }
 
   function renderPhoneNotes() {
-    const el = document.getElementById("notesList");
+    var el = document.getElementById("notesList");
     if (!el) return;
-    const notes = window.__gameState?.memory?.notes || [];
+    var notes = window.__gameState?.memory?.notes || [];
     el.innerHTML = "";
     if (!notes.length) {
       el.innerHTML =
         '<div class="empty-state"><div class="empty-emoji">📋</div>یادداشتی ثبت نشده</div>';
       return;
     }
-    notes.forEach((note) => {
-      const row = document.createElement("div");
+    notes.forEach(function (note) {
+      var row = document.createElement("div");
       row.className = "list-item";
-      row.innerHTML = `
-        <span class="list-bullet" style="color:rgba(212,168,70,0.6);">—</span>
-        <span class="list-item-text">${typeof note === "object" ? note.text || "" : String(note)}</span>
-      `;
+      row.innerHTML =
+        '<span class="list-bullet" style="color:rgba(212,168,70,0.6);">—</span><span class="list-item-text">' +
+        (typeof note === "object" ? note.text || "" : String(note)) +
+        "</span>";
       el.appendChild(row);
     });
   }
 
   // ================================================================
-  // ===== PHONE - CALLBACKS =====
+  // ===== ITEM SYSTEM =====
+  // ================================================================
+
+  function showSystemMessage(msg) {
+    var container = document.getElementById("systemMessages");
+    if (!container) return;
+    var el = document.createElement("div");
+    el.className = "sys-msg";
+    el.textContent = msg;
+    container.appendChild(el);
+    setTimeout(function () {
+      el.remove();
+    }, 3100);
+  }
+
+  function showItemReceived(itemName, itemIcon, description) {
+    showSystemMessage(
+      "📦 " +
+        itemIcon +
+        " " +
+        itemName +
+        " — دریافت شد!" +
+        (description ? " (" + description + ")" : ""),
+    );
+    var flash = document.getElementById("golden-flash");
+    if (flash) {
+      flash.classList.add("flash");
+      setTimeout(function () {
+        flash.classList.remove("flash");
+      }, 400);
+    }
+    var badge = document.getElementById("bagBadge");
+    if (badge) {
+      var current = parseInt(badge.textContent) || 0;
+      badge.textContent = current + 1;
+      badge.removeAttribute("hidden");
+    }
+  }
+
+  function addItemToInventory(item) {
+    if (!window.__gameState) return;
+    if (!window.__gameState.memory) window.__gameState.memory = {};
+    if (!window.__gameState.memory.inventory)
+      window.__gameState.memory.inventory = [];
+    if (
+      window.__gameState.memory.inventory.some(function (it) {
+        return it.id === item.id;
+      })
+    ) {
+      showSystemMessage(
+        "📦 " + item.icon + " " + item.name + " — از قبل دارید",
+      );
+      return;
+    }
+    window.__gameState.memory.inventory.push({
+      id: item.id,
+      name: item.name,
+      icon: item.icon || "📦",
+      description: item.description || "",
+    });
+    showItemReceived(item.name, item.icon, item.description);
+    if (window.saveProgress) window.saveProgress();
+  }
+  // ================================================================
+  // ===== جدید: تابع نمایش تغییر شخصیت =====
+  // ================================================================
+
+  function showCharacterSwitch(character, theme, message) {
+    const overlay = document.getElementById("themeTransition");
+    const msgEl = document.getElementById("character-switch-message");
+
+    if (!overlay || !msgEl) {
+      console.warn("⚠️ themeTransition یا character-switch-message پیدا نشد!");
+      return;
+    }
+
+    msgEl.textContent = message || `🎭 شما در نقش ${character} هستید`;
+
+    overlay.classList.add("active");
+    overlay.setAttribute("aria-hidden", "false");
+
+    setTimeout(() => {
+      overlay.classList.remove("active");
+      overlay.setAttribute("aria-hidden", "true");
+    }, 2000);
+  }
+  // ================================================================
+  // ===== CALLBACKS =====
   // ================================================================
 
   function setPhoneChoiceCallback(cb) {
@@ -1030,17 +1303,19 @@ window.DonimehUI = (function () {
   initAtmosphere();
   setInterval(updatePhoneClock, 30000);
 
-  // ----- Event Listeners -----
-  document.getElementById("audioBtn")?.addEventListener("click", () => {
+  // ===== Event Listeners =====
+  document.getElementById("audioBtn")?.addEventListener("click", function () {
     toggleAudio();
     document.getElementById("audioBtn")?.classList.toggle("on", isAudioOn);
   });
 
-  document.getElementById("phoneOpenBtn")?.addEventListener("click", () => {
-    openPhone("گوشی");
-  });
+  document
+    .getElementById("phoneOpenBtn")
+    ?.addEventListener("click", function () {
+      openPhone("گوشی");
+    });
 
-  document.getElementById("invBtn")?.addEventListener("click", () => {
+  document.getElementById("invBtn")?.addEventListener("click", function () {
     toggleInventory(window.__gameState?.memory?.inventory || []);
   });
 
@@ -1056,37 +1331,43 @@ window.DonimehUI = (function () {
   document.getElementById("callEndBtn")?.addEventListener("click", closePhone);
 
   // ================================================================
-  // ===== EXPOSE PUBLIC API =====
+  // ===== EXPOSE =====
   // ================================================================
 
   return {
-    showPortrait,
-    showDialogue,
-    typeText,
-    skipTyping,
-    onTypeEnd,
-    showChoices,
-    showContinueHint,
-    startAmbient,
-    stopAmbient,
-    toggleAudio,
-    showPuzzle,
-    hidePuzzle,
-    openInventory,
-    closeInventory,
-    toggleInventory,
-    openPhone,
-    closePhone,
-    isPhoneVisible,
-    openApp,
-    setPhoneChat,
-    setPhoneGroupChat,
-    setPhoneCall,
-    setPhoneContact,
-    showChatLog,
-    renderPhoneItems,
-    renderPhoneNotes,
-    setPhoneChoiceCallback,
-    setApplyEffectsDirect,
+    showPortrait: showPortrait,
+    showDialogue: showDialogue,
+    typeText: typeText,
+    skipTyping: skipTyping,
+    onTypeEnd: onTypeEnd,
+    showChoices: showChoices,
+    showContinueHint: showContinueHint,
+    startAmbient: startAmbient,
+    stopAmbient: stopAmbient,
+    toggleAudio: toggleAudio,
+    showPuzzle: showPuzzle,
+    hidePuzzle: hidePuzzle,
+    openInventory: openInventory,
+    closeInventory: closeInventory,
+    toggleInventory: toggleInventory,
+    openPhone: openPhone,
+    closePhone: closePhone,
+    isPhoneVisible: isPhoneVisible,
+    openApp: openApp,
+    setPhoneChat: setPhoneChat,
+    setPhoneGroupChat: setPhoneGroupChat,
+    setPhoneCall: setPhoneCall,
+    setPhoneContact: setPhoneContact,
+    showChatLog: showChatLog,
+    renderPhoneItems: renderPhoneItems,
+    renderPhoneNotes: renderPhoneNotes,
+    setPhoneChoiceCallback: setPhoneChoiceCallback,
+    setApplyEffectsDirect: setApplyEffectsDirect,
+    addItemToInventory: addItemToInventory,
+    showSystemMessage: showSystemMessage,
+    showCharacterSwitch: showCharacterSwitch,
+    
   };
 })();
+
+console.log("✅ DonimehUI لود شد (نسخه سازگار)");

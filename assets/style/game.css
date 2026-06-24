@@ -3809,6 +3809,69 @@ body.theme-cream-gold {
     background 0.8s ease,
     color 0.8s ease;
 }
+/* ===== انتخاب‌ها ===== */
+.choice-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: rgba(201, 168, 76, 0.04);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  border-radius: 6px;
+  color: var(--cream, #e8dcc8);
+  font-family: var(--font-body, "Vazirmatn", sans-serif);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: right;
+  width: 100%;
+}
+
+.choice-btn:hover:not([data-selected="true"]) {
+  background: rgba(201, 168, 76, 0.08);
+  border-color: rgba(201, 168, 76, 0.3);
+  transform: translateX(-4px);
+}
+
+.choice-number {
+  color: var(--gold-dim, #7a6330);
+  font-weight: 600;
+  font-size: 0.85rem;
+  min-width: 24px;
+}
+
+.choice-text {
+  flex: 1;
+}
+
+.choice-check {
+  margin-right: auto;
+}
+
+.choice-ripple {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 6px;
+  background: radial-gradient(
+    circle at var(--rx, 50%) var(--ry, 50%),
+    rgba(201, 168, 76, 0.2),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.choice-btn[data-selected="true"] {
+  border-color: var(--gold, #c9a84c) !important;
+  box-shadow: 0 0 30px rgba(201, 168, 76, 0.15) !important;
+  background: linear-gradient(
+    90deg,
+    rgba(201, 168, 76, 0.12),
+    rgba(201, 168, 76, 0.03)
+  ) !important;
+}
 body.theme-blood-gold {
   --gold: #8b1a1a;
   --gold-light: #c44a4a;

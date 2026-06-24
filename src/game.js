@@ -470,6 +470,7 @@ window.DonimehUI = (function () {
   // ===== CHOICES =====
   // ================================================================
 
+  // ===== CHOICES =====
   function showChoices(choices) {
     const container = choicesContainer;
     if (!container) {
@@ -477,7 +478,6 @@ window.DonimehUI = (function () {
       return;
     }
 
-    // پیدا کردن continueHint داخل container
     const hint = container.querySelector("#continueHint") || continueHint;
 
     container.innerHTML = "";
@@ -497,6 +497,7 @@ window.DonimehUI = (function () {
       const b = document.createElement("button");
       b.className = "choice-btn";
       b.setAttribute("data-index", index);
+      b.dataset.selected = "false";
 
       const numSpan = document.createElement("span");
       numSpan.className = "choice-number";
@@ -509,11 +510,27 @@ window.DonimehUI = (function () {
       const ripple = document.createElement("span");
       ripple.className = "choice-ripple";
 
+      // ===== چک مارک برای انتخاب‌شده =====
+      const checkMark = document.createElement("span");
+      checkMark.className = "choice-check";
+      checkMark.textContent = "✓";
+      checkMark.style.cssText = `
+      display: none;
+      margin-right: auto;
+      color: var(--gold, #c9a84c);
+      font-size: 1.2rem;
+      font-weight: bold;
+    `;
+
       b.appendChild(numSpan);
       b.appendChild(textSpan);
+      b.appendChild(checkMark);
       b.appendChild(ripple);
 
       b.addEventListener("click", function (e) {
+        // ===== جلوگیری از کلیک دوباره =====
+        if (this.dataset.selected === "true") return;
+
         const rect = this.getBoundingClientRect();
         ripple.style.setProperty(
           "--rx",
@@ -526,20 +543,164 @@ window.DonimehUI = (function () {
         ripple.style.opacity = "1";
         setTimeout(() => (ripple.style.opacity = "0"), 400);
 
-        container.innerHTML = "";
-        container.style.display = "none";
-        if (c.onSelect) c.onSelect();
+        // ===== ۱. هایلایت کردن انتخاب (طلایی) =====
+        this.style.borderColor = "var(--gold, #c9a84c)";
+        this.style.boxShadow = "0 0 20px rgba(201, 168, 76, 0.3)";
+        this.style.background =
+          "linear-gradient(90deg, rgba(201, 168, 76, 0.15), rgba(201, 168, 76, 0.05))";
+
+        // ===== ۲. نمایش چک مارک =====
+        if (checkMark) checkMark.style.display = "inline-block";
+
+        // ===== ۳. غیرفعال کردن همه انتخاب‌ها =====
+        const allBtns = container.querySelectorAll(".choice-btn");
+        allBtns.forEach((btn) => {
+          if (btn !== this) {
+            btn.style.opacity = "0.4";
+            btn.style.pointerEvents = "none";
+            btn.style.cursor = "default";
+          }
+        });
+        this.dataset.selected = "true";
+
+        // ===== ۴. فلش طلایی برای تأیید انتخاب =====
+        triggerGoldenFlash();
+
+        // ===== ۵. پیام سیستمی (اگه انتخاب مهم باشه) =====
+        if (c.important) {
+          showSystemMessage("✦ انتخاب شما ثبت شد ✦");
+        }
+
+        // ===== ۶. اجرای onSelect =====
+        setTimeout(() => {
+          container.innerHTML = "";
+          container.style.display = "none";
+          if (c.onSelect) c.onSelect();
+        }, 400);
       });
 
       container.appendChild(b);
     });
   }
-
   function showContinueHint(show) {
     const hint = document.getElementById("continueHint");
     if (hint) hint.style.display = show ? "flex" : "none";
   }
+  // ===== فلش طلایی =====
+  function triggerGoldenFlash() {
+    const flash = document.getElementById("golden-flash");
+    if (!flash) {
+      // اگه فلش وجود نداره، بسازش
+      createGoldenFlash();
+      return;
+    }
+    flash.classList.remove("flash");
+    // force reflow
+    void flash.offsetWidth;
+    flash.classList.add("flash");
+    setTimeout(() => {
+      flash.classList.remove("flash");
+    }, 500);
+  }
 
+  function createGoldenFlash() {
+    const flash = document.createElement("div");
+    flash.id = "golden-flash";
+    flash.style.cssText = `
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(201, 168, 76, 0.25) 0%,
+      transparent 70%
+    );
+  `;
+    document.body.appendChild(flash);
+
+    // استایل flash رو اضافه کن
+    const style = document.createElement("style");
+    style.textContent = `
+    #golden-flash.flash {
+      opacity: 1;
+      animation: goldenFlash 0.6s ease forwards;
+    }
+    @keyframes goldenFlash {
+      0% { opacity: 0; transform: scale(0.95); }
+      30% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.05); }
+    }
+  `;
+    document.head.appendChild(style);
+
+    // اجرا
+    setTimeout(() => {
+      const f = document.getElementById("golden-flash");
+      if (f) {
+        f.classList.add("flash");
+        setTimeout(() => f.classList.remove("flash"), 500);
+      }
+    }, 50);
+  }
+  // ===== پیام سیستمی =====
+function showSystemMessage(msg, duration = 2500) {
+  // حذف پیام قبلی
+  const oldMsg = document.querySelector(".system-toast");
+  if (oldMsg) oldMsg.remove();
+
+  const toast = document.createElement("div");
+  toast.className = "system-toast";
+  toast.textContent = msg;
+  toast.style.cssText = `
+    position: fixed;
+    bottom: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9998;
+    background: rgba(9, 8, 6, 0.92);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    border-radius: 8px;
+    padding: 12px 28px;
+    color: var(--gold-light, #e8c97a);
+    font-family: var(--font-body, "Vazirmatn", sans-serif);
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(201, 168, 76, 0.1);
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateX(-50%) translateY(20px);
+    text-align: center;
+    max-width: 90%;
+  `;
+
+  // استایل برای موبایل
+  if (window.innerWidth < 640) {
+    toast.style.bottom = "100px";
+    toast.style.padding = "10px 18px";
+    toast.style.fontSize = "0.8rem";
+  }
+
+  document.body.appendChild(toast);
+
+  // ظاهر شدن
+  setTimeout(() => {
+    toast.style.opacity = "1";
+    toast.style.transform = "translateX(-50%) translateY(0)";
+  }, 50);
+
+  // محو شدن
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transform = "translateX(-50%) translateY(-10px)";
+    setTimeout(() => {
+      if (toast.parentNode) toast.parentNode.removeChild(toast);
+    }, 500);
+  }, duration);
+}
   // ================================================================
   // ===== AUDIO =====
   // ================================================================
@@ -1366,7 +1527,6 @@ window.DonimehUI = (function () {
     addItemToInventory: addItemToInventory,
     showSystemMessage: showSystemMessage,
     showCharacterSwitch: showCharacterSwitch,
-    
   };
 })();
 
